@@ -1,16 +1,8 @@
 {
   "criteria": {
-    "got_stone": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "minecraft:stone"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
+    "played": {
+      "conditions": {},
+      "trigger": "minecraft:tick"
     }
   },
   "display": {
@@ -31,7 +23,7 @@
   },
   "requirements": [
     [
-      "got_stone"
+      "played"
     ]
   ],
   "sends_telemetry_event": false

@@ -17,8 +17,11 @@ public class ModItemGroups {
             new Identifier(EmpiresAndFortresses.MOD_ID, "ruby"),
             FabricItemGroup.builder().displayName(Text.translatable("empires-and-fortresses.item_group.main"))
                     .icon(() -> new ItemStack(Items.STICK)).entries((displayContext, entries) -> {
-                        entries.add(Items.STICK);
-                        entries.add(Items.STONE);
+                        entries.add(ModItems.OBSIDIAN_SWORD);
+                        entries.add(ModItems.OBSIDIAN_PICKAXE);
+                        entries.add(ModItems.OBSIDIAN_AXE);
+                        entries.add(ModItems.OBSIDIAN_SHOVEL);
+                        entries.add(ModItems.OBSIDIAN_HOE);
                     }).build());
 
     public static void registerItemGroups() {

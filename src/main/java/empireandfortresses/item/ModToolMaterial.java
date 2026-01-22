@@ -2,11 +2,16 @@ package empireandfortresses.item;
 
 import java.util.function.Supplier;
 
+import net.fabricmc.yarn.constants.MiningLevels;
+import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 
 @SuppressWarnings("java:S1144")
-public class ModToolMaterial implements ToolMaterial {
+public enum ModToolMaterial implements ToolMaterial {
+
+    OBSIDIAN(MiningLevels.IRON, 666, 6f, 6f, 6, () -> Ingredient.ofItems(Items.OBSIDIAN));
+
     private final int miningLevel;
     private final int itemDurability;
     private final float miningSpeed;

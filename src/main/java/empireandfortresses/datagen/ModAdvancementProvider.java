@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementFrame;
 import net.minecraft.advancement.criterion.InventoryChangedCriterion;
+import net.minecraft.advancement.criterion.TickCriterion;
 import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -28,8 +29,6 @@ public class ModAdvancementProvider extends FabricAdvancementProvider {
 
     @Override
     public void generateAdvancement(Consumer<Advancement> consumer) {
-
-        // TODO: Make this like a player gets advancement for just joining the game
         Advancement rootAdvancement = Advancement.Builder.createUntelemetered()
                 .display(Items.STONE,
                         Text.translatable("advancements.empires-and-fortresses.root.title"),
@@ -39,7 +38,7 @@ public class ModAdvancementProvider extends FabricAdvancementProvider {
                         true,
                         true,
                         false)
-                .criterion("got_stone", InventoryChangedCriterion.Conditions.items(Items.STONE))
+                .criterion("played", TickCriterion.Conditions.createTick())
                 .build(consumer, EmpiresAndFortresses.MOD_ID + ":root");
 
     }
