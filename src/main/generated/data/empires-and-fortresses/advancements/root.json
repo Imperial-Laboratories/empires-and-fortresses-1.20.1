@@ -1,0 +1,38 @@
+{
+  "criteria": {
+    "got_stone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:stone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "minecraft:textures/block/stone.png",
+    "description": {
+      "translate": "advancements.empires-and-fortresses.root.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:stone"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.empires-and-fortresses.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "got_stone"
+    ]
+  ],
+  "sends_telemetry_event": false
+}
