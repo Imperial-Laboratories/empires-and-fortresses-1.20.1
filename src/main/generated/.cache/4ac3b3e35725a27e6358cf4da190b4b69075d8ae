@@ -1,8 +1,8 @@
-// 1.20.1	2026-01-26T19:15:19.5586778	Empires and Fortresses/Recipes
+// 1.20.1	2026-01-26T19:33:07.4947164	Empires and Fortresses/Recipes
 390fe68f139bfd0ed676039b000aae8d8198b722 data\emp_fort\recipes\obsidian_sword.json
 5e596e16a98cc5423efe8803dbf029f413eca822 data\emp_fort\recipes\obsidian_pickaxe.json
-e5a529d4f25eaadafe392fb6337596ef829a0a56 data\emp_fort\advancements\recipes\tools\obsidian_axe.json
 a5d3567a6d37fff5f89a0882aecc4266cb4c11aa data\emp_fort\advancements\recipes\tools\obsidian_pickaxe.json
+e5a529d4f25eaadafe392fb6337596ef829a0a56 data\emp_fort\advancements\recipes\tools\obsidian_axe.json
 a1e63fdd5e5002e405ab556035b9122c8aaae880 data\emp_fort\advancements\recipes\tools\obsidian_hoe.json
 485f310d743279f71059b0232586fa47bd62198b data\emp_fort\recipes\obsidian_axe.json
 074316d46c1ba53862f468d4f19ab4f7c2f7224f data\emp_fort\recipes\obsidian_hoe.json

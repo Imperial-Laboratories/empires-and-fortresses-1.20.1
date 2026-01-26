@@ -14,7 +14,10 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
     }
 
     @Override
+    @SuppressWarnings("java:S125")
     public void configure(WrapperLookup arg) {
+        // Use this method to add items/blocks to tags
+        // getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add();
     }
 
 }

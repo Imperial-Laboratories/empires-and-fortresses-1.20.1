@@ -23,15 +23,15 @@ import net.minecraft.util.Identifier;
 public class ModItems {
 
     public static final Item OBSIDIAN_SWORD = registerItem("obsidian_sword",
-            new SwordItem(ModToolMaterial.OBSIDIAN, 6, -6f, new FabricItemSettings()));
+            new SwordItem(ModToolMaterial.OBSIDIAN, 6, -2.4f, new FabricItemSettings()));
     public static final Item OBSIDIAN_PICKAXE = registerItem("obsidian_pickaxe",
-            new PickaxeItem(ModToolMaterial.OBSIDIAN, 6, -6f, new FabricItemSettings()));
+            new PickaxeItem(ModToolMaterial.OBSIDIAN, 6, -2.8f, new FabricItemSettings()));
     public static final Item OBSIDIAN_AXE = registerItem("obsidian_axe",
-            new AxeItem(ModToolMaterial.OBSIDIAN, 6f, -6f, new FabricItemSettings()));
+            new AxeItem(ModToolMaterial.OBSIDIAN, 6f, -3f, new FabricItemSettings()));
     public static final Item OBSIDIAN_SHOVEL = registerItem("obsidian_shovel",
-            new ShovelItem(ModToolMaterial.OBSIDIAN, 6f, -6f, new FabricItemSettings()));
+            new ShovelItem(ModToolMaterial.OBSIDIAN, 6f, -2f, new FabricItemSettings()));
     public static final Item OBSIDIAN_HOE = registerItem("obsidian_hoe",
-            new HoeItem(ModToolMaterial.OBSIDIAN, -6, -6f, new FabricItemSettings()));
+            new HoeItem(ModToolMaterial.OBSIDIAN, -6, 0f, new FabricItemSettings()));
 
     // Example on how to add to a vanilla item group
     private static void addItemsToCombatItemGroup(FabricItemGroupEntries entries) {
