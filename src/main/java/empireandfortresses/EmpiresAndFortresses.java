@@ -10,7 +10,7 @@ import empireandfortresses.item.ModItemGroups;
 import empireandfortresses.item.ModItems;
 
 public class EmpiresAndFortresses implements ModInitializer {
-    public static final String MOD_ID = "empires-and-fortresses";
+    public static final String MOD_ID = "emp_fort";
 
     // This logger is used to write text to the console and the log file.
     // It is considered best practice to use your mod id as the logger's name.

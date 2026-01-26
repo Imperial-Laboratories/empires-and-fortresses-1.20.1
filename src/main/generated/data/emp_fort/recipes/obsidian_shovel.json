@@ -10,12 +10,12 @@
     }
   },
   "pattern": [
-    "MMM",
-    " S ",
-    " S "
+    "M",
+    "S",
+    "S"
   ],
   "result": {
-    "item": "empires-and-fortresses:obsidian_pickaxe"
+    "item": "emp_fort:obsidian_shovel"
   },
   "show_notification": true
 }

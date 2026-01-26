@@ -31,8 +31,8 @@ public class ModAdvancementProvider extends FabricAdvancementProvider {
     public void generateAdvancement(Consumer<Advancement> consumer) {
         Advancement rootAdvancement = Advancement.Builder.createUntelemetered()
                 .display(Items.STONE,
-                        Text.translatable("advancements.empires-and-fortresses.root.title"),
-                        Text.translatable("advancements.empires-and-fortresses.root.description"),
+                        Text.translatable("advancements." + EmpiresAndFortresses.MOD_ID + ".root.title"),
+                        Text.translatable("advancements." + EmpiresAndFortresses.MOD_ID + ".root.description"),
                         new Identifier("textures/block/stone.png"), // Background texture
                         AdvancementFrame.TASK,
                         true,

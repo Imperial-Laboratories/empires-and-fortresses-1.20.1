@@ -1,6 +1,6 @@
 {
     "schemaVersion": 1,
-    "id": "empires-and-fortresses",
+    "id": "emp_fort",
     "version": "${version}",
     "name": "Empires and Fortresses",
     "description": "This is an example description! Tell everyone what your mod is about!",
@@ -10,7 +10,7 @@
         "sources": "https://github.com/Imperial-Laboratories/empires-and-fortresses-1.20.1"
     },
     "license": "MIT",
-    "icon": "assets/empires-and-fortresses/icon.png",
+    "icon": "assets/emp_fort/icon.png",
     "environment": "*",
     "entrypoints": {
         "main": ["empireandfortresses.EmpiresAndFortresses"],
@@ -19,7 +19,7 @@
             "empireandfortresses.EmpiresAndFortressesDataGenerator"
         ]
     },
-    "mixins": ["empires-and-fortresses.mixins.json"],
+    "mixins": ["emp_fort.mixins.json"],
     "depends": {
         "fabricloader": ">=0.18.4",
         "minecraft": "~1.20.1",

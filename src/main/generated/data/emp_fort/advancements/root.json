@@ -9,7 +9,7 @@
     "announce_to_chat": true,
     "background": "minecraft:textures/block/stone.png",
     "description": {
-      "translate": "advancements.empires-and-fortresses.root.description"
+      "translate": "advancements.emp_fort.root.description"
     },
     "frame": "task",
     "hidden": false,
@@ -18,7 +18,7 @@
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.empires-and-fortresses.root.title"
+      "translate": "advancements.emp_fort.root.title"
     }
   },
   "requirements": [

@@ -11,11 +11,11 @@
   },
   "pattern": [
     "MM",
-    "S ",
+    "SM",
     "S "
   ],
   "result": {
-    "item": "empires-and-fortresses:obsidian_hoe"
+    "item": "emp_fort:obsidian_axe"
   },
   "show_notification": true
 }

@@ -1,6 +1,6 @@
-// 1.20.1	2026-01-22T21:09:47.2389981	Empires and Fortresses/Model Definitions
-1461f32b3df6defea8c5f2653830bc24bc12d8e4 assets\empires-and-fortresses\models\item\obsidian_sword.json
-1815df2e338477c98ca771f9fc87f6a186487f30 assets\empires-and-fortresses\models\item\obsidian_shovel.json
-81fcc0fabe5e099e032282effca05de092451a05 assets\empires-and-fortresses\models\item\obsidian_hoe.json
-7a5427c9d250977c247837734ce9cb09ac75054b assets\empires-and-fortresses\models\item\obsidian_axe.json
-e7054d6730a18892df1b20f1c0b6c0b0982eade2 assets\empires-and-fortresses\models\item\obsidian_pickaxe.json
+// 1.20.1	2026-01-26T19:15:19.5612193	Empires and Fortresses/Model Definitions
+ebf119c2cc70d77d92631e273ecbc96a880d1486 assets\emp_fort\models\item\obsidian_sword.json
+3cc290bbfea0598f7799204d2eb6d7de1dea4fc7 assets\emp_fort\models\item\obsidian_hoe.json
+2211c80b7ac833a87b0eaeeab7b13403ae2d8a18 assets\emp_fort\models\item\obsidian_pickaxe.json
+fd0a7d8e907fe23482cb55d2341ab0e331e29e19 assets\emp_fort\models\item\obsidian_axe.json
+c30ed15bdfa14135a3bd1286d2fcc61045455cd0 assets\emp_fort\models\item\obsidian_shovel.json

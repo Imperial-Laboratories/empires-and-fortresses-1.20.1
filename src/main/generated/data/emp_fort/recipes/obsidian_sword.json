@@ -11,11 +11,11 @@
   },
   "pattern": [
     "M",
-    "S",
+    "M",
     "S"
   ],
   "result": {
-    "item": "empires-and-fortresses:obsidian_shovel"
+    "item": "emp_fort:obsidian_sword"
   },
   "show_notification": true
 }

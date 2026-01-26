@@ -10,12 +10,12 @@
     }
   },
   "pattern": [
-    "M",
-    "M",
-    "S"
+    "MM",
+    "S ",
+    "S "
   ],
   "result": {
-    "item": "empires-and-fortresses:obsidian_sword"
+    "item": "emp_fort:obsidian_hoe"
   },
   "show_notification": true
 }

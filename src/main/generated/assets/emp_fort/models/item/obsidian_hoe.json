@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "empires-and-fortresses:item/obsidian_shovel"
+    "layer0": "emp_fort:item/obsidian_hoe"
   }
 }

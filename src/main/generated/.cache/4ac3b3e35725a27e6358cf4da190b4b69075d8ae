@@ -1,11 +1,11 @@
-// 1.20.1	2026-01-22T21:09:47.2314807	Empires and Fortresses/Recipes
-c3e7c4d5b87d2142fe66b1311edefe05c9dbbd5b data\empires-and-fortresses\recipes\obsidian_pickaxe.json
-e0fa4590b50dbbe182deb315dc1f65d2c803a9f8 data\empires-and-fortresses\recipes\obsidian_sword.json
-a5d3567a6d37fff5f89a0882aecc4266cb4c11aa data\empires-and-fortresses\advancements\recipes\tools\obsidian_pickaxe.json
-48768a8d5d1ba2a67a338770176f90b7ddb3eda7 data\empires-and-fortresses\recipes\obsidian_shovel.json
-165a5f99d277c535b18a6ae4dd10dbec9fddfa83 data\empires-and-fortresses\advancements\recipes\combat\obsidian_sword.json
-e5a529d4f25eaadafe392fb6337596ef829a0a56 data\empires-and-fortresses\advancements\recipes\tools\obsidian_axe.json
-a1e63fdd5e5002e405ab556035b9122c8aaae880 data\empires-and-fortresses\advancements\recipes\tools\obsidian_hoe.json
-bc2f0d7352a995485630f390b9dc15d41684fdb0 data\empires-and-fortresses\recipes\obsidian_axe.json
-f9902fa4787b88688f0140937b0ec7053a1226c9 data\empires-and-fortresses\recipes\obsidian_hoe.json
-63c7b95b4b80ca8d09c5f3c64ee26625763a60af data\empires-and-fortresses\advancements\recipes\tools\obsidian_shovel.json
+// 1.20.1	2026-01-26T19:15:19.5586778	Empires and Fortresses/Recipes
+390fe68f139bfd0ed676039b000aae8d8198b722 data\emp_fort\recipes\obsidian_sword.json
+5e596e16a98cc5423efe8803dbf029f413eca822 data\emp_fort\recipes\obsidian_pickaxe.json
+e5a529d4f25eaadafe392fb6337596ef829a0a56 data\emp_fort\advancements\recipes\tools\obsidian_axe.json
+a5d3567a6d37fff5f89a0882aecc4266cb4c11aa data\emp_fort\advancements\recipes\tools\obsidian_pickaxe.json
+a1e63fdd5e5002e405ab556035b9122c8aaae880 data\emp_fort\advancements\recipes\tools\obsidian_hoe.json
+485f310d743279f71059b0232586fa47bd62198b data\emp_fort\recipes\obsidian_axe.json
+074316d46c1ba53862f468d4f19ab4f7c2f7224f data\emp_fort\recipes\obsidian_hoe.json
+165a5f99d277c535b18a6ae4dd10dbec9fddfa83 data\emp_fort\advancements\recipes\combat\obsidian_sword.json
+d4b84d74983eb0f831eac019b9dfec0ca2e5ad4b data\emp_fort\recipes\obsidian_shovel.json
+63c7b95b4b80ca8d09c5f3c64ee26625763a60af data\emp_fort\advancements\recipes\tools\obsidian_shovel.json
