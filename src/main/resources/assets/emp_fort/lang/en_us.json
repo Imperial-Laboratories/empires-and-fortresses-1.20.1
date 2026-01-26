@@ -1,6 +1,12 @@
 {
     "emp_fort.item_group.main": "Empires and Fortresses",
 
+    "item.emp_fort.obsidian_sword": "Obsidian Sword",
+    "item.emp_fort.obsidian_pickaxe": "Obsidian Pickaxe",
+    "item.emp_fort.obsidian_axe": "Obsidian Axe",
+    "item.emp_fort.obsidian_shovel": "Obsidian Shovel",
+    "item.emp_fort.obsidian_hoe": "Obsidian Hoe",
+
     "advancements.emp_fort.root.title": "Empires and Fortresses",
     "advancements.emp_fort.root.description": "Welcome to Empires and Fortresses!"
 }
