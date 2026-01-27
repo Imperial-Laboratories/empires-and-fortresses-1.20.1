@@ -22,6 +22,14 @@ import net.minecraft.util.Identifier;
 @SuppressWarnings({ "unused", "java:S125" })
 public class ModItems {
 
+    public static final Item RUBY = registerItem("ruby", new Item(new FabricItemSettings()));
+    public static final Item SAPPHIRE = registerItem("sapphire", new Item(new FabricItemSettings()));
+    public static final Item TOPAZ = registerItem("topaz", new Item(new FabricItemSettings()));
+    public static final Item STEEL_INGOT = registerItem("steel_ingot", new Item(new FabricItemSettings()));
+    public static final Item PLATINUM_INGOT = registerItem("platinum_ingot", new Item(new FabricItemSettings()));
+    public static final Item MITHRIL = registerItem("mithril", new Item(new FabricItemSettings()));
+    public static final Item ADAMANT = registerItem("adamant", new Item(new FabricItemSettings()));
+
     public static final Item OBSIDIAN_SWORD = registerItem("obsidian_sword",
             new SwordItem(ModToolMaterial.OBSIDIAN, 6, -2.4f, new FabricItemSettings()));
     public static final Item OBSIDIAN_PICKAXE = registerItem("obsidian_pickaxe",
