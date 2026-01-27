@@ -9,8 +9,28 @@ import net.minecraft.recipe.Ingredient;
 
 @SuppressWarnings("java:S1144")
 public enum ModToolMaterial implements ToolMaterial {
-
-    OBSIDIAN(MiningLevels.IRON, 666, 6f, 6f, 6, () -> Ingredient.ofItems(Items.OBSIDIAN));
+    // TODO: we probably want custom mining levels later, also, enchantability
+    // TODO: values are currently placeholders.
+    // TODO: Some values also need to be tweaked
+    FLINT(MiningLevels.WOOD, 45, 2, 1, 66, () -> Ingredient.ofItems(Items.FLINT)),
+    BONE(MiningLevels.WOOD, 32, 6f, 0, 66, () -> Ingredient.ofItems(Items.BONE)),
+    COPPER(MiningLevels.STONE, 180, 5f, 1.5f, 14, () -> Ingredient.ofItems(Items.COPPER_INGOT)), // TODO: tweak values
+    GRANITE(MiningLevels.IRON, 500, 4f, 2f, 10, () -> Ingredient.ofItems(Items.GRANITE)), // TODO: tweak values
+    OBSIDIAN(MiningLevels.IRON, 666, 7, 1, 66, () -> Ingredient.ofItems(Items.OBSIDIAN)), // TODO: tweak values
+    RUBY(MiningLevels.DIAMOND, 1500, 8f, 3f, 22, () -> Ingredient.ofItems(ModItems.RUBY)), // TODO: tweak values
+    SAPPHIRE(MiningLevels.DIAMOND, 1500, 8f, 3f, 22, () -> Ingredient.ofItems(ModItems.SAPPHIRE)), // TODO: tweak values
+    EMERALD(MiningLevels.DIAMOND, 2031, 8f, 3f, 25, () -> Ingredient.ofItems(Items.EMERALD)), // TODO: tweak values
+    TOPAZ(MiningLevels.DIAMOND, 1500, 8f, 3f, 22, () -> Ingredient.ofItems(ModItems.TOPAZ)), // TODO: tweak values
+    STEEL(MiningLevels.DIAMOND, 750, 9f, 4f, 18, () -> Ingredient.ofItems(ModItems.STEEL_INGOT)), // TODO: tweak values
+    AMETHYST(MiningLevels.NETHERITE, 2031, 9f, 4f, 30, () -> Ingredient.ofItems(Items.AMETHYST_SHARD)), // TODO: tweak
+                                                                                                        // values
+    PLATINUM(MiningLevels.NETHERITE, 1200, 10f, 4f, 22, () -> Ingredient.ofItems(ModItems.PLATINUM_INGOT)), // TODO:
+                                                                                                            // tweak
+                                                                                                            // values
+    MITHRIL(MiningLevels.NETHERITE, 1800, 12f, 5f, 30, () -> Ingredient.ofItems(ModItems.MITHRIL)), // TODO: tweak
+                                                                                                    // values
+    ADAMANT(MiningLevels.NETHERITE, 2500, 14f, 6f, 35, () -> Ingredient.ofItems(ModItems.ADAMANT)); // TODO: tweak
+                                                                                                    // values
 
     private final int miningLevel;
     private final int itemDurability;
