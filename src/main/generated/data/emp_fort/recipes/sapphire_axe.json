@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "M": {
+      "item": "emp_fort:sapphire"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "MM",
+    "SM",
+    "S "
+  ],
+  "result": {
+    "item": "emp_fort:sapphire_axe"
+  },
+  "show_notification": true
+}

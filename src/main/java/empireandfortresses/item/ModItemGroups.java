@@ -85,6 +85,12 @@ public class ModItemGroups {
                         entries.add(ModItems.STEEL_SHOVEL);
                         entries.add(ModItems.STEEL_HOE);
 
+                        entries.add(ModItems.AMETHYST_SWORD);
+                        entries.add(ModItems.AMETHYST_PICKAXE);
+                        entries.add(ModItems.AMETHYST_AXE);
+                        entries.add(ModItems.AMETHYST_SHOVEL);
+                        entries.add(ModItems.AMETHYST_HOE);
+
                         entries.add(ModItems.PLATINUM_SWORD);
                         entries.add(ModItems.PLATINUM_PICKAXE);
                         entries.add(ModItems.PLATINUM_AXE);
