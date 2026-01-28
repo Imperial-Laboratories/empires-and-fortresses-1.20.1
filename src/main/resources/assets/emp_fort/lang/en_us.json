@@ -1,5 +1,6 @@
 {
     "emp_fort.item_group.main": "Empires and Fortresses",
+    "emp_fort.item_group.tools": "Empires and Fortresses - Tools",
 
     "item.emp_fort.ruby": "Ruby",
     "item.emp_fort.sapphire": "Sapphire",

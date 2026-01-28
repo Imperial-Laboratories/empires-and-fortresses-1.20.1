@@ -13,9 +13,22 @@ import net.minecraft.util.Identifier;
 @SuppressWarnings("java:S1186")
 public class ModItemGroups {
 
-    public static final ItemGroup TESTING_GROUP = Registry.register(Registries.ITEM_GROUP,
-            new Identifier(EmpiresAndFortresses.MOD_ID, "ruby"),
+    public static final ItemGroup MAIN_GROUP = Registry.register(Registries.ITEM_GROUP,
+            new Identifier(EmpiresAndFortresses.MOD_ID, "main"),
             FabricItemGroup.builder().displayName(Text.translatable(EmpiresAndFortresses.MOD_ID + ".item_group.main"))
+                    .icon(() -> new ItemStack(Items.STICK)).entries((displayContext, entries) -> {
+                        entries.add(ModItems.RUBY);
+                        entries.add(ModItems.SAPPHIRE);
+                        entries.add(ModItems.TOPAZ);
+                        entries.add(ModItems.STEEL_INGOT);
+                        entries.add(ModItems.PLATINUM_INGOT);
+                        entries.add(ModItems.MITHRIL);
+                        entries.add(ModItems.ADAMANT);
+                    }).build());
+
+    public static final ItemGroup TOOLS_GROUP = Registry.register(Registries.ITEM_GROUP,
+            new Identifier(EmpiresAndFortresses.MOD_ID, "tools"),
+            FabricItemGroup.builder().displayName(Text.translatable(EmpiresAndFortresses.MOD_ID + ".item_group.tools"))
                     .icon(() -> new ItemStack(Items.STICK)).entries((displayContext, entries) -> {
                         entries.add(ModItems.RUBY);
                         entries.add(ModItems.SAPPHIRE);
