@@ -61,11 +61,11 @@ public class ModItems {
     public static final Item COPPER_PICKAXE = registerItem("copper_pickaxe",
             new PickaxeItem(ModToolMaterial.COPPER, 1, -2.8f, new FabricItemSettings()));
     public static final Item COPPER_AXE = registerItem("copper_axe",
-            new AxeItem(ModToolMaterial.COPPER, 5f, -3f, new FabricItemSettings()));
+            new AxeItem(ModToolMaterial.COPPER, 7f, -3.2f, new FabricItemSettings()));
     public static final Item COPPER_SHOVEL = registerItem("copper_shovel",
-            new ShovelItem(ModToolMaterial.COPPER, 1.5f, -2f, new FabricItemSettings()));
+            new ShovelItem(ModToolMaterial.COPPER, 1.5f, -3f, new FabricItemSettings()));
     public static final Item COPPER_HOE = registerItem("copper_hoe",
-            new HoeItem(ModToolMaterial.COPPER, -2, 0f, new FabricItemSettings()));
+            new HoeItem(ModToolMaterial.COPPER, -1, -2f, new FabricItemSettings()));
 
     // Granite
     public static final Item GRANITE_SWORD = registerItem("granite_sword",
