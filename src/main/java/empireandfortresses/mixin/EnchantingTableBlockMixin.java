@@ -4,6 +4,7 @@ import net.minecraft.block.EnchantingTableBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,13 +20,12 @@ public class EnchantingTableBlockMixin {
     @Inject(at = @At("HEAD"), method = "onUse", cancellable = true)
     // @Local means you don't have to get all parameters in original order but you
     // can just pick the ones you need
-    private void init(CallbackInfoReturnable<ActionResult> info, @Local World world, @Local PlayerEntity player) {
+    private void init(CallbackInfoReturnable<ActionResult> info, @Local World world, @Local PlayerEntity player,
+            @Local Hand hand) {
         info.cancel();
         info.setReturnValue(ActionResult.PASS);
 
-        // This runs twice apparently? (like twice on the server??)
-        // TODO: fix that
-        if (!world.isClient) {
+        if (!world.isClient && hand == Hand.MAIN_HAND) {
             player.sendMessage(
                     Text.literal("Enchanting Tables are disabled in Empires and Fortresses."), false);
         }
