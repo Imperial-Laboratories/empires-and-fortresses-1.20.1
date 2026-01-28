@@ -14,7 +14,7 @@ public enum ModToolMaterial implements ToolMaterial {
     // TODO: Some values also need to be tweaked
     FLINT(MiningLevels.WOOD, 45, 2, 1, 66, () -> Ingredient.ofItems(Items.FLINT)),
     BONE(MiningLevels.WOOD, 32, 6f, 0, 66, () -> Ingredient.ofItems(Items.BONE)),
-    COPPER(MiningLevels.STONE, 180, 5f, 1.5f, 14, () -> Ingredient.ofItems(Items.COPPER_INGOT)), // TODO: tweak values
+    COPPER(MiningLevels.STONE, 190, 5f, 1f, 13, () -> Ingredient.ofItems(Items.COPPER_INGOT)),
     GRANITE(MiningLevels.IRON, 500, 4f, 2f, 10, () -> Ingredient.ofItems(Items.GRANITE)), // TODO: tweak values
     OBSIDIAN(MiningLevels.IRON, 666, 7, 1, 66, () -> Ingredient.ofItems(Items.OBSIDIAN)), // TODO: tweak values
     RUBY(MiningLevels.DIAMOND, 1500, 8f, 3f, 22, () -> Ingredient.ofItems(ModItems.RUBY)), // TODO: tweak values
