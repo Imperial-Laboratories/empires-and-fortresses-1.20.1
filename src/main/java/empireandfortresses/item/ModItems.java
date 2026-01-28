@@ -296,6 +296,32 @@ public class ModItems {
         entries.add(PLATINUM_AXE);
         entries.add(MITHRIL_AXE);
         entries.add(ADAMANT_AXE);
+
+        // Armors
+        entries.add(COPPER_HELMET);
+        entries.add(COPPER_CHESTPLATE);
+        entries.add(COPPER_LEGGINGS);
+        entries.add(COPPER_BOOTS);
+        entries.add(OBSIDIAN_HELMET);
+        entries.add(OBSIDIAN_CHESTPLATE);
+        entries.add(OBSIDIAN_LEGGINGS);
+        entries.add(OBSIDIAN_BOOTS);
+        entries.add(STEEL_HELMET);
+        entries.add(STEEL_CHESTPLATE);
+        entries.add(STEEL_LEGGINGS);
+        entries.add(STEEL_BOOTS);
+        entries.add(AMETHYST_HELMET);
+        entries.add(AMETHYST_CHESTPLATE);
+        entries.add(AMETHYST_LEGGINGS);
+        entries.add(AMETHYST_BOOTS);
+        entries.add(PLATINUM_HELMET);
+        entries.add(PLATINUM_CHESTPLATE);
+        entries.add(PLATINUM_LEGGINGS);
+        entries.add(PLATINUM_BOOTS);
+        entries.add(MITHRIL_HELMET);
+        entries.add(MITHRIL_CHESTPLATE);
+        entries.add(MITHRIL_LEGGINGS);
+        entries.add(MITHRIL_BOOTS);
     }
 
     private static void addItemsToToolsItemGroup(FabricItemGroupEntries entries) {
