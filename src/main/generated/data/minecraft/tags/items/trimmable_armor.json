@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    "emp_fort:copper_helmet",
+    "emp_fort:copper_chestplate",
+    "emp_fort:copper_leggings",
+    "emp_fort:copper_boots",
+    "emp_fort:obsidian_helmet",
+    "emp_fort:obsidian_chestplate",
+    "emp_fort:obsidian_leggings",
+    "emp_fort:obsidian_boots",
+    "emp_fort:steel_helmet",
+    "emp_fort:steel_chestplate",
+    "emp_fort:steel_leggings",
+    "emp_fort:steel_boots",
+    "emp_fort:amethyst_helmet",
+    "emp_fort:amethyst_chestplate",
+    "emp_fort:amethyst_leggings",
+    "emp_fort:amethyst_boots",
+    "emp_fort:platinum_helmet",
+    "emp_fort:platinum_chestplate",
+    "emp_fort:platinum_leggings",
+    "emp_fort:platinum_boots",
+    "emp_fort:mithril_helmet",
+    "emp_fort:mithril_chestplate",
+    "emp_fort:mithril_leggings",
+    "emp_fort:mithril_boots",
+    "emp_fort:adamant_helmet",
+    "emp_fort:adamant_chestplate",
+    "emp_fort:adamant_leggings",
+    "emp_fort:adamant_boots"
+  ]
+}

@@ -1,8 +1,8 @@
-// 1.20.1	2026-01-27T20:42:23.1762506	Empires and Fortresses/Recipes
+// 1.20.1	2026-01-28T20:37:33.3013739	Empires and Fortresses/Recipes
 9a6d710c5cae064a64e5f331f4a5cc1124165233 data\emp_fort\advancements\recipes\combat\emerald_sword.json
 485f310d743279f71059b0232586fa47bd62198b data\emp_fort\recipes\obsidian_axe.json
-d6ca3140918d005c8938126f832814b10e0d751e data\emp_fort\advancements\recipes\tools\sapphire_shovel.json
 ed285ff5d01554d161386ce034a28208c3fe6302 data\emp_fort\advancements\recipes\tools\sapphire_pickaxe.json
+d6ca3140918d005c8938126f832814b10e0d751e data\emp_fort\advancements\recipes\tools\sapphire_shovel.json
 60eb6208fe1fd3614739c83b490ed1b2d85c693a data\emp_fort\recipes\bone_pickaxe.json
 165a5f99d277c535b18a6ae4dd10dbec9fddfa83 data\emp_fort\advancements\recipes\combat\obsidian_sword.json
 f537fed9c461e1b5f6e8780bc3f6593be4f69240 data\emp_fort\recipes\sapphire_hoe.json
@@ -14,8 +14,8 @@ a5d22a53b223476a8605727f9c5e3072e4c4fc33 data\emp_fort\advancements\recipes\tool
 ea83092ed9096f4db60f7e248220bc126bebca74 data\emp_fort\recipes\emerald_axe.json
 97a8ae53a8c246492acda7e7baff329d7d18c92a data\emp_fort\advancements\recipes\combat\bone_sword.json
 dbd8cbd46a70e8d8e1c27cc9dc5110fb98bb0377 data\emp_fort\advancements\recipes\tools\mithril_shovel.json
-32e3f91dc0f9b160d331de4542bfef711570cc47 data\emp_fort\recipes\copper_axe.json
 469f0abe6817251a40ff564a4005b961d410deeb data\emp_fort\recipes\granite_shovel.json
+32e3f91dc0f9b160d331de4542bfef711570cc47 data\emp_fort\recipes\copper_axe.json
 f88c6e6a60592f0251830ddcd01ab2ecf1fba64f data\emp_fort\advancements\recipes\tools\emerald_axe.json
 3a49e856f4b36d85b7e0411cc6d955a29ee75946 data\emp_fort\advancements\recipes\tools\emerald_shovel.json
 ea2add1b5316f1861349a0a6450081d5cbcbdc93 data\emp_fort\advancements\recipes\tools\amethyst_hoe.json

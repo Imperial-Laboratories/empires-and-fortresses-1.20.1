@@ -16,7 +16,7 @@ public class ModItemGroups {
     public static final ItemGroup MAIN_GROUP = Registry.register(Registries.ITEM_GROUP,
             new Identifier(EmpiresAndFortresses.MOD_ID, "main"),
             FabricItemGroup.builder().displayName(Text.translatable(EmpiresAndFortresses.MOD_ID + ".item_group.main"))
-                    .icon(() -> new ItemStack(Items.STICK)).entries((displayContext, entries) -> {
+                    .icon(() -> new ItemStack(ModItems.RUBY)).entries((displayContext, entries) -> {
                         entries.add(ModItems.RUBY);
                         entries.add(ModItems.SAPPHIRE);
                         entries.add(ModItems.TOPAZ);
@@ -29,15 +29,7 @@ public class ModItemGroups {
     public static final ItemGroup TOOLS_GROUP = Registry.register(Registries.ITEM_GROUP,
             new Identifier(EmpiresAndFortresses.MOD_ID, "tools"),
             FabricItemGroup.builder().displayName(Text.translatable(EmpiresAndFortresses.MOD_ID + ".item_group.tools"))
-                    .icon(() -> new ItemStack(Items.STICK)).entries((displayContext, entries) -> {
-                        entries.add(ModItems.RUBY);
-                        entries.add(ModItems.SAPPHIRE);
-                        entries.add(ModItems.TOPAZ);
-                        entries.add(ModItems.STEEL_INGOT);
-                        entries.add(ModItems.PLATINUM_INGOT);
-                        entries.add(ModItems.MITHRIL);
-                        entries.add(ModItems.ADAMANT);
-
+                    .icon(() -> new ItemStack(ModItems.COPPER_SWORD)).entries((displayContext, entries) -> {
                         entries.add(ModItems.FLINT_SWORD);
                         entries.add(ModItems.FLINT_PICKAXE);
                         entries.add(ModItems.FLINT_AXE);
@@ -121,6 +113,46 @@ public class ModItemGroups {
                         entries.add(ModItems.ADAMANT_AXE);
                         entries.add(ModItems.ADAMANT_SHOVEL);
                         entries.add(ModItems.ADAMANT_HOE);
+                    }).build());
+
+    public static final ItemGroup ARMOR_GROUP = Registry.register(Registries.ITEM_GROUP,
+            new Identifier(EmpiresAndFortresses.MOD_ID, "armor"),
+            FabricItemGroup.builder().displayName(Text.translatable(EmpiresAndFortresses.MOD_ID + ".item_group.armor"))
+                    .icon(() -> new ItemStack(ModItems.OBSIDIAN_CHESTPLATE)).entries((displayContext, entries) -> {
+                        entries.add(ModItems.COPPER_HELMET);
+                        entries.add(ModItems.COPPER_CHESTPLATE);
+                        entries.add(ModItems.COPPER_LEGGINGS);
+                        entries.add(ModItems.COPPER_BOOTS);
+
+                        entries.add(ModItems.OBSIDIAN_HELMET);
+                        entries.add(ModItems.OBSIDIAN_CHESTPLATE);
+                        entries.add(ModItems.OBSIDIAN_LEGGINGS);
+                        entries.add(ModItems.OBSIDIAN_BOOTS);
+
+                        entries.add(ModItems.STEEL_HELMET);
+                        entries.add(ModItems.STEEL_CHESTPLATE);
+                        entries.add(ModItems.STEEL_LEGGINGS);
+                        entries.add(ModItems.STEEL_BOOTS);
+
+                        entries.add(ModItems.AMETHYST_HELMET);
+                        entries.add(ModItems.AMETHYST_CHESTPLATE);
+                        entries.add(ModItems.AMETHYST_LEGGINGS);
+                        entries.add(ModItems.AMETHYST_BOOTS);
+
+                        entries.add(ModItems.PLATINUM_HELMET);
+                        entries.add(ModItems.PLATINUM_CHESTPLATE);
+                        entries.add(ModItems.PLATINUM_LEGGINGS);
+                        entries.add(ModItems.PLATINUM_BOOTS);
+
+                        entries.add(ModItems.MITHRIL_HELMET);
+                        entries.add(ModItems.MITHRIL_CHESTPLATE);
+                        entries.add(ModItems.MITHRIL_LEGGINGS);
+                        entries.add(ModItems.MITHRIL_BOOTS);
+
+                        entries.add(ModItems.ADAMANT_HELMET);
+                        entries.add(ModItems.ADAMANT_CHESTPLATE);
+                        entries.add(ModItems.ADAMANT_LEGGINGS);
+                        entries.add(ModItems.ADAMANT_BOOTS);
                     }).build());
 
     public static void registerItemGroups() {

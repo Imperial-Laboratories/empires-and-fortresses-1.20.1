@@ -6,6 +6,7 @@ import empireandfortresses.EmpiresAndFortresses;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.Item;
@@ -67,6 +68,15 @@ public class ModItems {
     public static final Item COPPER_HOE = registerItem("copper_hoe",
             new HoeItem(ModToolMaterial.COPPER, -1, -2f, new FabricItemSettings()));
 
+    public static final Item COPPER_HELMET = registerItem("copper_helmet",
+            new ArmorItem(ModArmorMaterial.COPPER, ArmorItem.Type.HELMET, new FabricItemSettings()));
+    public static final Item COPPER_CHESTPLATE = registerItem("copper_chestplate",
+            new ArmorItem(ModArmorMaterial.COPPER, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
+    public static final Item COPPER_LEGGINGS = registerItem("copper_leggings",
+            new ArmorItem(ModArmorMaterial.COPPER, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
+    public static final Item COPPER_BOOTS = registerItem("copper_boots",
+            new ArmorItem(ModArmorMaterial.COPPER, ArmorItem.Type.BOOTS, new FabricItemSettings()));
+
     // Granite
     public static final Item GRANITE_SWORD = registerItem("granite_sword",
             new SwordItem(ModToolMaterial.GRANITE, 4, -2.4f, new FabricItemSettings()));
@@ -90,6 +100,15 @@ public class ModItems {
             new ShovelItem(ModToolMaterial.OBSIDIAN, 6f, -2f, new FabricItemSettings()));
     public static final Item OBSIDIAN_HOE = registerItem("obsidian_hoe",
             new HoeItem(ModToolMaterial.OBSIDIAN, -6, 0f, new FabricItemSettings()));
+
+    public static final Item OBSIDIAN_HELMET = registerItem("obsidian_helmet",
+            new ArmorItem(ModArmorMaterial.OBSIDIAN, ArmorItem.Type.HELMET, new FabricItemSettings()));
+    public static final Item OBSIDIAN_CHESTPLATE = registerItem("obsidian_chestplate",
+            new ArmorItem(ModArmorMaterial.OBSIDIAN, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
+    public static final Item OBSIDIAN_LEGGINGS = registerItem("obsidian_leggings",
+            new ArmorItem(ModArmorMaterial.OBSIDIAN, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
+    public static final Item OBSIDIAN_BOOTS = registerItem("obsidian_boots",
+            new ArmorItem(ModArmorMaterial.OBSIDIAN, ArmorItem.Type.BOOTS, new FabricItemSettings()));
 
     // Ruby
     public static final Item RUBY_SWORD = registerItem("ruby_sword",
@@ -151,6 +170,15 @@ public class ModItems {
     public static final Item STEEL_HOE = registerItem("steel_hoe",
             new HoeItem(ModToolMaterial.STEEL, -5, 0f, new FabricItemSettings()));
 
+    public static final Item STEEL_HELMET = registerItem("steel_helmet",
+            new ArmorItem(ModArmorMaterial.STEEL, ArmorItem.Type.HELMET, new FabricItemSettings()));
+    public static final Item STEEL_CHESTPLATE = registerItem("steel_chestplate",
+            new ArmorItem(ModArmorMaterial.STEEL, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
+    public static final Item STEEL_LEGGINGS = registerItem("steel_leggings",
+            new ArmorItem(ModArmorMaterial.STEEL, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
+    public static final Item STEEL_BOOTS = registerItem("steel_boots",
+            new ArmorItem(ModArmorMaterial.STEEL, ArmorItem.Type.BOOTS, new FabricItemSettings()));
+
     // Amethyst
     public static final Item AMETHYST_SWORD = registerItem("amethyst_sword",
             new SwordItem(ModToolMaterial.AMETHYST, 7, -2.4f, new FabricItemSettings()));
@@ -162,6 +190,15 @@ public class ModItems {
             new ShovelItem(ModToolMaterial.AMETHYST, 7f, -2f, new FabricItemSettings()));
     public static final Item AMETHYST_HOE = registerItem("amethyst_hoe",
             new HoeItem(ModToolMaterial.AMETHYST, -7, 0f, new FabricItemSettings()));
+
+    public static final Item AMETHYST_HELMET = registerItem("amethyst_helmet",
+            new ArmorItem(ModArmorMaterial.AMETHYST, ArmorItem.Type.HELMET, new FabricItemSettings()));
+    public static final Item AMETHYST_CHESTPLATE = registerItem("amethyst_chestplate",
+            new ArmorItem(ModArmorMaterial.AMETHYST, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
+    public static final Item AMETHYST_LEGGINGS = registerItem("amethyst_leggings",
+            new ArmorItem(ModArmorMaterial.AMETHYST, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
+    public static final Item AMETHYST_BOOTS = registerItem("amethyst_boots",
+            new ArmorItem(ModArmorMaterial.AMETHYST, ArmorItem.Type.BOOTS, new FabricItemSettings()));
 
     // Platinum
     public static final Item PLATINUM_SWORD = registerItem("platinum_sword",
@@ -175,6 +212,15 @@ public class ModItems {
     public static final Item PLATINUM_HOE = registerItem("platinum_hoe",
             new HoeItem(ModToolMaterial.PLATINUM, -6, 0f, new FabricItemSettings()));
 
+    public static final Item PLATINUM_HELMET = registerItem("platinum_helmet",
+            new ArmorItem(ModArmorMaterial.PLATINUM, ArmorItem.Type.HELMET, new FabricItemSettings()));
+    public static final Item PLATINUM_CHESTPLATE = registerItem("platinum_chestplate",
+            new ArmorItem(ModArmorMaterial.PLATINUM, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
+    public static final Item PLATINUM_LEGGINGS = registerItem("platinum_leggings",
+            new ArmorItem(ModArmorMaterial.PLATINUM, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
+    public static final Item PLATINUM_BOOTS = registerItem("platinum_boots",
+            new ArmorItem(ModArmorMaterial.PLATINUM, ArmorItem.Type.BOOTS, new FabricItemSettings()));
+
     // Mithril
     public static final Item MITHRIL_SWORD = registerItem("mithril_sword",
             new SwordItem(ModToolMaterial.MITHRIL, 8, -2.4f, new FabricItemSettings()));
@@ -187,6 +233,15 @@ public class ModItems {
     public static final Item MITHRIL_HOE = registerItem("mithril_hoe",
             new HoeItem(ModToolMaterial.MITHRIL, -8, 0f, new FabricItemSettings()));
 
+    public static final Item MITHRIL_HELMET = registerItem("mithril_helmet",
+            new ArmorItem(ModArmorMaterial.MITHRIL, ArmorItem.Type.HELMET, new FabricItemSettings()));
+    public static final Item MITHRIL_CHESTPLATE = registerItem("mithril_chestplate",
+            new ArmorItem(ModArmorMaterial.MITHRIL, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
+    public static final Item MITHRIL_LEGGINGS = registerItem("mithril_leggings",
+            new ArmorItem(ModArmorMaterial.MITHRIL, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
+    public static final Item MITHRIL_BOOTS = registerItem("mithril_boots",
+            new ArmorItem(ModArmorMaterial.MITHRIL, ArmorItem.Type.BOOTS, new FabricItemSettings()));
+
     // Adamant
     public static final Item ADAMANT_SWORD = registerItem("adamant_sword",
             new SwordItem(ModToolMaterial.ADAMANT, 9, -2.4f, new FabricItemSettings()));
@@ -198,6 +253,15 @@ public class ModItems {
             new ShovelItem(ModToolMaterial.ADAMANT, 9f, -2f, new FabricItemSettings()));
     public static final Item ADAMANT_HOE = registerItem("adamant_hoe",
             new HoeItem(ModToolMaterial.ADAMANT, -9, 0f, new FabricItemSettings()));
+
+    public static final Item ADAMANT_HELMET = registerItem("adamant_helmet",
+            new ArmorItem(ModArmorMaterial.ADAMANT, ArmorItem.Type.HELMET, new FabricItemSettings()));
+    public static final Item ADAMANT_CHESTPLATE = registerItem("adamant_chestplate",
+            new ArmorItem(ModArmorMaterial.ADAMANT, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
+    public static final Item ADAMANT_LEGGINGS = registerItem("adamant_leggings",
+            new ArmorItem(ModArmorMaterial.ADAMANT, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
+    public static final Item ADAMANT_BOOTS = registerItem("adamant_boots",
+            new ArmorItem(ModArmorMaterial.ADAMANT, ArmorItem.Type.BOOTS, new FabricItemSettings()));
 
     // Example on how to add to a vanilla item group
     private static void addItemsToCombatItemGroup(FabricItemGroupEntries entries) {
