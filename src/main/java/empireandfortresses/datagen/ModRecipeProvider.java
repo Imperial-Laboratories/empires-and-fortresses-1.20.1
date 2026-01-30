@@ -32,6 +32,8 @@ public class ModRecipeProvider extends FabricRecipeProvider {
         // Copper Tool Recipes
         offerAllToolRecipes(exporter, ModItems.COPPER_SWORD, ModItems.COPPER_PICKAXE, ModItems.COPPER_AXE,
                 ModItems.COPPER_SHOVEL, ModItems.COPPER_HOE, Items.COPPER_INGOT, Items.STICK);
+        offerAllArmorRecipes(exporter, ModItems.COPPER_HELMET, ModItems.COPPER_CHESTPLATE, ModItems.COPPER_LEGGINGS,
+                ModItems.COPPER_BOOTS, Items.COPPER_INGOT);
 
         // Granite Tool Recipes
         offerAllToolRecipes(exporter, ModItems.GRANITE_SWORD, ModItems.GRANITE_PICKAXE, ModItems.GRANITE_AXE,
@@ -40,6 +42,8 @@ public class ModRecipeProvider extends FabricRecipeProvider {
         // Obsidian Tool Recipes
         offerAllToolRecipes(exporter, ModItems.OBSIDIAN_SWORD, ModItems.OBSIDIAN_PICKAXE, ModItems.OBSIDIAN_AXE,
                 ModItems.OBSIDIAN_SHOVEL, ModItems.OBSIDIAN_HOE, Items.OBSIDIAN, Items.STICK);
+        offerAllArmorRecipes(exporter, ModItems.OBSIDIAN_HELMET, ModItems.OBSIDIAN_CHESTPLATE,
+                ModItems.OBSIDIAN_LEGGINGS, ModItems.OBSIDIAN_BOOTS, Items.OBSIDIAN);
 
         // Ruby Tool Recipes
         offerAllToolRecipes(exporter, ModItems.RUBY_SWORD, ModItems.RUBY_PICKAXE, ModItems.RUBY_AXE,
@@ -60,22 +64,33 @@ public class ModRecipeProvider extends FabricRecipeProvider {
         // Steel Tool Recipes
         offerAllToolRecipes(exporter, ModItems.STEEL_SWORD, ModItems.STEEL_PICKAXE, ModItems.STEEL_AXE,
                 ModItems.STEEL_SHOVEL, ModItems.STEEL_HOE, ModItems.STEEL_INGOT, Items.STICK);
+        offerAllArmorRecipes(exporter, ModItems.STEEL_HELMET, ModItems.STEEL_CHESTPLATE, ModItems.STEEL_LEGGINGS,
+                ModItems.STEEL_BOOTS, ModItems.STEEL_INGOT);
 
         // Amethyst Tool Recipes
         offerAllToolRecipes(exporter, ModItems.AMETHYST_SWORD, ModItems.AMETHYST_PICKAXE, ModItems.AMETHYST_AXE,
                 ModItems.AMETHYST_SHOVEL, ModItems.AMETHYST_HOE, Items.AMETHYST_SHARD, Items.STICK);
+        offerAllArmorRecipes(exporter, ModItems.AMETHYST_HELMET, ModItems.AMETHYST_CHESTPLATE,
+                ModItems.AMETHYST_LEGGINGS,
+                ModItems.AMETHYST_BOOTS, Items.AMETHYST_SHARD);
 
         // Platinum Tool Recipes
         offerAllToolRecipes(exporter, ModItems.PLATINUM_SWORD, ModItems.PLATINUM_PICKAXE, ModItems.PLATINUM_AXE,
                 ModItems.PLATINUM_SHOVEL, ModItems.PLATINUM_HOE, ModItems.PLATINUM_INGOT, Items.STICK);
+        offerAllArmorRecipes(exporter, ModItems.PLATINUM_HELMET, ModItems.PLATINUM_CHESTPLATE,
+                ModItems.PLATINUM_LEGGINGS, ModItems.PLATINUM_BOOTS, ModItems.PLATINUM_INGOT);
 
         // Mithril Tool Recipes
         offerAllToolRecipes(exporter, ModItems.MITHRIL_SWORD, ModItems.MITHRIL_PICKAXE, ModItems.MITHRIL_AXE,
                 ModItems.MITHRIL_SHOVEL, ModItems.MITHRIL_HOE, ModItems.MITHRIL, Items.STICK);
+        offerAllArmorRecipes(exporter, ModItems.MITHRIL_HELMET, ModItems.MITHRIL_CHESTPLATE,
+                ModItems.MITHRIL_LEGGINGS, ModItems.MITHRIL_BOOTS, ModItems.MITHRIL);
 
         // Adamant Tool Recipes
         offerAllToolRecipes(exporter, ModItems.ADAMANT_SWORD, ModItems.ADAMANT_PICKAXE, ModItems.ADAMANT_AXE,
                 ModItems.ADAMANT_SHOVEL, ModItems.ADAMANT_HOE, ModItems.ADAMANT, Items.STICK);
+        offerAllArmorRecipes(exporter, ModItems.ADAMANT_HELMET, ModItems.ADAMANT_CHESTPLATE,
+                ModItems.ADAMANT_LEGGINGS, ModItems.ADAMANT_BOOTS, ModItems.ADAMANT);
 
     }
 
@@ -88,6 +103,16 @@ public class ModRecipeProvider extends FabricRecipeProvider {
         offerAxeRecipes(exporter, RecipeCategory.TOOLS, axeOutput, material, stick);
         offerShovelRecipes(exporter, RecipeCategory.TOOLS, shovelOutput, material, stick);
         offerHoeRecipes(exporter, RecipeCategory.TOOLS, hoeOutput, material, stick);
+    }
+
+    public static void offerAllArmorRecipes(Consumer<RecipeJsonProvider> exporter,
+            ItemConvertible helmetOutput, ItemConvertible chestplateOutput,
+            ItemConvertible leggingsOutput, ItemConvertible bootsOutput,
+            ItemConvertible material) {
+        offerHelmetRecipes(exporter, RecipeCategory.COMBAT, helmetOutput, material);
+        offerChestplateRecipes(exporter, RecipeCategory.COMBAT, chestplateOutput, material);
+        offerLeggingsRecipes(exporter, RecipeCategory.COMBAT, leggingsOutput, material);
+        offerBootsRecipes(exporter, RecipeCategory.COMBAT, bootsOutput, material);
     }
 
     public static void offerSwordRecipes(Consumer<RecipeJsonProvider> exporter, RecipeCategory category,

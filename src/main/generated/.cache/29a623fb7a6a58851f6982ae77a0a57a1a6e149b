@@ -1,4 +1,4 @@
-// 1.20.1	2026-01-30T16:48:18.4687572	Empires and Fortresses/Model Definitions
+// 1.20.1	2026-01-30T16:52:19.1687527	Empires and Fortresses/Model Definitions
 44b1a9c5d0c1e57e8d8d3a5b3f6fed7e1ccaadad assets\emp_fort\models\item\obsidian_boots_emerald_trim.json
 8cefda6f258e961bc6738c3b5b5134575d4daa58 assets\emp_fort\models\item\obsidian_chestplate_lapis_trim.json
 3d8572feab0293cc7623874576a702d807821fde assets\emp_fort\models\item\obsidian_leggings.json
@@ -209,8 +209,8 @@ aac85410a37800e8dc9da4c0fca986e0de9fe027 assets\emp_fort\models\item\amethyst_he
 7ad074482b5997076716cd3e976b570b9d6732b6 assets\emp_fort\models\item\amethyst_leggings_lapis_trim.json
 271152ed5bb5e6f1a4de8f371bd3ea744551ca42 assets\emp_fort\models\item\obsidian_helmet_quartz_trim.json
 2d6bae0e05758066183d2c12f2603ce9c558d785 assets\emp_fort\models\item\copper_leggings_gold_trim.json
-1b89b7f1350030077bfee6a17d6f59a752dfeb17 assets\emp_fort\models\item\platinum_helmet_emerald_trim.json
 830144a5fcc41acd9804295258c3a446eec3ad72 assets\emp_fort\models\item\platinum_boots_gold_trim.json
+1b89b7f1350030077bfee6a17d6f59a752dfeb17 assets\emp_fort\models\item\platinum_helmet_emerald_trim.json
 e931ab4f7e2587d802824276e33b59d93a8f86f2 assets\emp_fort\models\item\steel_pickaxe.json
 ca7ceceea34ae206d0d6443f4578f648198f45ec assets\emp_fort\models\item\copper_leggings_diamond_trim.json
 7da166eb6e2228306161afdeb8abe0b82ce6aedc assets\emp_fort\models\item\mithril_boots_redstone_trim.json
