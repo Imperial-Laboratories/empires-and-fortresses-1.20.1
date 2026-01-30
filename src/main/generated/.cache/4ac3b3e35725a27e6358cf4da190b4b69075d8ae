@@ -1,4 +1,4 @@
-// 1.20.1	2026-01-28T20:37:33.3013739	Empires and Fortresses/Recipes
+// 1.20.1	2026-01-30T16:48:18.4547705	Empires and Fortresses/Recipes
 9a6d710c5cae064a64e5f331f4a5cc1124165233 data\emp_fort\advancements\recipes\combat\emerald_sword.json
 485f310d743279f71059b0232586fa47bd62198b data\emp_fort\recipes\obsidian_axe.json
 ed285ff5d01554d161386ce034a28208c3fe6302 data\emp_fort\advancements\recipes\tools\sapphire_pickaxe.json
@@ -14,8 +14,8 @@ a5d22a53b223476a8605727f9c5e3072e4c4fc33 data\emp_fort\advancements\recipes\tool
 ea83092ed9096f4db60f7e248220bc126bebca74 data\emp_fort\recipes\emerald_axe.json
 97a8ae53a8c246492acda7e7baff329d7d18c92a data\emp_fort\advancements\recipes\combat\bone_sword.json
 dbd8cbd46a70e8d8e1c27cc9dc5110fb98bb0377 data\emp_fort\advancements\recipes\tools\mithril_shovel.json
-469f0abe6817251a40ff564a4005b961d410deeb data\emp_fort\recipes\granite_shovel.json
 32e3f91dc0f9b160d331de4542bfef711570cc47 data\emp_fort\recipes\copper_axe.json
+469f0abe6817251a40ff564a4005b961d410deeb data\emp_fort\recipes\granite_shovel.json
 f88c6e6a60592f0251830ddcd01ab2ecf1fba64f data\emp_fort\advancements\recipes\tools\emerald_axe.json
 3a49e856f4b36d85b7e0411cc6d955a29ee75946 data\emp_fort\advancements\recipes\tools\emerald_shovel.json
 ea2add1b5316f1861349a0a6450081d5cbcbdc93 data\emp_fort\advancements\recipes\tools\amethyst_hoe.json
@@ -53,15 +53,15 @@ d737aa19cc284c8d4021896f4e5502fe59299f56 data\emp_fort\recipes\sapphire_sword.js
 73d0da0b6fb75f9847909f342ff44f3d5f4394bb data\emp_fort\recipes\ruby_hoe.json
 de6672fc309be5aa55fe6493d9b1a66620c2aa9a data\emp_fort\recipes\sapphire_shovel.json
 00d8864c33461328844c3008cdaee377545fb3c3 data\emp_fort\advancements\recipes\tools\platinum_shovel.json
-9ccc9e98efdd2ebe9b5ae0628362ee7f73efb3df data\emp_fort\recipes\granite_axe.json
 8a3a0548565ab933e50bf76b67309fdbd47d47ec data\emp_fort\recipes\bone_sword.json
+9ccc9e98efdd2ebe9b5ae0628362ee7f73efb3df data\emp_fort\recipes\granite_axe.json
 6093b73d104b6155e29281fc7b6f5e945448a4c2 data\emp_fort\recipes\adamant_shovel.json
 d64e10ba980ddc9f0890e6c83354f4dfd644915a data\emp_fort\advancements\recipes\combat\flint_sword.json
 42be9961e257258da18363ef9416a25b42e64b8d data\emp_fort\recipes\flint_hoe.json
 09f7abd637fa64ad60d3b439f0b6c4759b1e08ab data\emp_fort\recipes\adamant_pickaxe.json
 613a7267f46faccac11834fe14267ef50bda539b data\emp_fort\advancements\recipes\combat\adamant_sword.json
-265e472743ced69bdaf091c4741db643b5a244e7 data\emp_fort\advancements\recipes\tools\mithril_axe.json
 f5123dc425b22f82d9520ede04430ffbdee7a8fa data\emp_fort\advancements\recipes\tools\mithril_hoe.json
+265e472743ced69bdaf091c4741db643b5a244e7 data\emp_fort\advancements\recipes\tools\mithril_axe.json
 6381c80db4ce21b6bf2aebc81ff00091b2fca251 data\emp_fort\recipes\ruby_pickaxe.json
 21a44f1f56b4d87e87f8ae9115996783e1763a10 data\emp_fort\advancements\recipes\combat\platinum_sword.json
 ce456270bbb4feb1ec44411aca3a431d2decd224 data\emp_fort\recipes\amethyst_hoe.json
@@ -99,8 +99,8 @@ ca9eb6e56bfaf4558b9155b6639bfc6711b2cc3c data\emp_fort\advancements\recipes\tool
 4ee407f1b945f14738b5f13c63bc414d77b7d4b6 data\emp_fort\advancements\recipes\tools\platinum_pickaxe.json
 186a8b06d19163e12d5547b3f12857e377283e3c data\emp_fort\recipes\steel_hoe.json
 3258e7c70676ee4e4be3b9b338ff17d60b5e7be6 data\emp_fort\advancements\recipes\tools\bone_hoe.json
-ff57b8ded96f9a8eb38b32afeb1c5427b9d2e54d data\emp_fort\recipes\amethyst_pickaxe.json
 a0a09b58bd07f3added7ef399e8c908a3b896aa3 data\emp_fort\advancements\recipes\tools\amethyst_pickaxe.json
+ff57b8ded96f9a8eb38b32afeb1c5427b9d2e54d data\emp_fort\recipes\amethyst_pickaxe.json
 074316d46c1ba53862f468d4f19ab4f7c2f7224f data\emp_fort\recipes\obsidian_hoe.json
 8e01f1228b131418c6b05d6e310d13218c2fe99f data\emp_fort\advancements\recipes\tools\bone_pickaxe.json
 e1bb64fc66999a857e48e7d655b9cf01dd7136b7 data\emp_fort\recipes\sapphire_axe.json
@@ -122,8 +122,8 @@ c7092b5c13113376421c0273a1b432b947000ab5 data\emp_fort\advancements\recipes\comb
 e108a7d92960ab047fa6b5e7da365e70af3d49e2 data\emp_fort\recipes\flint_pickaxe.json
 9a52c3a3c3fa03c8ad6f00bb75a6b514b20c6862 data\emp_fort\recipes\topaz_pickaxe.json
 938768236184206e2ef9c1a15664c5792d20ec87 data\emp_fort\recipes\granite_sword.json
-570ce0659018fdb80a3dca7033c054b9338a897d data\emp_fort\recipes\topaz_axe.json
 a3374b9cf7f66818280381adbfba75f436bf2eb2 data\emp_fort\recipes\topaz_hoe.json
+570ce0659018fdb80a3dca7033c054b9338a897d data\emp_fort\recipes\topaz_axe.json
 abc9f0c5bd4926ccdc8e3ad77331ce1c61b4bba5 data\emp_fort\advancements\recipes\tools\adamant_axe.json
 7c9f79739fe7211958f258680a7fbf70c10aad5d data\emp_fort\recipes\flint_sword.json
 b580c7e4a7c6f1afe7bc2b20132812d7a82f6165 data\emp_fort\recipes\sapphire_pickaxe.json
