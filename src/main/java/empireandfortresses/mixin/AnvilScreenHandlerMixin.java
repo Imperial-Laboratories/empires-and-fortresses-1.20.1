@@ -24,9 +24,6 @@ public class AnvilScreenHandlerMixin {
      * 
      * Next, the method name and it's params. (I for int).
      * Finally, we add the return type, which is void (V).
-     * 
-     * Other types: I = int, Z = boolean, F = float, D = double, V = void and
-     * classes same as above.
      */
     @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/Property;set(I)V"), method = "updateResult")
     private void init(Property property, int cost) {
