@@ -255,13 +255,13 @@ public class ModItems {
             new HoeItem(ModToolMaterial.ADAMANT_CHUNK, -9, 0f, new FabricItemSettings()));
 
     public static final Item ADAMANT_HELMET = registerItem("adamant_helmet",
-            new ArmorItem(ModArmorMaterial.ADAMANT_CHUNK, ArmorItem.Type.HELMET, new FabricItemSettings()));
+            new ArmorItem(ModArmorMaterial.ADAMANT, ArmorItem.Type.HELMET, new FabricItemSettings()));
     public static final Item ADAMANT_CHESTPLATE = registerItem("adamant_chestplate",
-            new ArmorItem(ModArmorMaterial.ADAMANT_CHUNK, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
+            new ArmorItem(ModArmorMaterial.ADAMANT, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
     public static final Item ADAMANT_LEGGINGS = registerItem("adamant_leggings",
-            new ArmorItem(ModArmorMaterial.ADAMANT_CHUNK, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
+            new ArmorItem(ModArmorMaterial.ADAMANT, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
     public static final Item ADAMANT_BOOTS = registerItem("adamant_boots",
-            new ArmorItem(ModArmorMaterial.ADAMANT_CHUNK, ArmorItem.Type.BOOTS, new FabricItemSettings()));
+            new ArmorItem(ModArmorMaterial.ADAMANT, ArmorItem.Type.BOOTS, new FabricItemSettings()));
 
     // Example on how to add to a vanilla item group
     private static void addItemsToCombatItemGroup(FabricItemGroupEntries entries) {

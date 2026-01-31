@@ -21,14 +21,6 @@ public class ModModelProvider extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-        itemModelGenerator.register(ModItems.RUBY, Models.GENERATED);
-        itemModelGenerator.register(ModItems.SAPPHIRE, Models.GENERATED);
-        itemModelGenerator.register(ModItems.TOPAZ, Models.GENERATED);
-        itemModelGenerator.register(ModItems.STEEL_INGOT, Models.GENERATED);
-        itemModelGenerator.register(ModItems.PLATINUM_INGOT, Models.GENERATED);
-        itemModelGenerator.register(ModItems.MITHRIL, Models.GENERATED);
-        itemModelGenerator.register(ModItems.ADAMANT, Models.GENERATED);
-
         itemModelGenerator.register(ModItems.FLINT_SWORD, Models.HANDHELD);
         itemModelGenerator.register(ModItems.FLINT_PICKAXE, Models.HANDHELD);
         itemModelGenerator.register(ModItems.FLINT_AXE, Models.HANDHELD);
