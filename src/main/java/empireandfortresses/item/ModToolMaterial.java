@@ -29,7 +29,7 @@ public enum ModToolMaterial implements ToolMaterial {
                                                                                                             // values
     MITHRIL(MiningLevels.NETHERITE, 1800, 12f, 5f, 30, () -> Ingredient.ofItems(ModItems.MITHRIL)), // TODO: tweak
                                                                                                     // values
-    ADAMANT(MiningLevels.NETHERITE, 2500, 14f, 6f, 35, () -> Ingredient.ofItems(ModItems.ADAMANT)); // TODO: tweak
+    ADAMANT_CHUNK(MiningLevels.NETHERITE, 2500, 14f, 6f, 35, () -> Ingredient.ofItems(ModItems.ADAMANT_CHUNK)); // TODO: tweak
                                                                                                     // values
 
     private final int miningLevel;

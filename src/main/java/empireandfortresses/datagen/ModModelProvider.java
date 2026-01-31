@@ -60,12 +60,14 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.registerArmor((ArmorItem) ModItems.OBSIDIAN_LEGGINGS);
         itemModelGenerator.registerArmor((ArmorItem) ModItems.OBSIDIAN_BOOTS);
 
+        itemModelGenerator.register(ModItems.RUBY, Models.GENERATED);
         itemModelGenerator.register(ModItems.RUBY_SWORD, Models.HANDHELD);
         itemModelGenerator.register(ModItems.RUBY_PICKAXE, Models.HANDHELD);
         itemModelGenerator.register(ModItems.RUBY_AXE, Models.HANDHELD);
         itemModelGenerator.register(ModItems.RUBY_SHOVEL, Models.HANDHELD);
         itemModelGenerator.register(ModItems.RUBY_HOE, Models.HANDHELD);
 
+        itemModelGenerator.register(ModItems.SAPPHIRE, Models.GENERATED);
         itemModelGenerator.register(ModItems.SAPPHIRE_SWORD, Models.HANDHELD);
         itemModelGenerator.register(ModItems.SAPPHIRE_PICKAXE, Models.HANDHELD);
         itemModelGenerator.register(ModItems.SAPPHIRE_AXE, Models.HANDHELD);
@@ -78,12 +80,14 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.EMERALD_SHOVEL, Models.HANDHELD);
         itemModelGenerator.register(ModItems.EMERALD_HOE, Models.HANDHELD);
 
+        itemModelGenerator.register(ModItems.TOPAZ, Models.GENERATED);
         itemModelGenerator.register(ModItems.TOPAZ_SWORD, Models.HANDHELD);
         itemModelGenerator.register(ModItems.TOPAZ_PICKAXE, Models.HANDHELD);
         itemModelGenerator.register(ModItems.TOPAZ_AXE, Models.HANDHELD);
         itemModelGenerator.register(ModItems.TOPAZ_SHOVEL, Models.HANDHELD);
         itemModelGenerator.register(ModItems.TOPAZ_HOE, Models.HANDHELD);
 
+        itemModelGenerator.register(ModItems.STEEL_INGOT, Models.GENERATED);
         itemModelGenerator.register(ModItems.STEEL_SWORD, Models.HANDHELD);
         itemModelGenerator.register(ModItems.STEEL_PICKAXE, Models.HANDHELD);
         itemModelGenerator.register(ModItems.STEEL_AXE, Models.HANDHELD);
@@ -104,6 +108,7 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.registerArmor((ArmorItem) ModItems.AMETHYST_LEGGINGS);
         itemModelGenerator.registerArmor((ArmorItem) ModItems.AMETHYST_BOOTS);
 
+        itemModelGenerator.register(ModItems.PLATINUM_INGOT, Models.GENERATED);
         itemModelGenerator.register(ModItems.PLATINUM_SWORD, Models.HANDHELD);
         itemModelGenerator.register(ModItems.PLATINUM_PICKAXE, Models.HANDHELD);
         itemModelGenerator.register(ModItems.PLATINUM_AXE, Models.HANDHELD);
@@ -114,6 +119,7 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.registerArmor((ArmorItem) ModItems.PLATINUM_LEGGINGS);
         itemModelGenerator.registerArmor((ArmorItem) ModItems.PLATINUM_BOOTS);
 
+        itemModelGenerator.register(ModItems.MITHRIL, Models.GENERATED);
         itemModelGenerator.register(ModItems.MITHRIL_SWORD, Models.HANDHELD);
         itemModelGenerator.register(ModItems.MITHRIL_PICKAXE, Models.HANDHELD);
         itemModelGenerator.register(ModItems.MITHRIL_AXE, Models.HANDHELD);
@@ -124,6 +130,7 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.registerArmor((ArmorItem) ModItems.MITHRIL_LEGGINGS);
         itemModelGenerator.registerArmor((ArmorItem) ModItems.MITHRIL_BOOTS);
 
+        itemModelGenerator.register(ModItems.ADAMANT_CHUNK, Models.HANDHELD);
         itemModelGenerator.register(ModItems.ADAMANT_SWORD, Models.HANDHELD);
         itemModelGenerator.register(ModItems.ADAMANT_PICKAXE, Models.HANDHELD);
         itemModelGenerator.register(ModItems.ADAMANT_AXE, Models.HANDHELD);

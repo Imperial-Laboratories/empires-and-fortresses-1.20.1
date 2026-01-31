@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_adamant": {
+    "has_adamant_chunk": {
       "conditions": {
         "items": [
           {
             "items": [
-              "emp_fort:adamant"
+              "emp_fort:adamant_chunk"
             ]
           }
         ]
@@ -34,7 +34,7 @@
   },
   "requirements": [
     [
-      "has_adamant",
+      "has_adamant_chunk",
       "has_stick",
       "has_the_recipe"
     ]

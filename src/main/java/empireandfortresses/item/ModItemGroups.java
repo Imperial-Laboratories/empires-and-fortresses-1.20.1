@@ -23,7 +23,7 @@ public class ModItemGroups {
                         entries.add(ModItems.STEEL_INGOT);
                         entries.add(ModItems.PLATINUM_INGOT);
                         entries.add(ModItems.MITHRIL);
-                        entries.add(ModItems.ADAMANT);
+                        entries.add(ModItems.ADAMANT_CHUNK);
                     }).build());
 
     public static final ItemGroup TOOLS_GROUP = Registry.register(Registries.ITEM_GROUP,
