@@ -129,7 +129,7 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.registerArmor((ArmorItem) ModItems.MITHRIL_LEGGINGS);
         itemModelGenerator.registerArmor((ArmorItem) ModItems.MITHRIL_BOOTS);
 
-        itemModelGenerator.register(ModItems.ADAMANT_CHUNK, Models.HANDHELD);
+        itemModelGenerator.register(ModItems.ADAMANT_CHUNK, Models.GENERATED);
         itemModelGenerator.register(ModItems.ADAMANT_SWORD, Models.HANDHELD);
         itemModelGenerator.register(ModItems.ADAMANT_PICKAXE, Models.HANDHELD);
         itemModelGenerator.register(ModItems.ADAMANT_AXE, Models.HANDHELD);
