@@ -30,7 +30,7 @@ public class ModItems {
     public static final Item STEEL_INGOT = registerItem("steel_ingot", new Item(new FabricItemSettings()));
     public static final Item PLATINUM_INGOT = registerItem("platinum_ingot", new Item(new FabricItemSettings()));
     public static final Item MITHRIL = registerItem("mithril", new Item(new FabricItemSettings()));
-    public static final Item ADAMANT = registerItem("adamant", new Item(new FabricItemSettings()));
+    public static final Item ADAMANT_CHUNK = registerItem("adamant_chunk", new Item(new FabricItemSettings()));
 
     // Flint
     public static final Item FLINT_SWORD = registerItem("flint_sword",
@@ -244,24 +244,24 @@ public class ModItems {
 
     // Adamant
     public static final Item ADAMANT_SWORD = registerItem("adamant_sword",
-            new SwordItem(ModToolMaterial.ADAMANT, 9, -2.4f, new FabricItemSettings()));
+            new SwordItem(ModToolMaterial.ADAMANT_CHUNK, 9, -2.4f, new FabricItemSettings()));
     public static final Item ADAMANT_PICKAXE = registerItem("adamant_pickaxe",
-            new PickaxeItem(ModToolMaterial.ADAMANT, 9, -2.8f, new FabricItemSettings()));
+            new PickaxeItem(ModToolMaterial.ADAMANT_CHUNK, 9, -2.8f, new FabricItemSettings()));
     public static final Item ADAMANT_AXE = registerItem("adamant_axe",
-            new AxeItem(ModToolMaterial.ADAMANT, 9f, -3f, new FabricItemSettings()));
+            new AxeItem(ModToolMaterial.ADAMANT_CHUNK, 9f, -3f, new FabricItemSettings()));
     public static final Item ADAMANT_SHOVEL = registerItem("adamant_shovel",
-            new ShovelItem(ModToolMaterial.ADAMANT, 9f, -2f, new FabricItemSettings()));
+            new ShovelItem(ModToolMaterial.ADAMANT_CHUNK, 9f, -2f, new FabricItemSettings()));
     public static final Item ADAMANT_HOE = registerItem("adamant_hoe",
-            new HoeItem(ModToolMaterial.ADAMANT, -9, 0f, new FabricItemSettings()));
+            new HoeItem(ModToolMaterial.ADAMANT_CHUNK, -9, 0f, new FabricItemSettings()));
 
     public static final Item ADAMANT_HELMET = registerItem("adamant_helmet",
-            new ArmorItem(ModArmorMaterial.ADAMANT, ArmorItem.Type.HELMET, new FabricItemSettings()));
+            new ArmorItem(ModArmorMaterial.ADAMANT_CHUNK, ArmorItem.Type.HELMET, new FabricItemSettings()));
     public static final Item ADAMANT_CHESTPLATE = registerItem("adamant_chestplate",
-            new ArmorItem(ModArmorMaterial.ADAMANT, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
+            new ArmorItem(ModArmorMaterial.ADAMANT_CHUNK, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
     public static final Item ADAMANT_LEGGINGS = registerItem("adamant_leggings",
-            new ArmorItem(ModArmorMaterial.ADAMANT, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
+            new ArmorItem(ModArmorMaterial.ADAMANT_CHUNK, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
     public static final Item ADAMANT_BOOTS = registerItem("adamant_boots",
-            new ArmorItem(ModArmorMaterial.ADAMANT, ArmorItem.Type.BOOTS, new FabricItemSettings()));
+            new ArmorItem(ModArmorMaterial.ADAMANT_CHUNK, ArmorItem.Type.BOOTS, new FabricItemSettings()));
 
     // Example on how to add to a vanilla item group
     private static void addItemsToCombatItemGroup(FabricItemGroupEntries entries) {

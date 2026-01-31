@@ -23,8 +23,8 @@ public enum ModArmorMaterial implements ArmorMaterial {
             () -> Ingredient.ofItems(ModItems.PLATINUM_INGOT)),
     MITHRIL("mithril", 45, new int[] { 4, 8, 7, 3 }, 22, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 3.0f, 0.1f,
             () -> Ingredient.ofItems(ModItems.MITHRIL)),
-    ADAMANT("adamant", 50, new int[] { 5, 9, 8, 4 }, 30, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 4.0f, 0.2f,
-            () -> Ingredient.ofItems(ModItems.ADAMANT));
+    ADAMANT_CHUNK("adamant_chunk", 50, new int[] { 5, 9, 8, 4 }, 30, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 4.0f, 0.2f,
+            () -> Ingredient.ofItems(ModItems.ADAMANT_CHUNK));
 
     private final String name;
     private final int durabilityMultiplier;

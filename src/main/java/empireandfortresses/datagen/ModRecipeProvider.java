@@ -88,7 +88,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 
         // Adamant Tool Recipes
         offerAllToolRecipes(exporter, ModItems.ADAMANT_SWORD, ModItems.ADAMANT_PICKAXE, ModItems.ADAMANT_AXE,
-                ModItems.ADAMANT_SHOVEL, ModItems.ADAMANT_HOE, ModItems.ADAMANT, Items.STICK);
+                ModItems.ADAMANT_SHOVEL, ModItems.ADAMANT_HOE, ModItems.ADAMANT_CHUNK, Items.STICK);
         offerAllArmorRecipes(exporter, ModItems.ADAMANT_HELMET, ModItems.ADAMANT_CHESTPLATE,
                 ModItems.ADAMANT_LEGGINGS, ModItems.ADAMANT_BOOTS, ModItems.ADAMANT);
 

@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "M": {
-      "item": "emp_fort:adamant"
+      "item": "emp_fort:adamant_chunk"
     },
     "S": {
       "item": "minecraft:stick"
