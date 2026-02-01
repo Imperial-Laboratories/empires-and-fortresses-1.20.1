@@ -4,7 +4,9 @@ import net.minecraft.screen.AnvilScreenHandler;
 import net.minecraft.screen.Property;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AnvilScreenHandler.class)
 public class AnvilScreenHandlerMixin {
@@ -28,5 +30,12 @@ public class AnvilScreenHandlerMixin {
     @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/Property;set(I)V"), method = "updateResult")
     private void init(Property property, int cost) {
         property.set(0);
+    }
+
+    // why does it check if levelCost.get() > 0
+    @Inject(at = @At("HEAD"), method = "canTakeOutput", cancellable = true)
+    private void canTakeOutputInject(CallbackInfoReturnable<Boolean> info) {
+        info.cancel();
+        info.setReturnValue(true);
     }
 }
