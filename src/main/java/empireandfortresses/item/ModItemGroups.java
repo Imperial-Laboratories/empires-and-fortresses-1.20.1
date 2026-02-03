@@ -1,10 +1,10 @@
 package empireandfortresses.item;
 
 import empireandfortresses.EmpiresAndFortresses;
+import empireandfortresses.block.ModBlocks;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
@@ -24,6 +24,8 @@ public class ModItemGroups {
                         entries.add(ModItems.PLATINUM_INGOT);
                         entries.add(ModItems.MITHRIL);
                         entries.add(ModItems.ADAMANT_CHUNK);
+
+                        entries.add(ModBlocks.MONUMENT_BLOCK);
                     }).build());
 
     public static final ItemGroup TOOLS_GROUP = Registry.register(Registries.ITEM_GROUP,
