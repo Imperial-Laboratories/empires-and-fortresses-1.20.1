@@ -14,6 +14,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 
 public class MonumentBlock extends Block {
     public MonumentBlock(Settings settings) {
@@ -37,6 +38,13 @@ public class MonumentBlock extends Block {
             }
             existingNation.setMonumentPos(pos);
         } else {
+            if (serverState.isAnyChunkClaimed(new ChunkPos(pos), 1)) {
+                player.sendMessage(Text.literal("Cannot create a nation here; area is already claimed!")
+                        .formatted(Formatting.RED));
+                world.breakBlock(pos, !player.isCreative());
+                return;
+            }
+
             Nation newNation = new Nation(
                     UUID.randomUUID(),
                     placer.getName().getString() + "'s Nation",
@@ -50,6 +58,24 @@ public class MonumentBlock extends Block {
 
         claimArea(world, existingNation.getId(), pos, 1);
         serverState.markDirty();
+    }
+
+    @Override
+    public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
+        if (world.isClient()) {
+            return;
+        }
+
+        TerritoryState serverState = TerritoryState.getServerState(world.getServer());
+        Nation monumentNation = serverState.nations.values().stream()
+                .filter(nation -> pos.equals(nation.getMonumentPos()))
+                .findFirst()
+                .orElse(null);
+
+        if (monumentNation != null) {
+            monumentNation.setMonumentPos(null);
+            serverState.markDirty();
+        }
     }
 
     private void claimArea(World world, UUID nationId, BlockPos pos, int radius) {

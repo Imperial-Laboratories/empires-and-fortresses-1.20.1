@@ -27,6 +27,22 @@ public class TerritoryState extends PersistentState {
         return psm.getOrCreate(TerritoryState::readNbt, TerritoryState::new, "territories");
     }
 
+    public boolean isChunkClaimed(ChunkPos chunkPos) {
+        return claimedChunks.containsKey(chunkPos);
+    }
+
+    public boolean isAnyChunkClaimed(ChunkPos center, int radius) {
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dz = -radius; dz <= radius; dz++) {
+                ChunkPos checkPos = new ChunkPos(center.x + dx, center.z + dz);
+                if (claimedChunks.containsKey(checkPos)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     @Override
     public NbtCompound writeNbt(NbtCompound nbt) {
         NbtList nationList = new NbtList();
