@@ -32,7 +32,7 @@ public class MonumentBlock extends Block {
         if (existingNation != null) {
             if (existingNation.getMonumentPos() != null) {
                 player.sendMessage(Text.literal("Your nation already has a monument!").formatted(Formatting.RED));
-                world.breakBlock(pos, true);
+                world.breakBlock(pos, !player.isCreative());
                 return;
             }
             existingNation.setMonumentPos(pos);
