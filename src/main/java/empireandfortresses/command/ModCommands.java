@@ -23,15 +23,17 @@ public class ModCommands {
                                             false);
                                 }
                                 return 1;
-                            })).then(CommandManager.literal("clear").executes(context -> {
-                                TerritoryState state = TerritoryState.getServerState(context.getSource().getServer());
-                                state.claimedChunks.clear();
-                                state.nations.clear();
-                                state.markDirty();
-                                context.getSource().sendFeedback(
-                                        () -> Text.literal("Cleared all nations and claimed chunks."), true);
-                                return 1;
-                            }))));
+                            })).then(CommandManager.literal("clear").requires(source -> source.hasPermissionLevel(4))
+                                    .executes(context -> {
+                                        TerritoryState state = TerritoryState
+                                                .getServerState(context.getSource().getServer());
+                                        state.claimedChunks.clear();
+                                        state.nations.clear();
+                                        state.markDirty();
+                                        context.getSource().sendFeedback(
+                                                () -> Text.literal("Cleared all nations and claimed chunks."), true);
+                                        return 1;
+                                    }))));
         });
     }
 
