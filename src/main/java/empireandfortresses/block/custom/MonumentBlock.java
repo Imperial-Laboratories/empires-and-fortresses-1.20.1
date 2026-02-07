@@ -45,7 +45,7 @@ public class MonumentBlock extends Block {
             }
             existingNation.setMonumentPos(pos);
         } else {
-            if (serverState.isAnyChunkClaimed(new ChunkPos(pos), 1)) {
+            if (serverState.isAnyChunkClaimed(new ChunkPos(pos), 2)) {
                 player.sendMessage(Text.literal("Cannot create a nation here; area is already claimed!")
                         .formatted(Formatting.RED));
                 world.breakBlock(pos, !player.isCreative());
