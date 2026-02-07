@@ -2,6 +2,7 @@ package empireandfortresses.nations;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 import empireandfortresses.EmpiresAndFortresses;
@@ -34,7 +35,7 @@ public class TerritoryState extends PersistentState {
     }
 
     public boolean isChunkClaimedBy(ChunkPos chunkPos, UUID nationId) {
-        return claimedChunks.getOrDefault(chunkPos, null) != null && claimedChunks.get(chunkPos).equals(nationId);
+        return Objects.equals(claimedChunks.get(chunkPos), nationId);
     }
 
     public boolean isAnyChunkClaimed(ChunkPos center, int radius) {
