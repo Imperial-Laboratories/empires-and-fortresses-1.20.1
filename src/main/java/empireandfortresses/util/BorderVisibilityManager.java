@@ -12,6 +12,7 @@ import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.World;
 
 public class BorderVisibilityManager {
 
@@ -31,6 +32,10 @@ public class BorderVisibilityManager {
 
     public static void initialize() {
         ServerTickEvents.END_WORLD_TICK.register(world -> {
+            if (world.getRegistryKey() != World.OVERWORLD) {
+                return;
+            }
+
             // twice a second
             if (world.getServer().getTicks() % 10 != 0) {
                 return;
