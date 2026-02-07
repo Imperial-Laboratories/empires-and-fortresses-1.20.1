@@ -49,8 +49,8 @@ public class BorderVisibilityManager {
                 }
 
                 ChunkPos playerChunk = new ChunkPos(player.getBlockPos());
-                for (int x = -6; x <= 6; x++) {
-                    for (int z = -6; z <= 6; z++) {
+                for (int x = -4; x <= 4; x++) {
+                    for (int z = -4; z <= 4; z++) {
                         ChunkPos currentChunk = new ChunkPos(playerChunk.x + x, playerChunk.z + z);
                         UUID nationId = state.claimedChunks.get(currentChunk);
 
