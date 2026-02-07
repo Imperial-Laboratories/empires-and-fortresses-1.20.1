@@ -65,15 +65,15 @@ public class TerritoryState extends PersistentState {
         return false;
     }
 
-    public void claimArea(World world, UUID nationId, BlockPos pos, int radius) {
-        TerritoryState state = TerritoryState.getServerState(world.getServer());
+    public void claimArea(UUID nationId, BlockPos pos, int radius) {
         ChunkPos center = new ChunkPos(pos);
         for (int x = -radius; x <= radius; x++) {
             for (int z = -radius; z <= radius; z++) {
-                if (state.isChunkClaimedBy(new ChunkPos(center.x + x, center.z + z), nationId)) {
+                ChunkPos targetPos = new ChunkPos(center.x + x, center.z + z);
+                if (isChunkClaimed(targetPos)) {
                     continue;
                 }
-                state.claimedChunks.put(new ChunkPos(center.x + x, center.z + z), nationId);
+                claimedChunks.put(targetPos, nationId);
             }
         }
     }

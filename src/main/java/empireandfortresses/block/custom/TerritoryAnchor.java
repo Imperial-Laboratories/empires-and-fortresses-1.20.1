@@ -57,7 +57,7 @@ public class TerritoryAnchor extends Block {
         }
 
         player.sendMessage(Text.literal("Chunks Claimed!").formatted(Formatting.GOLD));
-        serverState.claimArea(world, existingNation.getId(), pos, 1);
+        serverState.claimArea(existingNation.getId(), pos, 1);
         serverState.markDirty();
     }
 

@@ -43,6 +43,15 @@ public class MonumentBlock extends Block {
                 world.breakBlock(pos, !player.isCreative());
                 return;
             }
+
+            ChunkPos monumentChunkPos = new ChunkPos(existingNation.getMonumentPos());
+            if (serverState.isAnyChunkClaimedByOthers(monumentChunkPos, 2, existingNation.getId())) {
+                player.sendMessage(Text.literal("Cannot move monument here; area is already claimed by another nation!")
+                        .formatted(Formatting.RED));
+                world.breakBlock(pos, !player.isCreative());
+                return;
+            }
+
             existingNation.setMonumentPos(pos);
         } else {
             if (serverState.isAnyChunkClaimed(new ChunkPos(pos), 2)) {
@@ -63,7 +72,7 @@ public class MonumentBlock extends Block {
             player.sendMessage(Text.literal("Nation Created!").formatted(Formatting.GOLD));
         }
 
-        serverState.claimArea(world, existingNation.getId(), pos, 2);
+        serverState.claimArea(existingNation.getId(), pos, 2);
         serverState.markDirty();
     }
 
