@@ -18,6 +18,9 @@ public class ModBlocks {
     public static final Block MONUMENT_BLOCK = registerBlock("monument_block",
             new MonumentBlock(
                     FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).strength(5.0f).requiresTool()));
+    public static final Block TERRITORY_ANCHOR = registerBlock("territory_anchor",
+            new TerritoryAnchor(
+                    FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).strength(5.0f).requiresTool()));
 
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);

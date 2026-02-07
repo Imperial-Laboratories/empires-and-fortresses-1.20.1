@@ -14,6 +14,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 
 public class MonumentBlock extends Block {
     public MonumentBlock(Settings settings) {
@@ -26,17 +27,40 @@ public class MonumentBlock extends Block {
             return;
         }
 
+        if (world.getRegistryKey() != World.OVERWORLD) {
+            player.sendMessage(
+                    Text.literal("Monuments can only be placed in the Overworld!").formatted(Formatting.RED));
+            world.breakBlock(pos, !player.isCreative());
+            return;
+        }
+
         TerritoryState serverState = TerritoryState.getServerState(player.getServer());
         Nation existingNation = serverState.getNationOfPlayer(placer.getUuid());
 
         if (existingNation != null) {
             if (existingNation.getMonumentPos() != null) {
                 player.sendMessage(Text.literal("Your nation already has a monument!").formatted(Formatting.RED));
-                world.breakBlock(pos, true);
+                world.breakBlock(pos, !player.isCreative());
                 return;
             }
+
+            ChunkPos monumentChunkPos = new ChunkPos(existingNation.getMonumentPos());
+            if (serverState.isAnyChunkClaimedByOthers(monumentChunkPos, 2, existingNation.getId())) {
+                player.sendMessage(Text.literal("Cannot move monument here; area is already claimed by another nation!")
+                        .formatted(Formatting.RED));
+                world.breakBlock(pos, !player.isCreative());
+                return;
+            }
+
             existingNation.setMonumentPos(pos);
         } else {
+            if (serverState.isAnyChunkClaimed(new ChunkPos(pos), 2)) {
+                player.sendMessage(Text.literal("Cannot create a nation here; area is already claimed!")
+                        .formatted(Formatting.RED));
+                world.breakBlock(pos, !player.isCreative());
+                return;
+            }
+
             Nation newNation = new Nation(
                     UUID.randomUUID(),
                     placer.getName().getString() + "'s Nation",
@@ -48,18 +72,25 @@ public class MonumentBlock extends Block {
             player.sendMessage(Text.literal("Nation Created!").formatted(Formatting.GOLD));
         }
 
-        claimArea(world, existingNation.getId(), pos, 1);
+        serverState.claimArea(existingNation.getId(), pos, 2);
         serverState.markDirty();
     }
 
-    private void claimArea(World world, UUID nationId, BlockPos pos, int radius) {
-        TerritoryState state = TerritoryState.getServerState(world.getServer());
-        ChunkPos center = new ChunkPos(pos);
-        for (int x = -radius; x <= radius; x++) {
-            for (int z = -radius; z <= radius; z++) {
-                state.claimedChunks.put(new ChunkPos(center.x + x, center.z + z), nationId);
-            }
+    @Override
+    public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
+        if (world.isClient()) {
+            return;
+        }
+
+        TerritoryState serverState = TerritoryState.getServerState(world.getServer());
+        Nation monumentNation = serverState.nations.values().stream()
+                .filter(nation -> pos.equals(nation.getMonumentPos()))
+                .findFirst()
+                .orElse(null);
+
+        if (monumentNation != null) {
+            monumentNation.setMonumentPos(null);
+            serverState.markDirty();
         }
     }
-
 }

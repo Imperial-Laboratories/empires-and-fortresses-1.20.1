@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "emp_fort:block/monument_block"
+    }
+  }
+}

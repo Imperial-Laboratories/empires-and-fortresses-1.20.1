@@ -1,13 +1,14 @@
 package empireandfortresses;
 
 import net.fabricmc.api.ModInitializer;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import empireandfortresses.block.ModBlocks;
+import empireandfortresses.command.ModCommands;
 import empireandfortresses.item.ModItemGroups;
 import empireandfortresses.item.ModItems;
+import empireandfortresses.util.BorderVisibilityManager;
 
 public class EmpiresAndFortresses implements ModInitializer {
     public static final String MOD_ID = "emp_fort";
@@ -26,5 +27,9 @@ public class EmpiresAndFortresses implements ModInitializer {
         ModItemGroups.registerItemGroups();
         ModItems.registerItems();
         ModBlocks.registerBlocks();
+        ModCommands.registerCommands();
+
+        BorderVisibilityManager.initialize();
     }
+
 }
