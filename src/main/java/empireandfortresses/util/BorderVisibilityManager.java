@@ -8,6 +8,7 @@ import org.joml.Vector3f;
 
 import empireandfortresses.nations.TerritoryState;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -31,6 +32,9 @@ public class BorderVisibilityManager {
     }
 
     public static void initialize() {
+        ServerPlayConnectionEvents.DISCONNECT
+                .register((handler, server) -> VISIBLE_PLAYERS.remove(handler.player.getUuid()));
+
         ServerTickEvents.END_WORLD_TICK.register(world -> {
             if (world.getRegistryKey() != World.OVERWORLD) {
                 return;
