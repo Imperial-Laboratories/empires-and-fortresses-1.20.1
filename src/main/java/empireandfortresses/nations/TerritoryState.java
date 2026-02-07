@@ -9,9 +9,11 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.PersistentStateManager;
+import net.minecraft.world.World;
 
 public class TerritoryState extends PersistentState {
 
@@ -31,6 +33,10 @@ public class TerritoryState extends PersistentState {
         return claimedChunks.containsKey(chunkPos);
     }
 
+    public boolean isChunkClaimedBy(ChunkPos chunkPos, UUID nationId) {
+        return claimedChunks.getOrDefault(chunkPos, null) != null && claimedChunks.get(chunkPos).equals(nationId);
+    }
+
     public boolean isAnyChunkClaimed(ChunkPos center, int radius) {
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dz = -radius; dz <= radius; dz++) {
@@ -41,6 +47,34 @@ public class TerritoryState extends PersistentState {
             }
         }
         return false;
+    }
+
+    public boolean isAnyChunkClaimedByOthers(ChunkPos center, int radius, UUID nationId) {
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dz = -radius; dz <= radius; dz++) {
+                ChunkPos checkPos = new ChunkPos(center.x + dx, center.z + dz);
+                if (claimedChunks.containsKey(checkPos)) {
+                    UUID claimingNationId = claimedChunks.get(checkPos);
+                    if (!claimingNationId.equals(nationId)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public void claimArea(World world, UUID nationId, BlockPos pos, int radius) {
+        TerritoryState state = TerritoryState.getServerState(world.getServer());
+        ChunkPos center = new ChunkPos(pos);
+        for (int x = -radius; x <= radius; x++) {
+            for (int z = -radius; z <= radius; z++) {
+                if (state.isChunkClaimedBy(new ChunkPos(center.x + x, center.z + z), nationId)) {
+                    continue;
+                }
+                state.claimedChunks.put(new ChunkPos(center.x + x, center.z + z), nationId);
+            }
+        }
     }
 
     @Override
@@ -69,6 +103,7 @@ public class TerritoryState extends PersistentState {
         NbtList nationList = nbt.getList("Nations", NbtElement.COMPOUND_TYPE);
         for (int i = 0; i < nationList.size(); i++) {
             Nation nation = Nation.fromNbt(nationList.getCompound(i));
+            EmpiresAndFortresses.LOGGER.info("Loaded nation: {}", nation);
             state.nations.put(nation.getId(), nation);
         }
 

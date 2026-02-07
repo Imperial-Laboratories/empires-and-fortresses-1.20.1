@@ -7,11 +7,17 @@ import java.util.Map;
 import java.util.UUID;
 
 import empireandfortresses.EmpiresAndFortresses;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.math.BlockPos;
 
+@Getter
+@Setter
+@ToString
 public class Nation {
 
     private UUID id;
@@ -88,54 +94,5 @@ public class Nation {
         }
 
         return nation;
-    }
-
-    // Getters & Setters
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public UUID getLeader() {
-        return leader;
-    }
-
-    public void setLeader(UUID leader) {
-        this.leader = leader;
-    }
-
-    public Map<NationLevelType, Integer> getLevels() {
-        return levels;
-    }
-
-    public void setLevels(Map<NationLevelType, Integer> levels) {
-        this.levels = levels;
-    }
-
-    public List<UUID> getMembers() {
-        return members;
-    }
-
-    public void setMembers(List<UUID> members) {
-        this.members = members;
-    }
-
-    public BlockPos getMonumentPos() {
-        return monumentPos;
-    }
-
-    public void setMonumentPos(BlockPos monumentPos) {
-        this.monumentPos = monumentPos;
     }
 }

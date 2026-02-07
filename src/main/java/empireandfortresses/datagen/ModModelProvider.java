@@ -1,5 +1,6 @@
 package empireandfortresses.datagen;
 
+import empireandfortresses.block.ModBlocks;
 import empireandfortresses.item.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
@@ -17,6 +18,8 @@ public class ModModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.MONUMENT_BLOCK);
+        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.TERRITORY_ANCHOR);
     }
 
     @Override

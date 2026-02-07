@@ -1,4 +1,4 @@
-// 1.20.1	2026-02-03T20:20:38.5698183	Empires and Fortresses/Recipes
+// 1.20.1	2026-02-07T19:02:46.9276595	Empires and Fortresses/Recipes
 485f310d743279f71059b0232586fa47bd62198b data\emp_fort\recipes\obsidian_axe.json
 d6ca3140918d005c8938126f832814b10e0d751e data\emp_fort\advancements\recipes\tools\sapphire_shovel.json
 60eb6208fe1fd3614739c83b490ed1b2d85c693a data\emp_fort\recipes\bone_pickaxe.json
@@ -78,8 +78,8 @@ febc5cd7b529d946972445e75b6452ab30c37d84 data\emp_fort\advancements\recipes\tool
 40b03dc6e7c79392a67e77118e3b9b499e6ed124 data\emp_fort\advancements\recipes\tools\ruby_pickaxe.json
 c7092b5c13113376421c0273a1b432b947000ab5 data\emp_fort\advancements\recipes\combat\copper_sword.json
 1df05ccd4ae7b83d3bab3294eea1351d63e901ef data\emp_fort\recipes\steel_axe.json
-4f45a262709da72fbba605d5131d67ef987507a6 data\emp_fort\advancements\recipes\tools\bone_shovel.json
 649ae386b5e7fa3d01ef2445bcd589b768fa60b7 data\emp_fort\advancements\recipes\tools\bone_axe.json
+4f45a262709da72fbba605d5131d67ef987507a6 data\emp_fort\advancements\recipes\tools\bone_shovel.json
 9a52c3a3c3fa03c8ad6f00bb75a6b514b20c6862 data\emp_fort\recipes\topaz_pickaxe.json
 938768236184206e2ef9c1a15664c5792d20ec87 data\emp_fort\recipes\granite_sword.json
 67f2171c795d2182648e66f5772d839a882c9a3a data\emp_fort\advancements\recipes\tools\adamant_axe.json
@@ -162,8 +162,8 @@ f16b8dbef152b39abfa3a8e5ea63144e0e98fb7e data\emp_fort\advancements\recipes\tool
 2d46673269836b49c61340eea77049b932b4f5c9 data\emp_fort\recipes\adamant_leggings.json
 5815fc83551ccc5518332cfd6ea699d18c5610f3 data\emp_fort\advancements\recipes\combat\ruby_sword.json
 3716ac59f56e525da1fe17c7153ba9255e7a1e65 data\emp_fort\advancements\recipes\combat\platinum_helmet.json
-4ee407f1b945f14738b5f13c63bc414d77b7d4b6 data\emp_fort\advancements\recipes\tools\platinum_pickaxe.json
 240d6b8b997d20d66ecf764c75b14e85b20eb578 data\emp_fort\recipes\platinum_pickaxe.json
+4ee407f1b945f14738b5f13c63bc414d77b7d4b6 data\emp_fort\advancements\recipes\tools\platinum_pickaxe.json
 ff57b8ded96f9a8eb38b32afeb1c5427b9d2e54d data\emp_fort\recipes\amethyst_pickaxe.json
 074316d46c1ba53862f468d4f19ab4f7c2f7224f data\emp_fort\recipes\obsidian_hoe.json
 1effed9b212b339c90ab4bea80e38ecd7adca204 data\emp_fort\advancements\recipes\tools\ruby_hoe.json

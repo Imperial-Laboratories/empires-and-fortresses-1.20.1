@@ -56,7 +56,7 @@ public class MonumentBlock extends Block {
             player.sendMessage(Text.literal("Nation Created!").formatted(Formatting.GOLD));
         }
 
-        claimArea(world, existingNation.getId(), pos, 1);
+        serverState.claimArea(world, existingNation.getId(), pos, 2);
         serverState.markDirty();
     }
 
@@ -77,15 +77,4 @@ public class MonumentBlock extends Block {
             serverState.markDirty();
         }
     }
-
-    private void claimArea(World world, UUID nationId, BlockPos pos, int radius) {
-        TerritoryState state = TerritoryState.getServerState(world.getServer());
-        ChunkPos center = new ChunkPos(pos);
-        for (int x = -radius; x <= radius; x++) {
-            for (int z = -radius; z <= radius; z++) {
-                state.claimedChunks.put(new ChunkPos(center.x + x, center.z + z), nationId);
-            }
-        }
-    }
-
 }

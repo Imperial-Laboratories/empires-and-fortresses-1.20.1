@@ -14,6 +14,7 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
     @Override
     public void generate() {
         addDrop(ModBlocks.MONUMENT_BLOCK);
+        addDrop(ModBlocks.TERRITORY_ANCHOR);
     }
 
 }
