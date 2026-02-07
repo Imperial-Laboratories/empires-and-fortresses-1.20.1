@@ -27,6 +27,13 @@ public class MonumentBlock extends Block {
             return;
         }
 
+        if (world.getRegistryKey() != World.OVERWORLD) {
+            player.sendMessage(
+                    Text.literal("Monuments can only be placed in the Overworld!").formatted(Formatting.RED));
+            world.breakBlock(pos, !player.isCreative());
+            return;
+        }
+
         TerritoryState serverState = TerritoryState.getServerState(player.getServer());
         Nation existingNation = serverState.getNationOfPlayer(placer.getUuid());
 
