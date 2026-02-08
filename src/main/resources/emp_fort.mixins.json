@@ -2,7 +2,11 @@
     "required": true,
     "package": "empireandfortresses.mixin",
     "compatibilityLevel": "JAVA_17",
-    "mixins": ["EnchantingTableBlockMixin", "AnvilScreenHandlerMixin"],
+    "mixins": [
+        "EnchantingTableBlockMixin",
+        "AnvilScreenHandlerMixin",
+        "ServerPlayerEntityMixin"
+    ],
     "injectors": {
         "defaultRequire": 1
     },
