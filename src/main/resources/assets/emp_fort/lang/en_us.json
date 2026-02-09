@@ -125,5 +125,11 @@
     "item.emp_fort.adamant_boots": "Adamant Boots",
 
     "advancements.emp_fort.root.title": "Empires and Fortresses",
-    "advancements.emp_fort.root.description": "Welcome to Empires and Fortresses!"
+    "advancements.emp_fort.root.description": "Welcome to Empires and Fortresses!",
+
+    "attribute.name.generic.magic_attack_damage": "Magic Attack Damage",
+
+    "spell.emp_fort.fail.xp": "Not enough XP!",
+    "spell.emp_fort.fail.cooldown": "Cooldown has not finished!",
+    "spell.emp_fort.fail.condition": "Cannot cast right now!"
 }
