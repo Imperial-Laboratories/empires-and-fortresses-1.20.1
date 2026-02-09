@@ -24,8 +24,10 @@ public class MagicBulletSpell extends Spell {
 
         world.spawnEntity(entity);
 
-        activateCooldown(user);
-        consumeXP(user, getXPCost(), isConsumingXPLevel());
+        if (!user.isCreative()) {
+            activateCooldown(user);
+            consumeXP(user, getXPCost(), isConsumingXPLevel());
+        }
     }
 
     @Override
