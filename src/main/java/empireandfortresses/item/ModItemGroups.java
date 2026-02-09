@@ -97,6 +97,7 @@ public class ModItemGroups {
                         entries.add(ModItems.AMETHYST_AXE);
                         entries.add(ModItems.AMETHYST_SHOVEL);
                         entries.add(ModItems.AMETHYST_HOE);
+                        entries.add(ModItems.AMETHYST_WAND);
 
                         entries.add(ModItems.PLATINUM_SWORD);
                         entries.add(ModItems.PLATINUM_PICKAXE);
