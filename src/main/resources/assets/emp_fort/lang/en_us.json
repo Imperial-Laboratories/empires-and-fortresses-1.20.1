@@ -88,6 +88,7 @@
     "item.emp_fort.amethyst_axe": "Amethyst Axe",
     "item.emp_fort.amethyst_shovel": "Amethyst Shovel",
     "item.emp_fort.amethyst_hoe": "Amethyst Hoe",
+    "item.emp_fort.amethyst_wand": "Amethyst Wand",
     "item.emp_fort.amethyst_helmet": "Amethyst Helmet",
     "item.emp_fort.amethyst_chestplate": "Amethyst Chestplate",
     "item.emp_fort.amethyst_leggings": "Amethyst Leggings",
@@ -124,5 +125,11 @@
     "item.emp_fort.adamant_boots": "Adamant Boots",
 
     "advancements.emp_fort.root.title": "Empires and Fortresses",
-    "advancements.emp_fort.root.description": "Welcome to Empires and Fortresses!"
+    "advancements.emp_fort.root.description": "Welcome to Empires and Fortresses!",
+
+    "attribute.name.generic.magic_attack_damage": "Magic Attack Damage",
+
+    "spell.emp_fort.fail.xp": "Not enough XP!",
+    "spell.emp_fort.fail.cooldown": "Cooldown has not finished!",
+    "spell.emp_fort.fail.condition": "Cannot cast right now!"
 }

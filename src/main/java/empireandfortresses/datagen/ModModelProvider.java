@@ -105,6 +105,7 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.AMETHYST_AXE, Models.HANDHELD);
         itemModelGenerator.register(ModItems.AMETHYST_SHOVEL, Models.HANDHELD);
         itemModelGenerator.register(ModItems.AMETHYST_HOE, Models.HANDHELD);
+        itemModelGenerator.register(ModItems.AMETHYST_WAND, Models.HANDHELD);
         itemModelGenerator.registerArmor((ArmorItem) ModItems.AMETHYST_HELMET);
         itemModelGenerator.registerArmor((ArmorItem) ModItems.AMETHYST_CHESTPLATE);
         itemModelGenerator.registerArmor((ArmorItem) ModItems.AMETHYST_LEGGINGS);
