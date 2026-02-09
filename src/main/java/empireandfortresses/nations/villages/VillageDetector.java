@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import empireandfortresses.nations.TerritoryState;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
@@ -11,6 +12,7 @@ import net.minecraft.structure.StructureStart;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
 public class VillageDetector {
@@ -79,6 +81,16 @@ public class VillageDetector {
         state.claimArea(villageId, villageCenter, 2);
 
         state.markDirty();
+    }
+
+    public static void initialize() {
+        ServerChunkEvents.CHUNK_LOAD.register((world, chunk) -> {
+            if (world.getRegistryKey() != World.OVERWORLD) {
+                return;
+            }
+
+            world.getServer().execute(() -> tryRegisterVillage(world, chunk.getPos()));
+        });
     }
 
 }
