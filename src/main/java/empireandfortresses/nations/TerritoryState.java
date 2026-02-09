@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import empireandfortresses.EmpiresAndFortresses;
+import empireandfortresses.nations.villages.VillageNation;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -14,12 +15,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.PersistentStateManager;
-import net.minecraft.world.World;
 
 public class TerritoryState extends PersistentState {
 
     public final Map<ChunkPos, UUID> claimedChunks = new HashMap<>();
     public final Map<UUID, Nation> nations = new HashMap<>();
+    public final Map<UUID, VillageNation> villages = new HashMap<>();
 
     public Nation getNationOfPlayer(UUID playerUuid) {
         return nations.values().stream().filter(n -> n.getMembers().contains(playerUuid)).findFirst().orElse(null);
@@ -28,6 +29,14 @@ public class TerritoryState extends PersistentState {
     public static TerritoryState getServerState(MinecraftServer server) {
         PersistentStateManager psm = server.getOverworld().getPersistentStateManager();
         return psm.getOrCreate(TerritoryState::readNbt, TerritoryState::new, "territories");
+    }
+
+    public VillageNation getVillageAtChunk(ChunkPos pos) {
+        UUID nationId = claimedChunks.get(pos);
+        if (nationId == null) {
+            return null;
+        }
+        return villages.get(nationId);
     }
 
     public boolean isChunkClaimed(ChunkPos chunkPos) {
@@ -84,6 +93,10 @@ public class TerritoryState extends PersistentState {
         nations.values().forEach(nation -> nationList.add(nation.toNbt()));
         nbt.put("Nations", nationList);
 
+        NbtList villageList = new NbtList();
+        villages.values().forEach(v -> villageList.add(v.toNbt()));
+        nbt.put("Villages", villageList);
+
         NbtList claimList = new NbtList();
         claimedChunks.forEach((chunkPos, nationId) -> {
             NbtCompound claimNbt = new NbtCompound();
@@ -106,6 +119,12 @@ public class TerritoryState extends PersistentState {
             Nation nation = Nation.fromNbt(nationList.getCompound(i));
             EmpiresAndFortresses.LOGGER.info("Loaded nation: {}", nation);
             state.nations.put(nation.getId(), nation);
+        }
+
+        NbtList villageList = nbt.getList("Villages", NbtElement.COMPOUND_TYPE);
+        for (int i = 0; i < villageList.size(); i++) {
+            VillageNation v = VillageNation.fromNbt(villageList.getCompound(i));
+            state.villages.put(v.getId(), v);
         }
 
         NbtList claimList = nbt.getList("Claims", NbtElement.COMPOUND_TYPE);
