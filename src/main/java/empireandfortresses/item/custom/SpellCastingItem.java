@@ -91,7 +91,7 @@ public class SpellCastingItem extends ToolItem {
             // user.sendMessage(Text.literal(stack.getNbt().getString("ActiveSpell")));
 
             Spell spell = Spells.getSpellById(stack.getNbt().getString("ActiveSpell"));
-            if (spell != null && spell.castable(user)) {
+            if (spell.castable(user)) {
                 spell.cast(world, user, stack);
             } else if(!spell.XPSufficient(user)) {
                 user.sendMessage(Text.translatable("spell.emp_fort.fail.xp").formatted(Formatting.RED), true);

@@ -12,7 +12,7 @@ import empireandfortresses.entity.attribute.ModEntityAttributes;
 
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin {
-	@Inject(method = "createPlayerAttributes", at = @At("Return"))
+	@Inject(method = "createPlayerAttributes", at = @At("RETURN"))
 	private static void onAddAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> info) {
 		info.getReturnValue().add(ModEntityAttributes.GENERIC_MAGIC_ATTACK_DAMAGE, 0.0);
 	}

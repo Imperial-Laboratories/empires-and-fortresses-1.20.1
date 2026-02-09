@@ -1,7 +1,5 @@
 package empireandfortresses.item;
 
-import javax.tools.Tool;
-
 import empireandfortresses.EmpiresAndFortresses;
 import empireandfortresses.item.custom.SpellCastingItem;
 import empireandfortresses.magic.Spells;

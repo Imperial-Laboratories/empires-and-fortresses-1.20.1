@@ -1,7 +1,5 @@
 package empireandfortresses.entity.spell;
 
-import empireandfortresses.EmpiresAndFortresses;
-import net.minecraft.client.particle.SpellParticle;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;

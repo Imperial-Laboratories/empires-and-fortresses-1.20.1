@@ -46,7 +46,6 @@ public class PlayerCooldownComponent implements CooldownComponent {
 
     @Override
     public void serverTick() {
-        EmpiresAndFortresses.LOGGER.info("tick");
         cooldowns.entrySet().forEach(entry -> {
             // if (entry.getValue() > 0) {
                 // entry.setValue(entry.getValue() - 1);
