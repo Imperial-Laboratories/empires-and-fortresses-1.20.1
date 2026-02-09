@@ -95,7 +95,7 @@ public class SpellCastingItem extends ToolItem {
                 spell.cast(world, user, stack);
             } else if(!spell.XPSufficient(user)) {
                 user.sendMessage(Text.translatable("spell.emp_fort.fail.xp").formatted(Formatting.RED), true);
-            } else if(spell.onCooldown()) {
+            } else if(spell.isOnCooldown(user)) {
                 user.sendMessage(Text.translatable("spell.emp_fort.fail.cooldown").formatted(Formatting.RED), true);
             } else if(!spell.condition()) {
                 user.sendMessage(Text.translatable("spell.emp_fort.fail.condition").formatted(Formatting.RED), true);
@@ -130,14 +130,6 @@ public class SpellCastingItem extends ToolItem {
 
         if (!nbt.contains("ActiveSpell")) {
             nbt.putString("ActiveSpell", defaultSpell.getSpellID().toString());
-        }
-
-        NbtList list = nbt.getList("Spells", NbtElement.COMPOUND_TYPE);
-        for (int i = 0; i < list.size(); i++) {
-            Spell spell = Spells.getSpellById(list.getCompound(i).getString("Id"));
-            if (spell.onCooldown()) {
-                spell.cooldownTick();
-            }
         }
     }
 }

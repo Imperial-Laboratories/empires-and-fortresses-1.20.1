@@ -1,6 +1,7 @@
 package empireandfortresses.magic;
 
 import empireandfortresses.EmpiresAndFortresses;
+import empireandfortresses.component.ModComponents;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,19 +15,20 @@ import net.minecraft.world.World;
 
 public abstract class Spell {
     private final Identifier spellID;
+    private final SpellCategory category;
     private final int XPCost;
-    private final boolean consumesXPLevel;
+    private final boolean consumingXPLevel;
     private final int maxCooldown;
-    private int cooldownTimer;
-    private final boolean hasCharge;
+    private final boolean chargable;
     private final int castTime;
 
-    public Spell(String id, int cost, boolean type, int maxCooldown, boolean hasCharge, int castTime) {
+    public Spell(String id, SpellCategory category, int cost, boolean consumingXPLevel, int maxCooldown, boolean chargable, int castTime) {
         this.spellID = new Identifier(EmpiresAndFortresses.MOD_ID, id);
+        this.category = category;
         this.XPCost = cost;
-        this.consumesXPLevel = type;
+        this.consumingXPLevel = consumingXPLevel;
         this.maxCooldown = maxCooldown;
-        this.hasCharge = hasCharge;
+        this.chargable = chargable;
         this.castTime = castTime;
     }
 
@@ -35,24 +37,18 @@ public abstract class Spell {
     public abstract void cast(World world, PlayerEntity user, ItemStack stack);
 
     public boolean XPSufficient(PlayerEntity user) {
-        if (consumesXPLevel) {
+        if (consumingXPLevel) {
             return user.experienceLevel >= XPCost;
         }
         return user.totalExperience >= XPCost;
     }
 
     public boolean castable(PlayerEntity user) {
-        return condition() && ((XPSufficient(user) && !onCooldown()) || user.isCreative());
+        return condition() && ((XPSufficient(user) && !isOnCooldown(user)) || user.isCreative());
     }
 
-    public void cooldownTick() {
-        int t = this.getCooldownTimer();
-        t--;
-        this.setCooldownTimer(t);
-    }
-
-    public boolean onCooldown() {
-        return getCooldownTimer() > 0;
+    public boolean isOnCooldown(PlayerEntity user) {
+        return ModComponents.COOLDOWN_COMPONENT.get(user).getCooldown(category) > 0;
     }
 
     public void consumeXP(PlayerEntity user, int cost, boolean consumesLevel) {
@@ -74,11 +70,7 @@ public abstract class Spell {
         return nbt;
     }
 
-    public boolean hasCharge() {
-        return hasCharge;
-    }
-
-    public boolean consumesXPLevel() {
-        return consumesXPLevel;
+    public void activateCooldown(PlayerEntity user) {
+        ModComponents.COOLDOWN_COMPONENT.get(user).setCooldown(category, maxCooldown);
     }
 }
