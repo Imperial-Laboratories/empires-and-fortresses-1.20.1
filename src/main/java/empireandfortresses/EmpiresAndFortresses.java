@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 
 import empireandfortresses.block.ModBlocks;
 import empireandfortresses.command.ModCommands;
+import empireandfortresses.entity.ModEntities;
+import empireandfortresses.entity.attribute.ModEntityAttributes;
 import empireandfortresses.item.ModItemGroups;
 import empireandfortresses.item.ModItems;
 import empireandfortresses.util.BorderVisibilityManager;
@@ -28,6 +30,8 @@ public class EmpiresAndFortresses implements ModInitializer {
         ModItems.registerItems();
         ModBlocks.registerBlocks();
         ModCommands.registerCommands();
+        ModEntities.registerEntities();
+        ModEntityAttributes.registerAttributes();
 
         BorderVisibilityManager.initialize();
     }
