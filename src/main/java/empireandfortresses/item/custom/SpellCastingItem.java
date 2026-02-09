@@ -94,11 +94,11 @@ public class SpellCastingItem extends ToolItem {
             if (spell != null && spell.castable(user)) {
                 spell.cast(world, user, stack);
             } else if(!spell.XPSufficient(user)) {
-                user.sendMessage(Text.literal("Not enough XP!").formatted(Formatting.RED), true);
+                user.sendMessage(Text.translatable("spell.emp_fort.fail.xp").formatted(Formatting.RED), true);
             } else if(spell.onCooldown()) {
-                user.sendMessage(Text.literal("Cooldown has not finished!").formatted(Formatting.RED), true);
+                user.sendMessage(Text.translatable("spell.emp_fort.fail.cooldown").formatted(Formatting.RED), true);
             } else if(!spell.condition()) {
-                user.sendMessage(Text.literal("Cannot cast right now!").formatted(Formatting.RED), true);
+                user.sendMessage(Text.translatable("spell.emp_fort.fail.condition").formatted(Formatting.RED), true);
             }
 
             if (!user.isSneaking()) {
