@@ -57,9 +57,9 @@ public abstract class Spell {
 
     public void consumeXP(PlayerEntity user, int cost, boolean consumesLevel) {
         if (!consumesLevel) {
-            user.totalExperience -= cost;
+            user.addExperience(-cost);
         } else {
-            user.experienceLevel -= cost;
+            user.addExperienceLevels(-cost);
         }
     }
 
