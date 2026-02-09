@@ -10,6 +10,7 @@ import empireandfortresses.entity.ModEntities;
 import empireandfortresses.entity.attribute.ModEntityAttributes;
 import empireandfortresses.item.ModItemGroups;
 import empireandfortresses.item.ModItems;
+import empireandfortresses.nations.villages.VillageDetector;
 import empireandfortresses.util.BorderVisibilityManager;
 
 public class EmpiresAndFortresses implements ModInitializer {
@@ -34,6 +35,7 @@ public class EmpiresAndFortresses implements ModInitializer {
         ModEntityAttributes.registerAttributes();
 
         BorderVisibilityManager.initialize();
+        VillageDetector.initialize();
     }
 
 }
