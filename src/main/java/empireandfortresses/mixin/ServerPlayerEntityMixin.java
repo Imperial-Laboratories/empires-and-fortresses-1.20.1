@@ -5,31 +5,37 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.mojang.authlib.GameProfile;
+
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 
 @Mixin(ServerPlayerEntity.class)
-public class ServerPlayerEntityMixin {
+abstract class ServerPlayerEntityMixin extends PlayerEntity {
+    protected ServerPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile gameProfile) {
+        super(world, pos, yaw, gameProfile);
+    }
 
-    @Inject(at = @At("HEAD"), method = "setExperiencePoints")
+    @Inject(at = @At("RETURN"), method = "setExperiencePoints")
     private void setExperiencePointsInject(int experiencePoints, CallbackInfo ci) {
-        ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
-        player.totalExperience = getLevelExperience(player.experienceLevel)
-                + experiencePoints;
+        updateTotalExperience((ServerPlayerEntity) (Object) this);
     }
 
-    @Inject(at = @At("HEAD"), method = "setExperienceLevel")
+    @Inject(at = @At("RETURN"), method = "setExperienceLevel")
     private void setExperienceLevelInject(int experienceLevel, CallbackInfo ci) {
-        ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
-        player.totalExperience = getLevelExperience(experienceLevel)
-                + MathHelper.floor(player.experienceProgress * player.getNextLevelExperience());
+        updateTotalExperience((ServerPlayerEntity) (Object) this);
     }
 
-    @Inject(at = @At("HEAD"), method = "addExperienceLevels")
+    @Inject(at = @At("RETURN"), method = "addExperienceLevels")
     private void addExperienceLevelsInject(int levels, CallbackInfo ci) {
-        ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
-        int newLevel = player.experienceLevel + levels;
-        player.totalExperience = getLevelExperience(newLevel)
+        updateTotalExperience((ServerPlayerEntity) (Object) this);
+    }
+
+    private void updateTotalExperience(ServerPlayerEntity player) {
+        player.totalExperience = getLevelExperience(player.experienceLevel)
                 + MathHelper.floor(player.experienceProgress * player.getNextLevelExperience());
     }
 
