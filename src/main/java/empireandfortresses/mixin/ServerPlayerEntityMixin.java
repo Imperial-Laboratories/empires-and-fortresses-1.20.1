@@ -24,6 +24,11 @@ abstract class ServerPlayerEntityMixin extends PlayerEntity {
         updateTotalExperience((ServerPlayerEntity) (Object) this);
     }
 
+    @Inject(at = @At("RETURN"), method = "addExperiencePoints")
+    private void addExperiencePointsInject(int experiencePoints, CallbackInfo ci) {
+        updateTotalExperience((ServerPlayerEntity) (Object) this);
+    }
+
     @Inject(at = @At("RETURN"), method = "setExperienceLevel")
     private void setExperienceLevelInject(int experienceLevel, CallbackInfo ci) {
         updateTotalExperience((ServerPlayerEntity) (Object) this);
