@@ -3,6 +3,8 @@ package empireandfortresses.item;
 import javax.tools.Tool;
 
 import empireandfortresses.EmpiresAndFortresses;
+import empireandfortresses.item.custom.SpellCastingItem;
+import empireandfortresses.magic.Spells;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -190,6 +192,9 @@ public class ModItems {
             new ShovelItem(ModToolMaterial.AMETHYST, 7f, -2f, new FabricItemSettings()));
     public static final Item AMETHYST_HOE = registerItem("amethyst_hoe",
             new HoeItem(ModToolMaterial.AMETHYST, -7, 0f, new FabricItemSettings()));
+
+    public static final Item AMETHYST_WAND = registerItem("amethyst_wand",
+        new SpellCastingItem(ModToolMaterial.AMETHYST, 5, new FabricItemSettings(), Spells.MAGIC_BULLET));
 
     public static final Item AMETHYST_HELMET = registerItem("amethyst_helmet",
             new ArmorItem(ModArmorMaterial.AMETHYST, ArmorItem.Type.HELMET, new FabricItemSettings()));
