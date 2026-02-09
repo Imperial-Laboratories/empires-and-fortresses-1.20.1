@@ -3,16 +3,16 @@ package empireandfortresses.nations.villages;
 import java.util.Random;
 import java.util.UUID;
 
-import empireandfortresses.nations.TerritoryState;<<<<<<<HEAD
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;=======>>>>>>>8 c5fd7f(start doing stuff)
+import empireandfortresses.nations.TerritoryState;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.structure.StructureStart;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;<<<<<<<HEAD
-import net.minecraft.world.World;=======>>>>>>>8 c5fd7f(start doing stuff)
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
 public class VillageDetector {
