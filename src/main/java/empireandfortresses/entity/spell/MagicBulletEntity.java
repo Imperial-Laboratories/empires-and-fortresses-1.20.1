@@ -1,5 +1,6 @@
 package empireandfortresses.entity.spell;
 
+import empireandfortresses.entity.damage.ModDamageTypes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -69,7 +70,7 @@ public class MagicBulletEntity extends ProjectileEntity {
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
-        entityHitResult.getEntity().damage(this.getDamageSources().magic(), this.damage);
+        entityHitResult.getEntity().damage(ModDamageTypes.of(getEntityWorld(), ModDamageTypes.SPELL), this.damage);
         this.discard();
     }
 
