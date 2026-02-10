@@ -5,13 +5,18 @@ import java.util.UUID;
 
 import empireandfortresses.nations.TerritoryState;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.structure.StructureStart;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.village.VillagerProfession;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
@@ -57,8 +62,7 @@ public class VillageDetector {
         BlockPos villageCenter = null;
 
         for (StructureStart start : world.getStructureAccessor().getStructureStarts(chunkPos, s -> true)) {
-            Identifier structId = world.getRegistryManager().get(RegistryKeys.STRUCTURE)
-                    .getId(start.getStructure());
+            Identifier structId = world.getRegistryManager().get(RegistryKeys.STRUCTURE).getId(start.getStructure());
             if (structId != null && structId.getPath().contains("village")) {
                 hasVillage = true;
                 villageCenter = start.getBoundingBox().getCenter();
@@ -81,6 +85,30 @@ public class VillageDetector {
         state.claimArea(villageId, villageCenter, 2);
 
         state.markDirty();
+    }
+
+    public static void spawnLeader(ServerWorld world, VillageNation village) {
+        // TODO: custom entity instead of villager
+        VillagerEntity leader = EntityType.VILLAGER.create(world);
+        if (leader == null) {
+            return;
+        }
+
+        BlockPos pos = village.getMonumentPos();
+        leader.refreshPositionAndAngles(pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 0, 0);
+
+        // TODO: like i said before, custom entity later
+        leader.setVillagerData(leader.getVillagerData().withProfession(VillagerProfession.NITWIT).withLevel(5));
+        leader.setCustomName(Text.literal(village.getType().leaderTitle + " of " + village.getName()).formatted(village.getType().color, Formatting.BOLD));
+        leader.setCustomNameVisible(true);
+
+        // TODO: like i said before, custom entity later
+        leader.setInvulnerable(true);
+        leader.setAiDisabled(false);
+        leader.setPersistent();
+
+        world.spawnEntity(leader);
+        village.setLeaderEntityUuid(leader.getUuid());
     }
 
     public static void initialize() {
