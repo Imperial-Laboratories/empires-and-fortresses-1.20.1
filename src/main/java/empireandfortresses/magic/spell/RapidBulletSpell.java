@@ -6,6 +6,7 @@ import empireandfortresses.entity.spell.MagicBulletEntity;
 import empireandfortresses.magic.Spell;
 import empireandfortresses.magic.SpellCategory;
 import empireandfortresses.magic.SpellTriggerCategory;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -23,6 +24,11 @@ public class RapidBulletSpell extends Spell {
         int useTimer = nbt.getInt("useTimer");
         if (useTimer % 5 == 0) {
             spawnBullet(world, user);
+            if (!user.isCreative()) {
+                stack.damage(1, user, (e) -> {
+                    e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
+                });
+            }
         }
         // nbt modification every tick. Probably not a good idea
         if (!user.isCreative()) {

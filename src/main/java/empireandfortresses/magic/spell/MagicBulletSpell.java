@@ -1,5 +1,6 @@
 package empireandfortresses.magic.spell;
 
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -28,6 +29,9 @@ public class MagicBulletSpell extends Spell {
         if (!user.isCreative()) {
             activateCooldown(user);
             consumeXP(user, getXPCost(), isConsumingXPLevel());
+            stack.damage(1, user, (e) -> {
+                e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
+            });
         }
     }
 }
