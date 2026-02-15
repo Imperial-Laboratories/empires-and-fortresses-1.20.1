@@ -157,7 +157,7 @@ public class SpellCastingItem extends ToolItem {
                     nbt.putBoolean("wasPressed", true);
                     return true;
                 } else {
-                    if (nbt.getBoolean("wasPressed") && !player.isCreative()) {
+                    if (nbt.getBoolean("wasPressed") && !player.isCreative() && !spell.isOnCooldown(player)) {
                         spell.activateCooldown(player);
                     }
                     nbt.putBoolean("wasPressed", false);
@@ -168,7 +168,7 @@ public class SpellCastingItem extends ToolItem {
                     nbt.putBoolean("wasPressed", true);
                     return true;
                 } else {
-                    if (nbt.getBoolean("wasPressed") && !player.isCreative()) {
+                    if (nbt.getBoolean("wasPressed") && !player.isCreative() && !spell.isOnCooldown(player)) {
                         spell.activateCooldown(player);
                     }
                     nbt.putBoolean("wasPressed", false);
