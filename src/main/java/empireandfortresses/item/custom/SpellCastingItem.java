@@ -47,7 +47,7 @@ public class SpellCastingItem extends ToolItem {
         this.magicAttackDamage = damage;
 		Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
 		builder.put(
-			ModEntityAttributes.GENERIC_MAGIC_ATTACK_DAMAGE,
+			ModEntityAttributes.MAGIC_ATTACK_DAMAGE,
 			new EntityAttributeModifier(UUID.fromString("07e14470-a892-4032-9bcd-ee900f68f9e5"), "Weapon modifier", (double)this.magicAttackDamage, EntityAttributeModifier.Operation.ADDITION)
 		);
 		this.attributeModifiers = builder.build();
@@ -92,7 +92,6 @@ public class SpellCastingItem extends ToolItem {
         ItemStack stack = user.getStackInHand(hand);
 
         if (!world.isClient) {
-            // user.sendMessage(Text.literal(String.valueOf(user.getAttributeValue(ModEntityAttributes.GENERIC_MAGIC_ATTACK_DAMAGE))), false);
             // user.sendMessage(Text.literal(stack.getNbt().getString("ActiveSpell")));
 
             Spell spell = Spells.getSpellById(stack.getNbt().getString("ActiveSpell"));

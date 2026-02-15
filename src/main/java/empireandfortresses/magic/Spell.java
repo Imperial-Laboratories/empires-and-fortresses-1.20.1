@@ -2,6 +2,7 @@ package empireandfortresses.magic;
 
 import empireandfortresses.EmpiresAndFortresses;
 import empireandfortresses.component.ModComponents;
+import empireandfortresses.entity.attribute.ModEntityAttributes;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.entity.player.PlayerEntity;
@@ -44,9 +45,9 @@ public abstract class Spell {
 
     public boolean XPSufficient(PlayerEntity user) {
         if (consumingXPLevel) {
-            return user.experienceLevel >= XPCost;
+            return user.experienceLevel >= XPCost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY);
         }
-        return user.totalExperience >= XPCost;
+        return user.totalExperience >= XPCost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY);
     }
 
     public boolean castable(PlayerEntity user) {
@@ -70,9 +71,9 @@ public abstract class Spell {
 
     public void consumeXP(PlayerEntity user, int cost, boolean consumesLevel) {
         if (!consumesLevel) {
-            user.addExperience(-cost);
+            user.addExperience((int)(-cost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY)));
         } else {
-            user.addExperienceLevels(-cost);
+            user.addExperienceLevels((int)(-cost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY)));
         }
     }
 
@@ -83,6 +84,6 @@ public abstract class Spell {
     }
 
     public void activateCooldown(PlayerEntity user) {
-        ModComponents.COOLDOWN_COMPONENT.get(user).setCooldown(category, maxCooldown);
+        ModComponents.COOLDOWN_COMPONENT.get(user).setCooldown(category, (int)(maxCooldown * (1 / user.getAttributeValue(ModEntityAttributes.MAGIC_AFFINITY))));
     }
 }

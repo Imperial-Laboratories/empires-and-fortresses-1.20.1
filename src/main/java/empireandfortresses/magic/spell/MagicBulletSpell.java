@@ -19,7 +19,7 @@ public class MagicBulletSpell extends Spell {
 
     @Override
     public void cast(World world, PlayerEntity user, ItemStack stack) {
-        MagicBulletEntity entity = new MagicBulletEntity(ModEntities.MAGIC_BULLET, world, (float)user.getAttributeValue(ModEntityAttributes.GENERIC_MAGIC_ATTACK_DAMAGE));
+        MagicBulletEntity entity = new MagicBulletEntity(ModEntities.MAGIC_BULLET, world, (float)user.getAttributeValue(ModEntityAttributes.MAGIC_ATTACK_DAMAGE) * (float)user.getAttributeValue(ModEntityAttributes.MAGIC_AFFINITY));
         entity.setOwner(user);
         entity.setPos(user.getX(), user.getEyeY() - 0.25f, user.getZ());
         entity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 1.0F, 1);
