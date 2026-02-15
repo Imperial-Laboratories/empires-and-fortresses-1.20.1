@@ -192,7 +192,7 @@ public class ModItems {
             new HoeItem(ModToolMaterial.AMETHYST, -7, 0f, new FabricItemSettings()));
 
     public static final Item AMETHYST_WAND = registerItem("amethyst_wand",
-        new SpellCastingItem(ModToolMaterial.AMETHYST, 5, new FabricItemSettings(), Spells.MAGIC_BULLET));
+        new SpellCastingItem(ModToolMaterial.AMETHYST, 5, new FabricItemSettings(), 5, Spells.MAGIC_BULLET));
 
     public static final Item AMETHYST_HELMET = registerItem("amethyst_helmet",
             new ArmorItem(ModArmorMaterial.AMETHYST, ArmorItem.Type.HELMET, new FabricItemSettings()));

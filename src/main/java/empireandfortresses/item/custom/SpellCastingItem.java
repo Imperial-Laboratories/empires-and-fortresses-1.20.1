@@ -36,11 +36,14 @@ public class SpellCastingItem extends ToolItem {
 
 	private final float magicAttackDamage;
 	private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
+    private final int spellSlots;
     private NbtList defaultSpells;
     private Spell defaultSpell;
 
-    public SpellCastingItem(ToolMaterial material, int damage, Settings settings, Spell defaultSpell) {
+    public SpellCastingItem(ToolMaterial material, int damage, Settings settings, int slots, Spell defaultSpell) {
         super(material, settings);
+
+        this.spellSlots = slots;
 
         this.defaultSpells = new NbtList();
 
@@ -57,7 +60,9 @@ public class SpellCastingItem extends ToolItem {
     }
 
     public void appendSpell(Spell spell) {
-        this.defaultSpells.add(spell.toNbt());
+        if (this.defaultSpells.size() < this.spellSlots) {
+            this.defaultSpells.add(spell.toNbt());
+        }
     }
 
     public int getActiveSpellIndex(ItemStack stack) {
