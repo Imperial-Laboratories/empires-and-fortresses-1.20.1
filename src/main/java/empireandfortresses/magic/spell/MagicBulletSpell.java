@@ -8,11 +8,12 @@ import empireandfortresses.entity.attribute.ModEntityAttributes;
 import empireandfortresses.entity.spell.MagicBulletEntity;
 import empireandfortresses.magic.Spell;
 import empireandfortresses.magic.SpellCategory;
+import empireandfortresses.magic.SpellTriggerCategory;
 
 public class MagicBulletSpell extends Spell {
 
     public MagicBulletSpell() {
-        super("magic_bullet", SpellCategory.OFFENSE, 15, false, 20, false, 0);
+        super("magic_bullet", SpellCategory.OFFENSE, SpellTriggerCategory.ATTACK, 15, false, 20, false, 0);
     }
 
     @Override
@@ -28,10 +29,5 @@ public class MagicBulletSpell extends Spell {
             activateCooldown(user);
             consumeXP(user, getXPCost(), isConsumingXPLevel());
         }
-    }
-
-    @Override
-    public boolean condition() {
-        return true;
     }
 }
