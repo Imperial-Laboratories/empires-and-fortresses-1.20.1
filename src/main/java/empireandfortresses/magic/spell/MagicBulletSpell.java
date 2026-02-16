@@ -1,6 +1,5 @@
 package empireandfortresses.magic.spell;
 
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -20,18 +19,11 @@ public class MagicBulletSpell extends Spell {
     @Override
     public void cast(World world, PlayerEntity user, ItemStack stack) {
         MagicBulletEntity entity = new MagicBulletEntity(ModEntities.MAGIC_BULLET, world, (float)user.getAttributeValue(ModEntityAttributes.MAGIC_ATTACK_DAMAGE) * (float)user.getAttributeValue(ModEntityAttributes.MAGIC_AFFINITY));
-        entity.setOwner(user);
-        entity.setPos(user.getX(), user.getEyeY() - 0.25f, user.getZ());
-        entity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 1.0F, 1);
-
-        world.spawnEntity(entity);
-
+        entity.spawnBullet(world, user, 1.0f, 1.0f);
         if (!user.isCreative()) {
             activateCooldown(user);
             consumeXP(user, getXPCost(), isConsumingXPLevel());
-            stack.damage(1, user, (e) -> {
-                e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
-            });
+            super.cast(world, user, stack);
         }
     }
 }

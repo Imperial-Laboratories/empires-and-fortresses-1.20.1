@@ -5,6 +5,7 @@ import empireandfortresses.component.ModComponents;
 import empireandfortresses.entity.attribute.ModEntityAttributes;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -37,7 +38,23 @@ public abstract class Spell {
         this.castTime = castTime;
     }
 
-    public abstract void cast(World world, PlayerEntity user, ItemStack stack);
+    public void cast(World world, PlayerEntity user, ItemStack stack) {
+        if (!user.isCreative()) {
+            consumeXP(user, getXPCost(), isConsumingXPLevel());
+            stack.damage(1, user, (e) -> {
+                e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
+            });
+        }
+    }
+
+    public void cast(World world, PlayerEntity user, ItemStack stack, int itemDamage) {
+        if (!user.isCreative()) {
+            consumeXP(user, getXPCost(), isConsumingXPLevel());
+            stack.damage(itemDamage, user, (e) -> {
+                e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
+            });
+        }
+    }
 
     public boolean condition() {
         return true;
@@ -51,18 +68,19 @@ public abstract class Spell {
     }
 
     public boolean castable(PlayerEntity user) {
-        if (condition() && ((XPSufficient(user) && !isOnCooldown(user)) || user.isCreative())) {
-            return true;
-        } else {
-            if(!this.XPSufficient(user)) {
-                user.sendMessage(Text.translatable("spell.emp_fort.fail.xp").formatted(Formatting.RED), true);
-            } else if(this.isOnCooldown(user)) {
-                user.sendMessage(Text.translatable("spell.emp_fort.fail.cooldown").formatted(Formatting.RED), true);
-            } else if(!this.condition()) {
-                user.sendMessage(Text.translatable("spell.emp_fort.fail.condition").formatted(Formatting.RED), true);
-            }
+        if(!this.XPSufficient(user)) {
+            user.sendMessage(Text.translatable("spell.emp_fort.fail.xp").formatted(Formatting.RED), true);
             return false;
         }
+        if(this.isOnCooldown(user)) {
+            user.sendMessage(Text.translatable("spell.emp_fort.fail.cooldown").formatted(Formatting.RED), true);
+            return false;
+        }
+        if(!this.condition()) {
+            user.sendMessage(Text.translatable("spell.emp_fort.fail.condition").formatted(Formatting.RED), true);
+            return false;
+        }
+        return true;
     }
 
     public boolean isOnCooldown(PlayerEntity user) {

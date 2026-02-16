@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.nbt.NbtCompound;
@@ -33,6 +34,22 @@ public class MagicBulletEntity extends ProjectileEntity {
     @Override
     protected void initDataTracker() {
         this.dataTracker.startTracking(DURATION, 40);
+    }
+
+    public void spawnBullet(World world, PlayerEntity user, float speed, float divergence) {
+        this.setOwner(user);
+        this.setPos(user.getX(), user.getEyeY() - 0.25f, user.getZ());
+        this.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, speed, divergence);
+        this.setDuration(this.getDuration());
+        world.spawnEntity(this);
+    }
+
+    public void spawnBullet(World world, PlayerEntity user, float speed, float divergence, int duration) {
+        this.setOwner(user);
+        this.setPos(user.getX(), user.getEyeY() - 0.25f, user.getZ());
+        this.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, speed, divergence);
+        this.setDuration(5);
+        world.spawnEntity(this);
     }
 
     @Override

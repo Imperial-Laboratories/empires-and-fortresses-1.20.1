@@ -6,7 +6,6 @@ import empireandfortresses.entity.spell.MagicBulletEntity;
 import empireandfortresses.magic.Spell;
 import empireandfortresses.magic.SpellCategory;
 import empireandfortresses.magic.SpellTriggerCategory;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -23,13 +22,13 @@ public class RapidBulletSpell extends Spell {
         NbtCompound nbt = stack.getNbt();
         int useTimer = nbt.getInt("useTimer");
         if (useTimer % 5 == 0) {
-            spawnBullet(world, user);
+            MagicBulletEntity entity = new MagicBulletEntity(ModEntities.MAGIC_BULLET, world, (float)user.getAttributeValue(ModEntityAttributes.MAGIC_ATTACK_DAMAGE) * (float)user.getAttributeValue(ModEntityAttributes.MAGIC_AFFINITY) / 8);
+            entity.spawnBullet(world, user, 2.0f, 10f, 5);
             if (!user.isCreative()) {
-                stack.damage(1, user, (e) -> {
-                    e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
-                });
+                super.cast(world, user, stack);
             }
         }
+
         // nbt modification every tick. Probably not a good idea
         if (!user.isCreative()) {
             ++useTimer;
@@ -40,14 +39,5 @@ public class RapidBulletSpell extends Spell {
             }
             consumeXP(user, getXPCost(), isConsumingXPLevel());
         }
-    }
-
-    public void spawnBullet(World world, PlayerEntity user) {
-        MagicBulletEntity entity = new MagicBulletEntity(ModEntities.MAGIC_BULLET, world, (float)user.getAttributeValue(ModEntityAttributes.MAGIC_ATTACK_DAMAGE) * (float)user.getAttributeValue(ModEntityAttributes.MAGIC_AFFINITY) / 8);
-        entity.setOwner(user);
-        entity.setPos(user.getX(), user.getEyeY() - 0.25f, user.getZ());
-        entity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 2.0f, 2.5f);
-        entity.setDuration(5);
-        world.spawnEntity(entity);
     }
 }
