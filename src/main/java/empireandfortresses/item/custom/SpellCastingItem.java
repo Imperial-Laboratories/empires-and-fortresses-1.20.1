@@ -100,7 +100,7 @@ public class SpellCastingItem extends ToolItem {
     		return TypedActionResult.pass(stack);
     	}
 
-        if (!world.isClient && user.getStackInHand(Hand.MAIN_HAND).getItem().getClass() == SpellCastingItem.class) {
+        if (!world.isClient) {
             // user.sendMessage(Text.literal(stack.getNbt().getString("ActiveSpell")));
 
             Spell spell = Spells.getSpellById(stack.getNbt().getString("ActiveSpell"));
