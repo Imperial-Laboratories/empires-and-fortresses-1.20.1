@@ -1,9 +1,11 @@
 package empireandfortresses.entity.spell;
 
+import empireandfortresses.entity.damage.ModDamageTypes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.nbt.NbtCompound;
@@ -32,6 +34,18 @@ public class MagicBulletEntity extends ProjectileEntity {
     @Override
     protected void initDataTracker() {
         this.dataTracker.startTracking(DURATION, 40);
+    }
+
+    public void spawnBullet(World world, PlayerEntity user, float speed, float divergence) {
+        spawnBullet(world, user, speed, divergence, this.getDuration());
+    }
+
+    public void spawnBullet(World world, PlayerEntity user, float speed, float divergence, int duration) {
+        this.setOwner(user);
+        this.setPos(user.getX(), user.getEyeY() - 0.25f, user.getZ());
+        this.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, speed, divergence);
+        this.setDuration(duration);
+        world.spawnEntity(this);
     }
 
     @Override
@@ -69,7 +83,7 @@ public class MagicBulletEntity extends ProjectileEntity {
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
-        entityHitResult.getEntity().damage(this.getDamageSources().magic(), this.damage);
+        entityHitResult.getEntity().damage(ModDamageTypes.of(getEntityWorld(), ModDamageTypes.SPELL), this.damage);
         this.discard();
     }
 

@@ -14,6 +14,8 @@ import empireandfortresses.entity.attribute.ModEntityAttributes;
 public class PlayerEntityMixin {
 	@Inject(method = "createPlayerAttributes", at = @At("RETURN"))
 	private static void onAddAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> info) {
-		info.getReturnValue().add(ModEntityAttributes.GENERIC_MAGIC_ATTACK_DAMAGE, 0.0);
+		info.getReturnValue().add(ModEntityAttributes.MAGIC_ATTACK_DAMAGE, 0.0)
+		.add(ModEntityAttributes.MAGIC_AFFINITY)
+		.add(ModEntityAttributes.XP_EFFICIENCY);
 	}
 }

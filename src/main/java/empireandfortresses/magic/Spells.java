@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import empireandfortresses.magic.spell.MagicBulletSpell;
+import empireandfortresses.magic.spell.RapidBulletSpell;
 
 
 public class Spells {
     public static final List<Spell> SPELL_REGISTRY = new ArrayList<>();
 
     public static final Spell MAGIC_BULLET = registerSpell(new MagicBulletSpell());
+    public static final Spell RAPID_BULLET = registerSpell(new RapidBulletSpell());
 
     public static Spell registerSpell(Spell spell) {
         SPELL_REGISTRY.add(spell);

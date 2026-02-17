@@ -3,7 +3,6 @@ package empireandfortresses.component;
 import java.util.EnumMap;
 import java.util.Map;
 
-import empireandfortresses.EmpiresAndFortresses;
 import empireandfortresses.magic.SpellCategory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;

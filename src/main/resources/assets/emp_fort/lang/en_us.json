@@ -127,7 +127,9 @@
     "advancements.emp_fort.root.title": "Empires and Fortresses",
     "advancements.emp_fort.root.description": "Welcome to Empires and Fortresses!",
 
-    "attribute.name.generic.magic_attack_damage": "Magic Attack Damage",
+    "attribute.name.magic_attack_damage": "Magic Attack Damage",
+    "attribute.name.magic_affinity": "Magic Affinity",
+    "attribute.name.xp_efficiency": "XP Efficiency",
 
     "spell.emp_fort.fail.xp": "Not enough XP!",
     "spell.emp_fort.fail.cooldown": "Cooldown has not finished!",
