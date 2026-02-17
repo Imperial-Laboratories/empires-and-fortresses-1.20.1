@@ -95,6 +95,10 @@ public class SpellCastingItem extends ToolItem {
     @Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
+        
+        if(hand != Hand.MAIN_HAND) {
+    		return TypedActionResult.pass(stack);
+    	}
 
         if (!world.isClient && user.getStackInHand(Hand.MAIN_HAND).getItem().getClass() == SpellCastingItem.class) {
             // user.sendMessage(Text.literal(stack.getNbt().getString("ActiveSpell")));
