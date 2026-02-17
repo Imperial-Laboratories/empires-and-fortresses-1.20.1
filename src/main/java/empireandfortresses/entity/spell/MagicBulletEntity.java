@@ -37,18 +37,14 @@ public class MagicBulletEntity extends ProjectileEntity {
     }
 
     public void spawnBullet(World world, PlayerEntity user, float speed, float divergence) {
-        this.setOwner(user);
-        this.setPos(user.getX(), user.getEyeY() - 0.25f, user.getZ());
-        this.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, speed, divergence);
-        this.setDuration(this.getDuration());
-        world.spawnEntity(this);
+        spawnBullet(world, user, speed, divergence, this.getDuration());
     }
 
     public void spawnBullet(World world, PlayerEntity user, float speed, float divergence, int duration) {
         this.setOwner(user);
         this.setPos(user.getX(), user.getEyeY() - 0.25f, user.getZ());
         this.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, speed, divergence);
-        this.setDuration(5);
+        this.setDuration(duration);
         world.spawnEntity(this);
     }
 

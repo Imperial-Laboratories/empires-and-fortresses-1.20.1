@@ -96,7 +96,7 @@ public class SpellCastingItem extends ToolItem {
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
 
-        if (!world.isClient && stack.getItem().getClass() == SpellCastingItem.class) {
+        if (!world.isClient && user.getStackInHand(Hand.MAIN_HAND).getItem().getClass() == SpellCastingItem.class) {
             // user.sendMessage(Text.literal(stack.getNbt().getString("ActiveSpell")));
 
             Spell spell = Spells.getSpellById(stack.getNbt().getString("ActiveSpell"));
@@ -112,14 +112,16 @@ public class SpellCastingItem extends ToolItem {
                 prevSpell(stack);
                 user.sendMessage(Text.literal(stack.getNbt().getString("ActiveSpell")));
             }
+
+    		return TypedActionResult.success(stack);
         }
 
-		return TypedActionResult.success(stack);
+		return TypedActionResult.fail(stack);
 	}
 
     @Override
     public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-        if (miner instanceof PlayerEntity && miner.getActiveItem().getItem().getClass() == SpellCastingItem.class) {
+        if (miner instanceof PlayerEntity) {
             Spell spell = Spells.getSpellById(stack.getNbt().getString("ActiveSpell"));
 
             if (spell.getTriggerCategory() == SpellTriggerCategory.USE && spell.castable((PlayerEntity)miner)) {
@@ -132,7 +134,7 @@ public class SpellCastingItem extends ToolItem {
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (attacker instanceof PlayerEntity && attacker.getActiveItem().getItem().getClass() == SpellCastingItem.class) {
+        if (attacker instanceof PlayerEntity) {
             Spell spell = Spells.getSpellById(stack.getNbt().getString("ActiveSpell"));
             World world = attacker.getWorld();
 

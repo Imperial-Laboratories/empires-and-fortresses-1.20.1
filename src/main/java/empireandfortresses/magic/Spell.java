@@ -39,12 +39,7 @@ public abstract class Spell {
     }
 
     public void cast(World world, PlayerEntity user, ItemStack stack) {
-        if (!user.isCreative()) {
-            consumeXP(user, getXPCost(), isConsumingXPLevel());
-            stack.damage(1, user, (e) -> {
-                e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
-            });
-        }
+        cast(world, user, stack, 1);
     }
 
     public void cast(World world, PlayerEntity user, ItemStack stack, int itemDamage) {

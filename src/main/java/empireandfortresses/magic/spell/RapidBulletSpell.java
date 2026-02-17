@@ -25,6 +25,7 @@ public class RapidBulletSpell extends Spell {
             MagicBulletEntity entity = new MagicBulletEntity(ModEntities.MAGIC_BULLET, world, (float)user.getAttributeValue(ModEntityAttributes.MAGIC_ATTACK_DAMAGE) * (float)user.getAttributeValue(ModEntityAttributes.MAGIC_AFFINITY) / 8);
             entity.spawnBullet(world, user, 2.0f, 10f, 5);
             if (!user.isCreative()) {
+                consumeXP(user, getXPCost(), isConsumingXPLevel());
                 super.cast(world, user, stack);
             }
         }
