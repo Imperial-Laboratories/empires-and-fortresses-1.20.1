@@ -119,7 +119,7 @@ public class SpellCastingItem extends ToolItem {
 
         }
 
-		return TypedActionResult.fail(stack);
+		return TypedActionResult.success(stack);
 	}
 
     @Override
