@@ -44,7 +44,6 @@ public abstract class Spell {
 
     public void cast(World world, PlayerEntity user, ItemStack stack, int itemDamage) {
         if (!user.isCreative()) {
-            consumeXP(user, getXPCost(), isConsumingXPLevel());
             stack.damage(itemDamage, user, (e) -> {
                 e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
             });
