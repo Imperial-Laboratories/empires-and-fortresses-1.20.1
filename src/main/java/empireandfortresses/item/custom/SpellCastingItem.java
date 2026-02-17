@@ -117,7 +117,6 @@ public class SpellCastingItem extends ToolItem {
                 user.sendMessage(Text.literal(stack.getNbt().getString("ActiveSpell")));
             }
 
-    		return TypedActionResult.success(stack);
         }
 
 		return TypedActionResult.fail(stack);
