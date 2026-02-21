@@ -22,6 +22,7 @@ import net.minecraft.util.Identifier;
 public class MagicHudOverlay implements HudRenderCallback {
 
     public static final Identifier SPELL_SLOT = new Identifier(EmpiresAndFortresses.MOD_ID, "textures/gui/spell_slot.png");
+    public static final Identifier SPELL_MARKER = new Identifier(EmpiresAndFortresses.MOD_ID, "textures/gui/spell_marker.png");
 
     @Override
     public void onHudRender(DrawContext drawContext, float tickDelta) {
@@ -47,17 +48,23 @@ public class MagicHudOverlay implements HudRenderCallback {
             NbtCompound nbt = stack.getNbt();
 
             int spellSlots = 0;
-
+            
             if (stack.getItem() instanceof SpellCastingItem) {
+                int activeSpellSlot = ((SpellCastingItem) stack.getItem()).getActiveSpellIndex(stack);
+
                 spellSlots = nbt.getInt("SpellSlots");
                 drawContext.drawTexture(SPELL_SLOT, x - 91 + inventory.selectedSlot * 20, y - 44 - (spellSlots - 1) * 22, 0, 0, 22, 22 * spellSlots, 22, 22);
 
                 NbtList list = nbt.getList("Spells", NbtElement.COMPOUND_TYPE);
+
+                drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
                 for (int i = 0; i <= list.size() - 1; i++) {
                     // player.sendMessage(Text.literal(list.getCompound(i).toString()));
                     Identifier texture = Spells.getSpellById(list.getCompound(i).getString("Id")).getSpellIcon();
                     drawContext.drawTexture(texture, x - 88 + inventory.selectedSlot * 20, y - 41 - 22 * i, 0, 0, 16, 16, 16, 16);
                 }
+
+                drawContext.drawTexture(SPELL_MARKER, x - 92 + inventory.selectedSlot * 20, y - 45 - activeSpellSlot * 22, 0, 0, 24, 24, 24, 24);
             }
         }
 
