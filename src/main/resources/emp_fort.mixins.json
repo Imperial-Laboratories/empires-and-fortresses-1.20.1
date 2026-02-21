@@ -6,7 +6,8 @@
         "EnchantingTableBlockMixin",
         "AnvilScreenHandlerMixin",
         "ServerPlayerEntityMixin",
-        "PlayerEntityMixin"
+        "PlayerEntityMixin",
+        "MouseMixin"
     ],
     "injectors": {
         "defaultRequire": 1

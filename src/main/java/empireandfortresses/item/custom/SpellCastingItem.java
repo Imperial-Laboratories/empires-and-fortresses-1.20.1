@@ -22,7 +22,6 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
@@ -101,25 +100,16 @@ public class SpellCastingItem extends ToolItem {
     	}
 
         if (!world.isClient) {
-            // user.sendMessage(Text.literal(stack.getNbt().getString("ActiveSpell")));
-
             Spell spell = Spells.getSpellById(stack.getNbt().getString("ActiveSpell"));
 
             if (spell.getTriggerCategory() == SpellTriggerCategory.USE && spell.castable(user)) {
                 spell.cast(world, user, stack);
-            }
-
-            if (!user.isSneaking()) {
-                nextSpell(stack);
-                user.sendMessage(Text.literal(stack.getNbt().getString("ActiveSpell")));
-            } else {
-                prevSpell(stack);
-                user.sendMessage(Text.literal(stack.getNbt().getString("ActiveSpell")));
+                return TypedActionResult.success(stack);
             }
 
         }
 
-		return TypedActionResult.success(stack);
+		return TypedActionResult.pass(stack);
 	}
 
     @Override

@@ -16,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class MagicHudOverlay implements HudRenderCallback {
@@ -48,7 +47,8 @@ public class MagicHudOverlay implements HudRenderCallback {
             NbtCompound nbt = stack.getNbt();
 
             int spellSlots = 0;
-            
+
+            // ? Chat messages break the Spell Slot display
             if (stack.getItem() instanceof SpellCastingItem) {
                 int activeSpellSlot = ((SpellCastingItem) stack.getItem()).getActiveSpellIndex(stack);
 
