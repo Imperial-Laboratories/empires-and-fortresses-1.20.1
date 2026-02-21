@@ -218,6 +218,10 @@ public class SpellCastingItem extends ToolItem {
             nbt.putInt("useTimer", 0);
         }
 
+        if(!nbt.contains("SpellSlots")) {
+            nbt.putInt("SpellSlots", spellSlots);
+        }
+
         if (entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity)entity;
             if (selected) {
