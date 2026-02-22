@@ -98,6 +98,8 @@ public abstract class Spell {
     }
 
     public void activateCooldown(PlayerEntity user) {
-        ModComponents.COOLDOWN_COMPONENT.get(user).setCooldown(category, (int)(maxCooldown * (1 / user.getAttributeValue(ModEntityAttributes.MAGIC_AFFINITY))));
+        int cooldown = (int)(maxCooldown * (1 / user.getAttributeValue(ModEntityAttributes.MAGIC_AFFINITY)));
+        ModComponents.COOLDOWN_COMPONENT.get(user).setCooldown(category, cooldown);
+        ModComponents.COOLDOWN_COMPONENT.get(user).setMaxCooldown(category, cooldown);
     }
 }

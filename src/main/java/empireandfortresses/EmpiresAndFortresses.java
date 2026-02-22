@@ -33,7 +33,8 @@ public class EmpiresAndFortresses implements ModInitializer {
         ModCommands.registerCommands();
         ModEntities.registerEntities();
         ModEntityAttributes.registerAttributes();
-        ModMessages.registerC2SPackets();;
+        ModMessages.registerC2SPackets();
+        ModMessages.registerS2CPackets();
 
         BorderVisibilityManager.initialize();
     }

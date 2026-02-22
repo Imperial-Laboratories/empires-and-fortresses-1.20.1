@@ -3,14 +3,19 @@ package empireandfortresses.client;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import empireandfortresses.EmpiresAndFortresses;
+import empireandfortresses.component.ModComponents;
+import empireandfortresses.component.PlayerCooldownComponent;
 import empireandfortresses.event.KeyInputHandler;
 import empireandfortresses.item.custom.SpellCastingItem;
+import empireandfortresses.magic.Spell;
+import empireandfortresses.magic.SpellCategory;
 import empireandfortresses.magic.Spells;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -22,6 +27,7 @@ public class MagicHudOverlay implements HudRenderCallback {
 
     public static final Identifier SPELL_SLOT = new Identifier(EmpiresAndFortresses.MOD_ID, "textures/gui/spell_slot.png");
     public static final Identifier SPELL_MARKER = new Identifier(EmpiresAndFortresses.MOD_ID, "textures/gui/spell_marker.png");
+    public static final Identifier SPELL_COOLDOWN = new Identifier(EmpiresAndFortresses.MOD_ID, "textures/gui/spell_cooldown.png");
 
     @Override
     public void onHudRender(DrawContext drawContext, float tickDelta) {
@@ -57,13 +63,25 @@ public class MagicHudOverlay implements HudRenderCallback {
 
                 NbtList list = nbt.getList("Spells", NbtElement.COMPOUND_TYPE);
 
-                drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
                 for (int i = 0; i <= list.size() - 1; i++) {
-                    // player.sendMessage(Text.literal(list.getCompound(i).toString()));
-                    Identifier texture = Spells.getSpellById(list.getCompound(i).getString("Id")).getSpellIcon();
-                    drawContext.drawTexture(texture, x - 88 + inventory.selectedSlot * 20, y - 41 - 22 * i, 0, 0, 16, 16, 16, 16);
+                    Spell spell = Spells.getSpellById(list.getCompound(i).getString("Id"));
+                    Identifier texture = spell.getSpellIcon();
+                    SpellCategory category = spell.getCategory();
+                    PlayerCooldownComponent component = (PlayerCooldownComponent)(ModComponents.COOLDOWN_COMPONENT.get((PlayerEntity)player));
+
+                    int maxCooldown = component.getMaxCooldown(category);
+                    int cooldownProgress = (int)(16 * ((float)component.getCooldown(category) / (float)maxCooldown));
+                    int slotX = x - 88 + inventory.selectedSlot * 20;
+                    int slotY = y - 41 - 22 * i;
+
+                    drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+                    drawContext.drawTexture(texture, slotX, slotY, 0, 0, 16, 16, 16, 16);
+
+                    drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 0.5f);
+                    drawContext.drawTexture(SPELL_COOLDOWN, slotX, slotY + 16 - cooldownProgress, 0, 0, 16, cooldownProgress, 16, 16);
                 }
 
+                drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
                 drawContext.drawTexture(SPELL_MARKER, x - 92 + inventory.selectedSlot * 20, y - 45 - activeSpellSlot * 22, 0, 0, 24, 24, 24, 24);
             }
         }
