@@ -42,6 +42,12 @@ public class MagicHudOverlay implements HudRenderCallback {
             y = height;
         }
 
+        drawContext.getMatrices().push();
+        drawContext.getMatrices().translate(0, 0, 101);
+
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 0.85f);
         RenderSystem.setShaderTexture(0, SPELL_SLOT);
@@ -54,7 +60,6 @@ public class MagicHudOverlay implements HudRenderCallback {
 
             int spellSlots = 0;
 
-            // ? Chat messages break the Spell Slot display
             if (stack.getItem() instanceof SpellCastingItem) {
                 int activeSpellSlot = ((SpellCastingItem) stack.getItem()).getActiveSpellIndex(stack);
 
@@ -87,5 +92,7 @@ public class MagicHudOverlay implements HudRenderCallback {
         }
 
         drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+        RenderSystem.disableBlend();
+        drawContext.getMatrices().pop();
     }
 }
