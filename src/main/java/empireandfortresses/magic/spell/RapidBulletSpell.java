@@ -33,13 +33,15 @@ public class RapidBulletSpell extends Spell {
         }
 
         // nbt modification every tick. Probably not a good idea
-        if (!user.isCreative()) {
-            ++useTimer;
-            nbt.putInt("useTimer", useTimer);
-            if (useTimer >= getCastTime()) {
-                nbt.putInt("useTimer", 0);
+        ++useTimer;
+        nbt.putInt("useTimer", useTimer);
+        if (useTimer >= getCastTime()) {
+            nbt.putInt("useTimer", 0);
+            if (!user.isCreative()) {
                 activateCooldown(user);
             }
+        }
+        if (!user.isCreative()) {
             consumeXP(user, getXPCost(), isConsumingXPLevel());
         }
     }

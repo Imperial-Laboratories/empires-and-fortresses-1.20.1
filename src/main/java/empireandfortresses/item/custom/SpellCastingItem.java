@@ -157,10 +157,11 @@ public class SpellCastingItem extends ToolItem {
                     nbt.putBoolean("wasPressed", true);
                     return true;
                 } else {
-                    if (nbt.getBoolean("wasPressed") && !player.isCreative() && !spell.isOnCooldown(player)) {
+                    if (nbt.getBoolean("wasPressed") && !player.isCreative() && spell.castable(player)) {
                         spell.activateCooldown(player);
                     }
                     nbt.putBoolean("wasPressed", false);
+                    nbt.putInt("useTimer", 0);
                     return false;
                 }
             case HOLD_USE:
@@ -168,10 +169,11 @@ public class SpellCastingItem extends ToolItem {
                     nbt.putBoolean("wasPressed", true);
                     return true;
                 } else {
-                    if (nbt.getBoolean("wasPressed") && !player.isCreative() && !spell.isOnCooldown(player)) {
+                    if (nbt.getBoolean("wasPressed") && !player.isCreative() && spell.castable(player)) {
                         spell.activateCooldown(player);
                     }
                     nbt.putBoolean("wasPressed", false);
+                    nbt.putInt("useTimer", 0);
                     return false;
                 }
             default:
