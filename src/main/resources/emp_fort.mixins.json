@@ -7,7 +7,8 @@
         "AnvilScreenHandlerMixin",
         "ServerPlayerEntityMixin",
         "PlayerEntityMixin",
-        "MouseMixin"
+        "MouseMixin",
+        "MinecraftClientMixin"
     ],
     "injectors": {
         "defaultRequire": 1
