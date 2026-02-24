@@ -102,6 +102,16 @@ public class MagicHudOverlay implements HudRenderCallback {
 
         }
 
+        SpellCategory category = activeSpell.getCategory();
+        PlayerCooldownComponent component = (PlayerCooldownComponent)(ModComponents.COOLDOWN_COMPONENT.get((PlayerEntity)player));
+
+        int maxCooldown = component.getMaxCooldown(category);
+        int cooldownProgress = (int)(16 * ((float)component.getCooldown(category) / (float)maxCooldown));
+
+        drawContext.getMatrices().translate(0, 0, 105);
+        drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 0.5f);
+        drawContext.drawTexture(SPELL_COOLDOWN, x - 88 + inventory.selectedSlot * 20, y - 3 - cooldownProgress, 0, 0, 16, cooldownProgress, 16, 16);
+
         // TODO: render position not final yet
         SpellTriggerCategory triggerCategory = activeSpell.getTriggerCategory();
         if (((SpellCastingItem) stack.getItem()).isTriggeringSpell(player, nbt, activeSpell) && activeSpell.castable(player) && (triggerCategory == SpellTriggerCategory.HOLD_ATTACK || triggerCategory == SpellTriggerCategory.HOLD_USE)) {
