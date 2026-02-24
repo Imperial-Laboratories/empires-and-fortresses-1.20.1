@@ -94,6 +94,8 @@
     "item.emp_fort.amethyst_leggings": "Amethyst Leggings",
     "item.emp_fort.amethyst_boots": "Amethyst Boots",
 
+    "item.emp_fort.amethyst_wand.lore": "What a wand-erful feeling, having Magic!",
+
     "item.emp_fort.platinum_sword": "Platinum Sword",
     "item.emp_fort.platinum_pickaxe": "Platinum Pickaxe",
     "item.emp_fort.platinum_axe": "Platinum Axe",
@@ -124,6 +126,9 @@
     "item.emp_fort.adamant_leggings": "Adamant Leggings",
     "item.emp_fort.adamant_boots": "Adamant Boots",
 
+
+    "tooltip.emp_fort.spells": "Stored Spells:",
+
     "advancements.emp_fort.root.title": "Empires and Fortresses",
     "advancements.emp_fort.root.description": "Welcome to Empires and Fortresses!",
 
@@ -135,5 +140,8 @@
 
     "spell.emp_fort.fail.xp": "Not enough XP!",
     "spell.emp_fort.fail.cooldown": "Cooldown has not finished!",
-    "spell.emp_fort.fail.condition": "Cannot cast right now!"
+    "spell.emp_fort.fail.condition": "Cannot cast right now!",
+
+    "spell.emp_fort.magic_bullet": "Magic Bullet",
+    "spell.emp_fort.rapid_bullet": "Rapid Bullet"
 }

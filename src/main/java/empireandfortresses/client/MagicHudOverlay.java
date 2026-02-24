@@ -79,7 +79,7 @@ public class MagicHudOverlay implements HudRenderCallback {
 
             NbtList list = nbt.getList("Spells", NbtElement.COMPOUND_TYPE);
 
-            for (int i = 0; i <= list.size() - 1; i++) {
+            for (int i = 0; i <= list.size() - 1; ++i) {
                 Spell spell = Spells.getSpellById(list.getCompound(i).getString("Id"));
                 Identifier texture = spell.getSpellIcon();
                 SpellCategory category = spell.getCategory();
