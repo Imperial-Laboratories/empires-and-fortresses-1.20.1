@@ -26,8 +26,9 @@ public abstract class Spell {
     private final int maxCooldown;
     private final boolean chargable;
     private final int castTime;
+    private final Identifier spellIcon;
 
-    public Spell(String id, SpellCategory category, SpellTriggerCategory triggerCategory, int cost, boolean consumingXPLevel, int maxCooldown, boolean chargable, int castTime) {
+    public Spell(String id, SpellCategory category, SpellTriggerCategory triggerCategory, int cost, boolean consumingXPLevel, int maxCooldown, boolean chargable, int castTime, Identifier spellIcon) {
         this.spellID = new Identifier(EmpiresAndFortresses.MOD_ID, id);
         this.category = category;
         this.triggerCategory = triggerCategory;
@@ -36,6 +37,7 @@ public abstract class Spell {
         this.maxCooldown = maxCooldown;
         this.chargable = chargable;
         this.castTime = castTime;
+        this.spellIcon = spellIcon;
     }
 
     public void cast(World world, PlayerEntity user, ItemStack stack) {
@@ -96,6 +98,8 @@ public abstract class Spell {
     }
 
     public void activateCooldown(PlayerEntity user) {
-        ModComponents.COOLDOWN_COMPONENT.get(user).setCooldown(category, (int)(maxCooldown * (1 / user.getAttributeValue(ModEntityAttributes.MAGIC_AFFINITY))));
+        int cooldown = (int)(maxCooldown * (1 / user.getAttributeValue(ModEntityAttributes.MAGIC_AFFINITY)));
+        ModComponents.COOLDOWN_COMPONENT.get(user).setCooldown(category, cooldown);
+        ModComponents.COOLDOWN_COMPONENT.get(user).setMaxCooldown(category, cooldown);
     }
 }

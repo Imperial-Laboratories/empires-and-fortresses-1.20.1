@@ -1,5 +1,6 @@
 package empireandfortresses.item.custom;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
@@ -9,6 +10,7 @@ import com.google.common.collect.Multimap;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
@@ -23,6 +25,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
@@ -101,25 +104,16 @@ public class SpellCastingItem extends ToolItem {
     	}
 
         if (!world.isClient) {
-            // user.sendMessage(Text.literal(stack.getNbt().getString("ActiveSpell")));
-
             Spell spell = Spells.getSpellById(stack.getNbt().getString("ActiveSpell"));
 
             if (spell.getTriggerCategory() == SpellTriggerCategory.USE && spell.castable(user)) {
                 spell.cast(world, user, stack);
-            }
-
-            if (!user.isSneaking()) {
-                nextSpell(stack);
-                user.sendMessage(Text.literal(stack.getNbt().getString("ActiveSpell")));
-            } else {
-                prevSpell(stack);
-                user.sendMessage(Text.literal(stack.getNbt().getString("ActiveSpell")));
+                return TypedActionResult.success(stack);
             }
 
         }
 
-		return TypedActionResult.success(stack);
+		return TypedActionResult.pass(stack);
 	}
 
     @Override
@@ -167,10 +161,11 @@ public class SpellCastingItem extends ToolItem {
                     nbt.putBoolean("wasPressed", true);
                     return true;
                 } else {
-                    if (nbt.getBoolean("wasPressed") && !player.isCreative() && !spell.isOnCooldown(player)) {
+                    if (nbt.getBoolean("wasPressed") && !player.isCreative() && spell.castable(player)) {
                         spell.activateCooldown(player);
                     }
                     nbt.putBoolean("wasPressed", false);
+                    nbt.putInt("useTimer", 0);
                     return false;
                 }
             case HOLD_USE:
@@ -178,10 +173,11 @@ public class SpellCastingItem extends ToolItem {
                     nbt.putBoolean("wasPressed", true);
                     return true;
                 } else {
-                    if (nbt.getBoolean("wasPressed") && !player.isCreative() && !spell.isOnCooldown(player)) {
+                    if (nbt.getBoolean("wasPressed") && !player.isCreative() && spell.castable(player)) {
                         spell.activateCooldown(player);
                     }
                     nbt.putBoolean("wasPressed", false);
+                    nbt.putInt("useTimer", 0);
                     return false;
                 }
             default:
@@ -218,6 +214,10 @@ public class SpellCastingItem extends ToolItem {
             nbt.putInt("useTimer", 0);
         }
 
+        if(!nbt.contains("SpellSlots")) {
+            nbt.putInt("SpellSlots", spellSlots);
+        }
+
         if (entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity)entity;
             if (selected) {
@@ -229,5 +229,23 @@ public class SpellCastingItem extends ToolItem {
                 }
             }
         }
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
+        NbtCompound nbt = stack.getNbt();
+        NbtList list = nbt.getList("Spells", NbtElement.COMPOUND_TYPE);
+
+        tooltip.add(Text.translatable("item.emp_fort." + this.asItem().toString() + ".lore"));
+        tooltip.add(Text.empty());
+        tooltip.add(Text.translatable("tooltip.emp_fort.spells").formatted(Formatting.GRAY));
+        for (int i = 0; i <= list.size() - 1; ++i) {
+            if (i == getActiveSpellIndex(stack)) {
+                tooltip.add(Text.literal("  [").formatted(Formatting.AQUA).append(Text.translatable("spell.emp_fort." + Spells.getSpellById(list.getCompound(i).getString("Id")).getSpellID().getPath()).formatted(Formatting.LIGHT_PURPLE)).append(Text.literal("]").formatted(Formatting.AQUA)));
+            } else {
+                tooltip.add(Text.literal("  ").append(Text.translatable("spell.emp_fort." + Spells.getSpellById(list.getCompound(i).getString("Id")).getSpellID().getPath())).formatted(Formatting.DARK_PURPLE));
+            }
+        }
+        super.appendTooltip(stack, world, tooltip, context);
     }
 }

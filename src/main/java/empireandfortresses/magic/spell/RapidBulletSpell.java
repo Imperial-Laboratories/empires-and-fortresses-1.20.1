@@ -1,5 +1,6 @@
 package empireandfortresses.magic.spell;
 
+import empireandfortresses.EmpiresAndFortresses;
 import empireandfortresses.entity.ModEntities;
 import empireandfortresses.entity.attribute.ModEntityAttributes;
 import empireandfortresses.entity.spell.MagicBulletEntity;
@@ -9,12 +10,13 @@ import empireandfortresses.magic.SpellTriggerCategory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 public class RapidBulletSpell extends Spell {
 
     public RapidBulletSpell() {
-        super("rapid_bullet", SpellCategory.OFFENSE, SpellTriggerCategory.HOLD_ATTACK, 1, false, 120, false, 100);
+        super("rapid_bullet", SpellCategory.OFFENSE, SpellTriggerCategory.HOLD_ATTACK, 1, false, 120, false, 100, new Identifier(EmpiresAndFortresses.MOD_ID, "textures/gui/spell/rapid_bullet.png"));
     }
 
     @Override
@@ -31,13 +33,15 @@ public class RapidBulletSpell extends Spell {
         }
 
         // nbt modification every tick. Probably not a good idea
-        if (!user.isCreative()) {
-            ++useTimer;
-            nbt.putInt("useTimer", useTimer);
-            if (useTimer >= getCastTime()) {
-                nbt.putInt("useTimer", 0);
+        ++useTimer;
+        nbt.putInt("useTimer", useTimer);
+        if (useTimer >= getCastTime()) {
+            nbt.putInt("useTimer", 0);
+            if (!user.isCreative()) {
                 activateCooldown(user);
             }
+        }
+        if (!user.isCreative()) {
             consumeXP(user, getXPCost(), isConsumingXPLevel());
         }
     }
