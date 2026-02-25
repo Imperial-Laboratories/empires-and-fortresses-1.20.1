@@ -1,5 +1,8 @@
 package empireandfortresses.entity.spell;
 
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
+
 import empireandfortresses.entity.damage.ModDamageTypes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataTracker;
@@ -14,6 +17,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class MagicBulletEntity extends ProjectileEntity {
@@ -36,14 +40,24 @@ public class MagicBulletEntity extends ProjectileEntity {
         this.dataTracker.startTracking(DURATION, 40);
     }
 
-    public void spawnBullet(World world, PlayerEntity user, float speed, float divergence) {
-        spawnBullet(world, user, speed, divergence, this.getDuration());
+    public void spawnBullet(World world, PlayerEntity user, float speed, float divergence, float angle) {
+        spawnBullet(world, user, speed, divergence, this.getDuration(), angle);
     }
 
-    public void spawnBullet(World world, PlayerEntity user, float speed, float divergence, int duration) {
+    public void spawnBullet(World world, PlayerEntity user, float speed, float divergence) {
+        spawnBullet(world, user, speed, divergence, this.getDuration(), 0);
+    }
+
+    public void spawnBullet(World world, PlayerEntity user, float speed, float divergence, int duration, float angle) {
         this.setOwner(user);
         this.setPos(user.getX(), user.getEyeY() - 0.25f, user.getZ());
-        this.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, speed, divergence);
+
+        Vec3d oppositeRotationVector = user.getOppositeRotationVector(1.0F);
+        Quaternionf quaternionf = (new Quaternionf()).setAngleAxis(angle * 0.017453292F, oppositeRotationVector.x, oppositeRotationVector.y, oppositeRotationVector.z);
+        Vec3d rotationVector = user.getRotationVec(1.0F);
+        Vector3f rotatedVector = rotationVector.toVector3f().rotate(quaternionf);
+
+        this.setVelocity(rotatedVector.x, rotatedVector.y, rotatedVector.z, speed, divergence);
         this.setDuration(duration);
         world.spawnEntity(this);
     }
@@ -71,7 +85,7 @@ public class MagicBulletEntity extends ProjectileEntity {
         if (this.getWorld().isClient) {
             return;
         }
-        ((ServerWorld)this.getWorld()).spawnParticles(ParticleTypes.WITCH, this.getX(), this.getY() + 0.15d, this.getZ(), 1, 0, 0, 0, 0);
+        ((ServerWorld) this.getWorld()).spawnParticles(ParticleTypes.WITCH, this.getX(), this.getY() + 0.15d, this.getZ(), 1, 0, 0, 0, 0);
     }
 
     @Override
@@ -89,7 +103,7 @@ public class MagicBulletEntity extends ProjectileEntity {
 
     @Override
     protected void writeCustomDataToNbt(NbtCompound nbt) {
-        nbt.putShort("Duration", (short)this.getDuration());
+        nbt.putShort("Duration", (short) this.getDuration());
     }
 
     @Override
@@ -97,12 +111,16 @@ public class MagicBulletEntity extends ProjectileEntity {
         this.setDuration(nbt.getShort("Duration"));
     }
 
-	public void setDuration(int duration) {
-		this.dataTracker.set(DURATION, duration);
-	}
+    public void setDuration(int duration) {
+        this.dataTracker.set(DURATION, duration);
+    }
 
-	public int getDuration() {
-		return this.dataTracker.get(DURATION);
-	}
+    public int getDuration() {
+        return this.dataTracker.get(DURATION);
+    }
+
+    public float getDamage() {
+        return damage;
+    }
 
 }

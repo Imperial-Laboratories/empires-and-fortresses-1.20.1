@@ -64,15 +64,15 @@ public abstract class Spell {
     }
 
     public boolean castable(PlayerEntity user) {
-        if(!this.XPSufficient(user)) {
+        if (!this.XPSufficient(user)) {
             user.sendMessage(Text.translatable("spell.emp_fort.fail.xp").formatted(Formatting.RED), true);
             return false;
         }
-        if(this.isOnCooldown(user)) {
+        if (this.isOnCooldown(user)) {
             user.sendMessage(Text.translatable("spell.emp_fort.fail.cooldown").formatted(Formatting.RED), true);
             return false;
         }
-        if(!this.condition()) {
+        if (!this.condition()) {
             user.sendMessage(Text.translatable("spell.emp_fort.fail.condition").formatted(Formatting.RED), true);
             return false;
         }
@@ -85,10 +85,14 @@ public abstract class Spell {
 
     public void consumeXP(PlayerEntity user, int cost, boolean consumesLevel) {
         if (!consumesLevel) {
-            user.addExperience((int)(-cost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY)));
+            user.addExperience((int) (-cost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY)));
         } else {
-            user.addExperienceLevels((int)(-cost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY)));
+            user.addExperienceLevels((int) (-cost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY)));
         }
+    }
+
+    public void consumeXP(PlayerEntity user) {
+        consumeXP(user, getXPCost(), isConsumingXPLevel());
     }
 
     public NbtCompound toNbt() {
@@ -98,7 +102,7 @@ public abstract class Spell {
     }
 
     public void activateCooldown(PlayerEntity user) {
-        int cooldown = (int)(maxCooldown * (1 / user.getAttributeValue(ModEntityAttributes.MAGIC_AFFINITY)));
+        int cooldown = (int) (maxCooldown * (1 / user.getAttributeValue(ModEntityAttributes.MAGIC_AFFINITY)));
         ModComponents.COOLDOWN_COMPONENT.get(user).setCooldown(category, cooldown);
         ModComponents.COOLDOWN_COMPONENT.get(user).setMaxCooldown(category, cooldown);
     }

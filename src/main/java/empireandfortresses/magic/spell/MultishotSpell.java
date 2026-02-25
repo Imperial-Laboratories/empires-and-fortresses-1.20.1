@@ -12,17 +12,20 @@ import empireandfortresses.magic.Spell;
 import empireandfortresses.magic.SpellCategory;
 import empireandfortresses.magic.SpellTriggerCategory;
 
-public class MagicBulletSpell extends Spell {
+public class MultishotSpell extends Spell {
 
-    public MagicBulletSpell() {
-        super("magic_bullet", SpellCategory.OFFENSE, SpellTriggerCategory.ATTACK, 15, false, 20, false, 0, new Identifier(EmpiresAndFortresses.MOD_ID, "textures/gui/spell/magic_bullet.png"));
+    public MultishotSpell() {
+        super("multishot", SpellCategory.OFFENSE, SpellTriggerCategory.ATTACK, 2, true, 30, false, 0, new Identifier(EmpiresAndFortresses.MOD_ID, "textures/gui/spell/multishot.png"));
     }
 
     @Override
     public void cast(World world, PlayerEntity user, ItemStack stack) {
-        MagicBulletEntity entity = new MagicBulletEntity(ModEntities.MAGIC_BULLET, world,
-                (float) user.getAttributeValue(ModEntityAttributes.MAGIC_ATTACK_DAMAGE) * (float) user.getAttributeValue(ModEntityAttributes.MAGIC_AFFINITY));
-        entity.spawnBullet(world, user, 1.0f, 1.0f);
+
+        for (int i = -1; i <= 1; i++) {
+            MagicBulletEntity entity = new MagicBulletEntity(ModEntities.MAGIC_BULLET, world,
+                    (float) user.getAttributeValue(ModEntityAttributes.MAGIC_ATTACK_DAMAGE) * (float) user.getAttributeValue(ModEntityAttributes.MAGIC_AFFINITY) / 3);
+            entity.spawnBullet(world, user, 1.0f, 1f, 10f * i);
+        }
         if (!user.isCreative()) {
             activateCooldown(user);
             consumeXP(user);
