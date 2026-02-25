@@ -47,7 +47,6 @@ public class MinecraftClientMixin {
             NbtList list = nbt.getList("Spells", NbtElement.COMPOUND_TYPE);
             for (int j = 0; j < list.size(); ++j) {
                 if (options.hotbarKeys[j].wasPressed()) {
-                    EmpiresAndFortresses.LOGGER.info(String.valueOf(j));
                     PacketByteBuf buf = PacketByteBufs.create();
                     buf.writeInt(j);
                     ClientPlayNetworking.send(ModMessages.SET_SPELL_ID, buf);
