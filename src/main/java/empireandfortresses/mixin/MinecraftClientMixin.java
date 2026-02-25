@@ -4,7 +4,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
-import empireandfortresses.EmpiresAndFortresses;
 import empireandfortresses.event.KeyInputHandler;
 import empireandfortresses.item.custom.SpellCastingItem;
 import empireandfortresses.magic.Spell;
@@ -16,7 +15,6 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.GameOptions;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -38,7 +36,8 @@ public class MinecraftClientMixin {
         Spell activeSpell = Spells.getSpellById(nbt.getString("ActiveSpell"));
         SpellTriggerCategory triggerCategory = activeSpell.getTriggerCategory();
 
-        if ((((SpellCastingItem) stack.getItem()).isTriggeringSpell((PlayerEntity)player, nbt, activeSpell) && activeSpell.castable((PlayerEntity)player) && (triggerCategory == SpellTriggerCategory.HOLD_ATTACK || triggerCategory == SpellTriggerCategory.HOLD_USE))) {
+        if ((((SpellCastingItem) stack.getItem()).isTriggeringSpell(player, nbt, activeSpell) && activeSpell.castable(player)
+                && (triggerCategory == SpellTriggerCategory.HOLD_ATTACK || triggerCategory == SpellTriggerCategory.HOLD_USE))) {
             return 0;
         }
 
