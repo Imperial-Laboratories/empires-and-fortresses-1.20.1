@@ -7,6 +7,7 @@ import empireandfortresses.magic.spell.MagicBulletSpell;
 import empireandfortresses.magic.spell.MultishotSpell;
 import empireandfortresses.magic.spell.RapidBulletSpell;
 import empireandfortresses.magic.spell.ReactiveBulletSpell;
+import net.minecraft.util.Identifier;
 
 public class Spells {
     protected static final List<Spell> SPELL_REGISTRY = new ArrayList<>();
@@ -23,5 +24,25 @@ public class Spells {
 
     public static Spell getSpellById(String id) {
         return SPELL_REGISTRY.stream().filter(s -> s.getSpellID().toString().equals(id)).findFirst().orElse(null);
+    }
+
+    public static List<String> getAllSpellIdsAsString() {
+        List<String> names = new ArrayList<>();
+        for (Spell spell : SPELL_REGISTRY) {
+            names.add(spell.getSpellID().toString());
+        }
+        return names;
+    }
+
+    public static List<Spell> getAllSpells() {
+        return new ArrayList<>(SPELL_REGISTRY);
+    }
+
+    public static List<Identifier> getAllSpellIds() {
+        List<Identifier> ids = new ArrayList<>();
+        for (Spell spell : SPELL_REGISTRY) {
+            ids.add(spell.getSpellID());
+        }
+        return ids;
     }
 }
