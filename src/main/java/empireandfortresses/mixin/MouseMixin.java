@@ -16,7 +16,6 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 
@@ -36,7 +35,8 @@ public class MouseMixin {
             Spell activeSpell = Spells.getSpellById(nbt.getString("ActiveSpell"));
             SpellTriggerCategory triggerCategory = activeSpell.getTriggerCategory();
 
-            if ((((SpellCastingItem) stack.getItem()).isTriggeringSpell((PlayerEntity)player, nbt, activeSpell) && activeSpell.castable((PlayerEntity)player) && (triggerCategory == SpellTriggerCategory.HOLD_ATTACK || triggerCategory == SpellTriggerCategory.HOLD_USE))) {
+            if ((((SpellCastingItem) stack.getItem()).isTriggeringSpell(player, nbt, activeSpell) && activeSpell.castable(player)
+                    && (triggerCategory == SpellTriggerCategory.HOLD_ATTACK || triggerCategory == SpellTriggerCategory.HOLD_USE))) {
                 info.cancel();
                 return;
             }

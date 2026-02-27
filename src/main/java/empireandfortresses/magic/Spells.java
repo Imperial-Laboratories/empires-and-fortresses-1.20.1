@@ -27,11 +27,7 @@ public class Spells {
     }
 
     public static List<String> getAllSpellIdsAsString() {
-        List<String> names = new ArrayList<>();
-        for (Spell spell : SPELL_REGISTRY) {
-            names.add(spell.getSpellID().toString());
-        }
-        return names;
+        return getAllSpellIds().stream().map(Identifier::toString).toList();
     }
 
     public static List<Spell> getAllSpells() {
@@ -39,10 +35,6 @@ public class Spells {
     }
 
     public static List<Identifier> getAllSpellIds() {
-        List<Identifier> ids = new ArrayList<>();
-        for (Spell spell : SPELL_REGISTRY) {
-            ids.add(spell.getSpellID());
-        }
-        return ids;
+        return SPELL_REGISTRY.stream().map(Spell::getSpellID).toList();
     }
 }

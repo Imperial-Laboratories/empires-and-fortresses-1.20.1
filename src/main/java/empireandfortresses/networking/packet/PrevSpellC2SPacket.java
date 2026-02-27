@@ -8,13 +8,13 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 
+@SuppressWarnings("java:S1172")
 public class PrevSpellC2SPacket {
-    public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler,
-        PacketByteBuf buf, PacketSender responseSender) {
-            ItemStack stack = player.getMainHandStack();
+    public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
+        ItemStack stack = player.getMainHandStack();
 
-            if (stack.getItem() instanceof SpellCastingItem) {
-                ((SpellCastingItem) stack.getItem()).prevSpell(stack);
-            }
+        if (stack.getItem() instanceof SpellCastingItem item) {
+            item.prevSpell(stack);
         }
+    }
 }
