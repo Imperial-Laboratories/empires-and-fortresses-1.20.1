@@ -41,12 +41,15 @@ public class MagicHudOverlay implements HudRenderCallback {
         PlayerInventory inventory = player.getInventory();
         ItemStack stack = player.getMainHandStack();
         NbtCompound nbt = stack.getNbt();
-        
+
         if (!(stack.getItem() instanceof SpellCastingItem) || client.options.hudHidden) {
             return;
         }
 
         Spell activeSpell = Spells.getSpellById(nbt.getString("ActiveSpell"));
+        if (activeSpell == null) {
+            return;
+        }
 
         int x = 0;
         int y = 0;
@@ -68,7 +71,7 @@ public class MagicHudOverlay implements HudRenderCallback {
         drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 0.85f);
         RenderSystem.setShaderTexture(0, SPELL_SLOT);
 
-        if (KeyInputHandler.magicKey.isPressed() && !((SpellCastingItem)stack.getItem()).isTriggeringSpell(player, nbt, activeSpell)) {
+        if (KeyInputHandler.magicKey.isPressed() && !((SpellCastingItem) stack.getItem()).isTriggeringSpell(player, nbt, activeSpell)) {
 
             int spellSlots = 0;
 
@@ -83,10 +86,10 @@ public class MagicHudOverlay implements HudRenderCallback {
                 Spell spell = Spells.getSpellById(list.getCompound(i).getString("Id"));
                 Identifier texture = spell.getSpellIcon();
                 SpellCategory category = spell.getCategory();
-                PlayerCooldownComponent component = (PlayerCooldownComponent)(ModComponents.COOLDOWN_COMPONENT.get((PlayerEntity)player));
+                PlayerCooldownComponent component = (PlayerCooldownComponent) (ModComponents.COOLDOWN_COMPONENT.get((PlayerEntity) player));
 
                 int maxCooldown = component.getMaxCooldown(category);
-                int cooldownProgress = (int)(16 * ((float)component.getCooldown(category) / (float)maxCooldown));
+                int cooldownProgress = (int) (16 * ((float) component.getCooldown(category) / (float) maxCooldown));
                 int slotX = x - 88 + inventory.selectedSlot * 20;
                 int slotY = y - 41 - 22 * i;
 
@@ -103,10 +106,10 @@ public class MagicHudOverlay implements HudRenderCallback {
         }
 
         SpellCategory category = activeSpell.getCategory();
-        PlayerCooldownComponent component = (PlayerCooldownComponent)(ModComponents.COOLDOWN_COMPONENT.get((PlayerEntity)player));
+        PlayerCooldownComponent component = (PlayerCooldownComponent) (ModComponents.COOLDOWN_COMPONENT.get((PlayerEntity) player));
 
         int maxCooldown = component.getMaxCooldown(category);
-        int cooldownProgress = (int)(16 * ((float)component.getCooldown(category) / (float)maxCooldown));
+        int cooldownProgress = (int) (16 * ((float) component.getCooldown(category) / (float) maxCooldown));
 
         drawContext.getMatrices().translate(0, 0, 105);
         drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 0.5f);
@@ -114,14 +117,15 @@ public class MagicHudOverlay implements HudRenderCallback {
 
         // TODO: render position not final yet
         SpellTriggerCategory triggerCategory = activeSpell.getTriggerCategory();
-        if (((SpellCastingItem) stack.getItem()).isTriggeringSpell(player, nbt, activeSpell) && activeSpell.castable(player) && (triggerCategory == SpellTriggerCategory.HOLD_ATTACK || triggerCategory == SpellTriggerCategory.HOLD_USE)) {
+        if (((SpellCastingItem) stack.getItem()).isTriggeringSpell(player, nbt, activeSpell) && activeSpell.castable(player)
+                && (triggerCategory == SpellTriggerCategory.HOLD_ATTACK || triggerCategory == SpellTriggerCategory.HOLD_USE)) {
             drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
             drawContext.getMatrices().translate(0, 0, -1);
             drawContext.drawTexture(SPELL_BACKGROUND, x - 91, y - 55, 0, 0, 182, 5, 182, 5);
 
             int useTimer = nbt.getInt("useTimer");
             int castTime = Spells.getSpellById(nbt.getString("ActiveSpell")).getCastTime();
-            drawContext.drawTexture(SPELL_CAST_PROGRESS, x - 91, y - 55, 0, 0, (int)(182 * (float)useTimer / (float)castTime), 5, 182, 5);
+            drawContext.drawTexture(SPELL_CAST_PROGRESS, x - 91, y - 55, 0, 0, (int) (182 * (float) useTimer / (float) castTime), 5, 182, 5);
         }
 
         drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
