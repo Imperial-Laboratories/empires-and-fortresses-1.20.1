@@ -126,7 +126,6 @@
     "item.emp_fort.adamant_leggings": "Adamant Leggings",
     "item.emp_fort.adamant_boots": "Adamant Boots",
 
-
     "tooltip.emp_fort.spells": "Stored Spells:",
 
     "advancements.emp_fort.root.title": "Empires and Fortresses",
@@ -143,5 +142,7 @@
     "spell.emp_fort.fail.condition": "Cannot cast right now!",
 
     "spell.emp_fort.magic_bullet": "Magic Bullet",
-    "spell.emp_fort.rapid_bullet": "Rapid Bullet"
+    "spell.emp_fort.rapid_bullet": "Rapid Bullet",
+    "spell.emp_fort.reactive_bullet": "Reactive Bullet",
+    "spell.emp_fort.multishot": "Multishot"
 }
