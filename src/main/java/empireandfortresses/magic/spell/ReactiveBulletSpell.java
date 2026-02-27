@@ -11,7 +11,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
 
 public class ReactiveBulletSpell extends Spell {
 
@@ -20,7 +19,7 @@ public class ReactiveBulletSpell extends Spell {
     }
 
     @Override
-    public void cast(World world, PlayerEntity user, ItemStack stack) {
+    public void cast(PlayerEntity user, ItemStack stack) {
         NbtCompound nbt = stack.getNbt();
         int useTimer = nbt.getInt("useTimer");
         ++useTimer;
@@ -31,12 +30,12 @@ public class ReactiveBulletSpell extends Spell {
                 activateCooldown(user);
             }
 
-            ExplosiveMagicBulletEntity entity = new ExplosiveMagicBulletEntity(ModEntities.MAGIC_BULLET, world,
+            ExplosiveMagicBulletEntity entity = new ExplosiveMagicBulletEntity(ModEntities.MAGIC_BULLET, user.getWorld(),
                     (float) user.getAttributeValue(ModEntityAttributes.MAGIC_ATTACK_DAMAGE) * (float) user.getAttributeValue(ModEntityAttributes.MAGIC_AFFINITY));
-            entity.spawnBullet(world, user, 1.5f, 1f, 30, 0);
+            entity.spawnBullet(user.getWorld(), user, 1.5f, 1f, 30, 0);
             if (!user.isCreative()) {
                 consumeXP(user);
-                super.cast(world, user, stack);
+                super.cast(user, stack);
             }
         }
     }

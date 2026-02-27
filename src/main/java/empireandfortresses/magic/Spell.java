@@ -12,27 +12,27 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
 
 @Getter
 @Setter
-
+@SuppressWarnings("java:S107")
 public abstract class Spell {
     private final Identifier spellID;
     private final SpellCategory category;
     private final SpellTriggerCategory triggerCategory;
-    private final int XPCost;
+    private final int xpCost;
     private final boolean consumingXPLevel;
     private final int maxCooldown;
     private final boolean chargable;
     private final int castTime;
     private final Identifier spellIcon;
 
-    public Spell(String id, SpellCategory category, SpellTriggerCategory triggerCategory, int cost, boolean consumingXPLevel, int maxCooldown, boolean chargable, int castTime, Identifier spellIcon) {
+    protected Spell(String id, SpellCategory category, SpellTriggerCategory triggerCategory, int cost, boolean consumingXPLevel, int maxCooldown, boolean chargable, int castTime,
+            Identifier spellIcon) {
         this.spellID = new Identifier(EmpiresAndFortresses.MOD_ID, id);
         this.category = category;
         this.triggerCategory = triggerCategory;
-        this.XPCost = cost;
+        this.xpCost = cost;
         this.consumingXPLevel = consumingXPLevel;
         this.maxCooldown = maxCooldown;
         this.chargable = chargable;
@@ -40,15 +40,13 @@ public abstract class Spell {
         this.spellIcon = spellIcon;
     }
 
-    public void cast(World world, PlayerEntity user, ItemStack stack) {
-        cast(world, user, stack, 1);
+    public void cast(PlayerEntity user, ItemStack stack) {
+        cast(user, stack, 1);
     }
 
-    public void cast(World world, PlayerEntity user, ItemStack stack, int itemDamage) {
+    public void cast(PlayerEntity user, ItemStack stack, int itemDamage) {
         if (!user.isCreative()) {
-            stack.damage(itemDamage, user, (e) -> {
-                e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
-            });
+            stack.damage(itemDamage, user, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
         }
     }
 
@@ -56,15 +54,15 @@ public abstract class Spell {
         return true;
     }
 
-    public boolean XPSufficient(PlayerEntity user) {
+    public boolean isXpSufficient(PlayerEntity user) {
         if (consumingXPLevel) {
-            return user.experienceLevel >= XPCost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY);
+            return user.experienceLevel >= xpCost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY);
         }
-        return user.totalExperience >= XPCost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY);
+        return user.totalExperience >= xpCost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY);
     }
 
     public boolean castable(PlayerEntity user) {
-        if (!this.XPSufficient(user)) {
+        if (!this.isXpSufficient(user)) {
             user.sendMessage(Text.translatable("spell.emp_fort.fail.xp").formatted(Formatting.RED), true);
             return false;
         }
@@ -92,7 +90,7 @@ public abstract class Spell {
     }
 
     public void consumeXP(PlayerEntity user) {
-        consumeXP(user, getXPCost(), isConsumingXPLevel());
+        consumeXP(user, getXpCost(), isConsumingXPLevel());
     }
 
     public NbtCompound toNbt() {

@@ -3,7 +3,6 @@ package empireandfortresses.magic.spell;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
 import empireandfortresses.EmpiresAndFortresses;
 import empireandfortresses.entity.ModEntities;
 import empireandfortresses.entity.attribute.ModEntityAttributes;
@@ -19,14 +18,14 @@ public class MagicBulletSpell extends Spell {
     }
 
     @Override
-    public void cast(World world, PlayerEntity user, ItemStack stack) {
-        MagicBulletEntity entity = new MagicBulletEntity(ModEntities.MAGIC_BULLET, world,
+    public void cast(PlayerEntity user, ItemStack stack) {
+        MagicBulletEntity entity = new MagicBulletEntity(ModEntities.MAGIC_BULLET, user.getWorld(),
                 (float) user.getAttributeValue(ModEntityAttributes.MAGIC_ATTACK_DAMAGE) * (float) user.getAttributeValue(ModEntityAttributes.MAGIC_AFFINITY));
-        entity.spawnBullet(world, user, 1.0f, 1.0f);
+        entity.spawnBullet(user.getWorld(), user, 1.0f, 1.0f);
         if (!user.isCreative()) {
             activateCooldown(user);
             consumeXP(user);
-            super.cast(world, user, stack);
+            super.cast(user, stack);
         }
     }
 }

@@ -16,7 +16,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.GameRenderer;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -51,15 +50,11 @@ public class MagicHudOverlay implements HudRenderCallback {
             return;
         }
 
-        int x = 0;
-        int y = 0;
-        if (client != null) {
-            int width = client.getWindow().getScaledWidth();
-            int height = client.getWindow().getScaledHeight();
+        int width = client.getWindow().getScaledWidth();
+        int height = client.getWindow().getScaledHeight();
 
-            x = width / 2;
-            y = height;
-        }
+        int x = width / 2;
+        int y = height;
 
         drawContext.getMatrices().push();
         drawContext.getMatrices().translate(0, 0, 101);
@@ -70,6 +65,8 @@ public class MagicHudOverlay implements HudRenderCallback {
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 0.85f);
         RenderSystem.setShaderTexture(0, SPELL_SLOT);
+
+        PlayerCooldownComponent component = (PlayerCooldownComponent) (ModComponents.COOLDOWN_COMPONENT.get(player));
 
         if (KeyInputHandler.magicKey.isPressed() && !((SpellCastingItem) stack.getItem()).isTriggeringSpell(player, nbt, activeSpell)) {
 
@@ -86,7 +83,6 @@ public class MagicHudOverlay implements HudRenderCallback {
                 Spell spell = Spells.getSpellById(list.getCompound(i).getString("Id"));
                 Identifier texture = spell.getSpellIcon();
                 SpellCategory category = spell.getCategory();
-                PlayerCooldownComponent component = (PlayerCooldownComponent) (ModComponents.COOLDOWN_COMPONENT.get((PlayerEntity) player));
 
                 int maxCooldown = component.getMaxCooldown(category);
                 int cooldownProgress = (int) (16 * ((float) component.getCooldown(category) / (float) maxCooldown));
@@ -106,7 +102,6 @@ public class MagicHudOverlay implements HudRenderCallback {
         }
 
         SpellCategory category = activeSpell.getCategory();
-        PlayerCooldownComponent component = (PlayerCooldownComponent) (ModComponents.COOLDOWN_COMPONENT.get((PlayerEntity) player));
 
         int maxCooldown = component.getMaxCooldown(category);
         int cooldownProgress = (int) (16 * ((float) component.getCooldown(category) / (float) maxCooldown));
@@ -125,7 +120,7 @@ public class MagicHudOverlay implements HudRenderCallback {
 
             int useTimer = nbt.getInt("useTimer");
             int castTime = Spells.getSpellById(nbt.getString("ActiveSpell")).getCastTime();
-            drawContext.drawTexture(SPELL_CAST_PROGRESS, x - 91, y - 55, 0, 0, (int) (182 * (float) useTimer / (float) castTime), 5, 182, 5);
+            drawContext.drawTexture(SPELL_CAST_PROGRESS, x - 91, y - 55, 0, 0, (int) (182 * (float) useTimer / castTime), 5, 182, 5);
         }
 
         drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
