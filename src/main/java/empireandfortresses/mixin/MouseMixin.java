@@ -26,6 +26,9 @@ public class MouseMixin {
     private void onMouseScroll(long window, double horizontal, double vertical, CallbackInfo info) {
         if (vertical != 0) {
             ClientPlayerEntity player = MinecraftClient.getInstance().player;
+            if (player == null) {
+                return;
+            }
             ItemStack stack = player.getMainHandStack();
             NbtCompound nbt = stack.getNbt();
 
