@@ -6,7 +6,6 @@ import lombok.Setter;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.EvokerFangsEntity;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 @Getter

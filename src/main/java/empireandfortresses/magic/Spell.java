@@ -54,7 +54,17 @@ public abstract class Spell {
         }
     }
 
-    public boolean condition() {
+    /**
+     * @param user Playerr casting spell, for use in overriding
+     */
+    public boolean condition(PlayerEntity user) {
+        return true;
+    }
+
+    /**
+     * @param user Playerr casting spell, for use in overriding
+     */
+    public boolean shouldNotifyOfFailingCondition(PlayerEntity user) {
         return true;
     }
 
@@ -74,8 +84,10 @@ public abstract class Spell {
             user.sendMessage(Text.translatable("spell.emp_fort.fail.cooldown").formatted(Formatting.RED), true);
             return false;
         }
-        if (!this.condition()) {
-            user.sendMessage(Text.translatable("spell.emp_fort.fail.condition").formatted(Formatting.RED), true);
+        if (!this.condition(user)) {
+            if (shouldNotifyOfFailingCondition(user)) {
+                user.sendMessage(Text.translatable("spell.emp_fort.fail.condition").formatted(Formatting.RED), true);
+            }
             return false;
         }
         return true;

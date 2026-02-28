@@ -182,6 +182,15 @@ public class SpellCastingItem extends ToolItem {
         }
     }
 
+    public void onJump(PlayerEntity player, ItemStack stack) {
+        NbtCompound nbt = stack.getNbt();
+        Spell spell = Spells.getSpellById(nbt.getString("ActiveSpell"));
+
+        if (spell.getTriggerCategory() == SpellTriggerCategory.JUMP && spell.castable(player)) {
+            spell.cast(player, stack);
+        }
+    }
+
     @Override
     public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
         return slot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(slot);

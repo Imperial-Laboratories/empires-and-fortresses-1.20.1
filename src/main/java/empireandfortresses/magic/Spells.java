@@ -12,10 +12,18 @@ public class Spells {
 
     public static final Spell MAGIC_BULLET = registerSpell(new MagicBulletSpell());
     public static final Spell RAPID_BULLET = registerSpell(new RapidBulletSpell());
-    public static final Spell REACTIVE_BULLET = registerSpell(new ReactiveBulletSpell());
     public static final Spell MULTISHOT = registerSpell(new MultishotSpell());
+    public static final Spell REACTIVE_BULLET = registerSpell(new ReactiveBulletSpell());
+
     public static final Spell FANGS_VERTICAL = registerSpell(new FangsVerticalSpell());
     public static final Spell FANGS_HORIZONTAL = registerSpell(new FangsHorizontalSpell());
+
+    public static final Spell HEAL = registerSpell(new HealSpell());
+
+    public static final Spell NULLIFY = registerSpell(new NullifySpell());
+
+    public static final Spell BACKSTEP = registerSpell(new BackstepSpell());
+    public static final Spell DOUBLE_LEAP = registerSpell(new DoubleLeapSpell());
 
     public static Spell registerSpell(Spell spell) {
         SPELL_REGISTRY.add(spell);
