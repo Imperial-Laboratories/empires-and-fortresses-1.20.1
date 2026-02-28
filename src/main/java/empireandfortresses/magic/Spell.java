@@ -40,6 +40,10 @@ public abstract class Spell {
         this.spellIcon = spellIcon;
     }
 
+    protected Spell(String id, SpellCategory category, SpellTriggerCategory triggerCategory, int cost, boolean consumingXPLevel, int maxCooldown, boolean chargable, int castTime) {
+        this(id, category, triggerCategory, cost, consumingXPLevel, maxCooldown, chargable, castTime, new Identifier(EmpiresAndFortresses.MOD_ID, "textures/gui/spell/" + id + ".png"));
+    }
+
     public void cast(PlayerEntity user, ItemStack stack) {
         cast(user, stack, 1);
     }
