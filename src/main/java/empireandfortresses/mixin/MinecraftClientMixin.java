@@ -34,6 +34,10 @@ public class MinecraftClientMixin {
         }
 
         Spell activeSpell = Spells.getSpellById(nbt.getString("ActiveSpell"));
+        if (activeSpell == null) {
+            return 9;
+        }
+
         SpellTriggerCategory triggerCategory = activeSpell.getTriggerCategory();
 
         if ((((SpellCastingItem) stack.getItem()).isTriggeringSpell(player, nbt, activeSpell) && activeSpell.castable(player)
