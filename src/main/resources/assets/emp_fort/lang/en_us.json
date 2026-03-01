@@ -144,5 +144,11 @@
     "spell.emp_fort.magic_bullet": "Magic Bullet",
     "spell.emp_fort.rapid_bullet": "Rapid Bullet",
     "spell.emp_fort.reactive_bullet": "Reactive Bullet",
-    "spell.emp_fort.multishot": "Multishot"
+    "spell.emp_fort.multishot": "Multishot",
+    "spell.emp_fort.fangs_vertical": "Vertical Fangs",
+    "spell.emp_fort.fangs_horizontal": "Horizontal Fangs",
+    "spell.emp_fort.heal": "Heal",
+    "spell.emp_fort.nullify": "Nullify",
+    "spell.emp_fort.backstep": "Backstep",
+    "spell.emp_fort.double_leap": "Double Leap"
 }
