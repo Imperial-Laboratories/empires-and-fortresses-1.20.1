@@ -17,6 +17,7 @@ import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.StringVisitable;
@@ -83,19 +84,18 @@ public class CustomEnchantmentScreen extends HandledScreen<CustomEnchantmentScre
 		this.drawBook(context, i, j, delta);
 		EnchantingPhrases.getInstance().setSeed(this.handler.getSeed());
 		int k = this.handler.getEnchantingItemCount();
+		ItemStack itemStack = this.handler.getSlot(0).getStack();
 
 		for (int l = 0; l < 3; l++) {
 			int m = i + 60;
 			int n = m + 20;
-			int o = this.handler.enchantmentPower[l];
-			if (o == 0) {
+			if (itemStack.getItem() == Items.AIR) {
 				context.drawTexture(TEXTURE, m, j + 14 + 19 * l, 0, 185, 108, 19);
 			} else {
-				String string = o + "";
-				int p = 86 - this.textRenderer.getWidth(string);
+				int p = 50;
 				StringVisitable stringVisitable = EnchantingPhrases.getInstance().generatePhrase(this.textRenderer, p);
 				int q = 6839882;
-				if ((k < l + 1 || this.client.player.experienceLevel < o) && !this.client.player.getAbilities().creativeMode) {
+				if ((k < l + 1) && !this.client.player.getAbilities().creativeMode) {
 					context.drawTexture(TEXTURE, m, j + 14 + 19 * l, 0, 185, 108, 19);
 					context.drawTexture(TEXTURE, m + 1, j + 15 + 19 * l, 16 * l, 239, 16, 16);
 					context.drawTextWrapped(this.textRenderer, stringVisitable, n, j + 16 + 19 * l, p, (q & 16711422) >> 1);
@@ -114,8 +114,6 @@ public class CustomEnchantmentScreen extends HandledScreen<CustomEnchantmentScre
 					context.drawTextWrapped(this.textRenderer, stringVisitable, n, j + 16 + 19 * l, p, q);
 					q = 8453920;
 				}
-
-				context.drawTextWithShadow(this.textRenderer, string, n + 86 - this.textRenderer.getWidth(string), j + 16 + 19 * l + 7, q);
 			}
 		}
 	}
@@ -153,35 +151,23 @@ public class CustomEnchantmentScreen extends HandledScreen<CustomEnchantmentScre
 		int i = this.handler.getEnchantingItemCount();
 
 		for (int j = 0; j < 3; j++) {
-			int k = this.handler.enchantmentPower[j];
 			Enchantment enchantment = Enchantment.byRawId(this.handler.enchantmentId[j]);
 			int l = this.handler.enchantmentLevel[j];
 			int m = j + 1;
-			if (this.isPointWithinBounds(60, 14 + 19 * j, 108, 17, mouseX, mouseY) && k > 0 && l >= 0 && enchantment != null) {
+			if (this.isPointWithinBounds(60, 14 + 19 * j, 108, 17, mouseX, mouseY) && enchantment != null) {
 				List<Text> list = Lists.<Text>newArrayList();
 				list.add(Text.translatable("container.enchant.clue", enchantment.getName(l)).formatted(Formatting.WHITE));
 				if (!bl) {
 					list.add(ScreenTexts.EMPTY);
-					if (this.client.player.experienceLevel < k) {
-						list.add(Text.translatable("container.enchant.level.requirement", this.handler.enchantmentPower[j]).formatted(Formatting.RED));
+					MutableText mutableText;
+					if (m == 1) {
+						mutableText = Text.translatable("container.enchant.lapis.one");
 					} else {
-						MutableText mutableText;
-						if (m == 1) {
-							mutableText = Text.translatable("container.enchant.lapis.one");
-						} else {
-							mutableText = Text.translatable("container.enchant.lapis.many", m);
-						}
-
-						list.add(mutableText.formatted(i >= m ? Formatting.GRAY : Formatting.RED));
-						MutableText mutableText2;
-						if (m == 1) {
-							mutableText2 = Text.translatable("container.enchant.level.one");
-						} else {
-							mutableText2 = Text.translatable("container.enchant.level.many", m);
-						}
-
-						list.add(mutableText2.formatted(Formatting.GRAY));
+						mutableText = Text.translatable("container.enchant.lapis.many", m);
 					}
+
+					list.add(mutableText.formatted(i >= m ? Formatting.GRAY : Formatting.RED));
+					
 				}
 
 				context.drawTooltip(this.textRenderer, list, mouseX, mouseY);
