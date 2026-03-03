@@ -1,14 +1,8 @@
 package empireandfortresses.screen;
 
-import java.util.List;
-
-import com.google.common.collect.Lists;
-
-import empireandfortresses.EmpiresAndFortresses;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
@@ -29,7 +23,6 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Util;
-import net.minecraft.util.math.random.Random;
 
 public class CustomEnchantmentScreenHandler extends ScreenHandler {
 	private final Inventory inventory = new SimpleInventory(2) {
@@ -40,7 +33,6 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 		}
 	};
 	private final ScreenHandlerContext context;
-	private final Random random = Random.create();
 	private final Property seed = Property.create();
 	public final int[] enchantmentPower = new int[3];
 	public final int[] enchantmentId = new int[]{-1, -1, -1};
@@ -84,7 +76,6 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 		this.addProperty(Property.create(this.enchantmentPower, 0));
 		this.addProperty(Property.create(this.enchantmentPower, 1));
 		this.addProperty(Property.create(this.enchantmentPower, 2));
-		// this.addProperty(this.seed).set(playerInventory.player.getEnchantmentTableSeed());
 		this.addProperty(Property.create(this.enchantmentId, 0));
 		this.addProperty(Property.create(this.enchantmentId, 1));
 		this.addProperty(Property.create(this.enchantmentId, 2));
@@ -97,21 +88,11 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 	public void onContentChanged(Inventory inventory) {
 		if (inventory == this.inventory) {
 			ItemStack itemStack = inventory.getStack(0);
+			ItemStack itemStack2 = inventory.getStack(1);
 			if (!itemStack.isEmpty() && itemStack.getItem().isEnchantable(itemStack)) {
 				this.context.run((world, pos) -> {
-					// int ix = 0;
-
-					// for (BlockPos blockPos : EnchantingTableBlock.POWER_PROVIDER_OFFSETS) {
-					// 	if (EnchantingTableBlock.canAccessPowerProvider(world, pos, blockPos)) {
-					// 		ix++;
-					// 	}
-					// }
-
-					// this.random.setSeed(this.seed.get());
-					EmpiresAndFortresses.LOGGER.info("content changed");
 
 					for (int j = 0; j < 3; j++) {
-						// this.enchantmentPower[j] = EnchantmentHelper.calculateRequiredExperienceLevel(this.random, j, 15, itemStack);
 						this.enchantmentPower[j] = 1;
 						this.enchantmentId[j] = -1;
 						this.enchantmentLevel[j] = -1;
@@ -121,9 +102,8 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 					}
 
 					for (int jx = 0; jx < 3; jx++) {
-						List<EnchantmentLevelEntry> list = this.generateEnchantments(itemStack);
-						if (list != null && !list.isEmpty()) {
-							EnchantmentLevelEntry enchantmentLevelEntry = (EnchantmentLevelEntry)list.get(0);
+						EnchantmentLevelEntry enchantmentLevelEntry = this.generateEnchantment(itemStack, itemStack2);
+						if (enchantmentLevelEntry != null) {
 							this.enchantmentId[jx] = Registries.ENCHANTMENT.getRawId(enchantmentLevelEntry.enchantment);
 							this.enchantmentLevel[jx] = enchantmentLevelEntry.level;
 						}
@@ -152,8 +132,8 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 			} else {
 				this.context.run((world, pos) -> {
 					ItemStack itemStack3 = itemStack;
-					List<EnchantmentLevelEntry> list = this.generateEnchantments(itemStack);
-					if (!list.isEmpty()) {
+					EnchantmentLevelEntry enchantmentLevelEntry = this.generateEnchantment(itemStack, itemStack2);
+					if (enchantmentLevelEntry != null) {
 						player.applyEnchantmentCosts(itemStack, i);
 						boolean bl = itemStack.isOf(Items.BOOK);
 						if (bl) {
@@ -166,13 +146,10 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 							this.inventory.setStack(0, itemStack3);
 						}
 
-						for (int k = 0; k < list.size(); k++) {
-							EnchantmentLevelEntry enchantmentLevelEntry = (EnchantmentLevelEntry)list.get(k);
-							if (bl) {
-								EnchantedBookItem.addEnchantment(itemStack3, enchantmentLevelEntry);
-							} else {
-								itemStack3.addEnchantment(enchantmentLevelEntry.enchantment, enchantmentLevelEntry.level);
-							}
+						if (bl) {
+							EnchantedBookItem.addEnchantment(itemStack3, enchantmentLevelEntry);
+						} else {
+							itemStack3.addEnchantment(enchantmentLevelEntry.enchantment, enchantmentLevelEntry.level);
 						}
 
 						if (!player.getAbilities().creativeMode) {
@@ -188,7 +165,6 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 						}
 
 						this.inventory.markDirty();
-						// this.seed.set(player.getEnchantmentTableSeed());
 						this.onContentChanged(this.inventory);
 						world.playSound(null, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
 					}
@@ -201,28 +177,16 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 		}
 	}
 
-	private List<EnchantmentLevelEntry> generateEnchantments(ItemStack stack) {
-		// this.random.setSeed(this.seed.get() + slot);
-		List<EnchantmentLevelEntry> list = Lists.<EnchantmentLevelEntry>newArrayList();
-		// for (Enchantment enchantment : Registries.ENCHANTMENT) {
-		// 	if (enchantment.target.isAcceptableItem(stack.getItem())) {
-		// 		for (int i = enchantment.getMaxLevel(); i > enchantment.getMinLevel() - 1; i--) {
-		// 			if (1 >= enchantment.getMinPower(i) && 1 <= enchantment.getMaxPower(i)) {
-		// 				list.add(new EnchantmentLevelEntry(enchantment, i));
-		// 				break;
-		// 			}
-		// 		}
-		// 	}
-		// }
+	private EnchantmentLevelEntry generateEnchantment(ItemStack stack, ItemStack stack2) {
+		EnchantmentLevelEntry enchantmentLevelEntry = null;
 		// TODO: get enchantments depending on items
-		list.add(new EnchantmentLevelEntry(Enchantments.SHARPNESS, 7));
-		list.add(new EnchantmentLevelEntry(Enchantments.UNBREAKING, 7));
-		list.add(new EnchantmentLevelEntry(Enchantments.LOOTING, 7));
-		if (stack.isOf(Items.BOOK) && list.size() > 1) {
-			list.remove(this.random.nextInt(list.size()));
+		for (Enchantment enchantment : Registries.ENCHANTMENT) {
+			if (enchantment.target.isAcceptableItem(stack.getItem())) {
+				enchantmentLevelEntry = new EnchantmentLevelEntry(Enchantments.SHARPNESS, 7);
+			}
 		}
 
-		return list;
+		return enchantmentLevelEntry;
 	}
 
 	public int getEnchantingItemCount() {

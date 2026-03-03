@@ -29,7 +29,7 @@ import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.random.Random;
 
 public class CustomEnchantmentScreen extends HandledScreen<CustomEnchantmentScreenHandler> {
-	private static final Identifier TEXTURE = new Identifier("textures/gui/container/enchanting_table.png");
+	private static final Identifier TEXTURE = new Identifier(EmpiresAndFortresses.MOD_ID, "textures/gui/container/enchanting_table.png");
 	private static final Identifier BOOK_TEXTURE = new Identifier("textures/entity/enchanting_table_book.png");
 	private final Random random = Random.create();
 	private BookModel BOOK_MODEL;
@@ -49,7 +49,6 @@ public class CustomEnchantmentScreen extends HandledScreen<CustomEnchantmentScre
 	@Override
 	protected void init() {
 		super.init();
-		EmpiresAndFortresses.LOGGER.info("initializing custom screen...");
 		this.BOOK_MODEL = new BookModel(this.client.getEntityModelLoader().getModelPart(EntityModelLayers.BOOK));
 	}
 
@@ -65,9 +64,9 @@ public class CustomEnchantmentScreen extends HandledScreen<CustomEnchantmentScre
 		int j = (this.height - this.backgroundHeight) / 2;
 
 		for (int k = 0; k < 3; k++) {
-			double d = mouseX - (i + 60);
+			double d = mouseX - (i + 78);
 			double e = mouseY - (j + 14 + 19 * k);
-			if (d >= 0.0 && e >= 0.0 && d < 108.0 && e < 19.0 && this.handler.onButtonClick(this.client.player, k)) {
+			if (d >= 0.0 && e >= 0.0 && d < 71.0 && e < 19.0 && this.handler.onButtonClick(this.client.player, k)) {
 				this.client.interactionManager.clickButton(this.handler.syncId, k);
 				return true;
 			}
@@ -87,8 +86,8 @@ public class CustomEnchantmentScreen extends HandledScreen<CustomEnchantmentScre
 		ItemStack itemStack = this.handler.getSlot(0).getStack();
 
 		for (int l = 0; l < 3; l++) {
-			int m = i + 60;
-			int n = m + 20;
+			int m = i + 79;
+			int n = m + 4;
 			if (itemStack.getItem() == Items.AIR) {
 				context.drawTexture(TEXTURE, m, j + 14 + 19 * l, 0, 185, 108, 19);
 			} else {
@@ -101,9 +100,9 @@ public class CustomEnchantmentScreen extends HandledScreen<CustomEnchantmentScre
 					context.drawTextWrapped(this.textRenderer, stringVisitable, n, j + 16 + 19 * l, p, (q & 16711422) >> 1);
 					q = 4226832;
 				} else {
-					int r = mouseX - (i + 60);
+					int r = mouseX - (i + 78);
 					int s = mouseY - (j + 14 + 19 * l);
-					if (r >= 0 && s >= 0 && r < 108 && s < 19) {
+					if (r >= 0 && s >= 0 && r < 71 && s < 19) {
 						context.drawTexture(TEXTURE, m, j + 14 + 19 * l, 0, 204, 108, 19);
 						q = 16777088;
 					} else {
@@ -154,7 +153,7 @@ public class CustomEnchantmentScreen extends HandledScreen<CustomEnchantmentScre
 			Enchantment enchantment = Enchantment.byRawId(this.handler.enchantmentId[j]);
 			int l = this.handler.enchantmentLevel[j];
 			int m = j + 1;
-			if (this.isPointWithinBounds(60, 14 + 19 * j, 108, 17, mouseX, mouseY) && enchantment != null) {
+			if (this.isPointWithinBounds(79, 14 + 19 * j, 69, 17, mouseX, mouseY) && enchantment != null) {
 				List<Text> list = Lists.<Text>newArrayList();
 				list.add(Text.translatable("container.enchant.clue", enchantment.getName(l)).formatted(Formatting.WHITE));
 				if (!bl) {
