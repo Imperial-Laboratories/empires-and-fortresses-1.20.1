@@ -2,11 +2,15 @@ package empireandfortresses.screen;
 
 import java.util.List;
 
+import com.google.common.collect.Lists;
+
+import empireandfortresses.EmpiresAndFortresses;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.EnchantingTableBlock;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -19,14 +23,12 @@ import net.minecraft.registry.Registries;
 import net.minecraft.screen.Property;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
-import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 
 public class CustomEnchantmentScreenHandler extends ScreenHandler {
@@ -49,7 +51,7 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 	}
 
     public CustomEnchantmentScreenHandler(int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
-        super(ScreenHandlerType.ENCHANTMENT, syncId);
+        super(ModScreenHandlers.ENCHANTING_SCREEN_HANDLER, syncId);
         this.context = context;
         this.addSlot(new Slot(this.inventory, 0, 15, 47) {
 			@Override
@@ -82,7 +84,7 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 		this.addProperty(Property.create(this.enchantmentPower, 0));
 		this.addProperty(Property.create(this.enchantmentPower, 1));
 		this.addProperty(Property.create(this.enchantmentPower, 2));
-		this.addProperty(this.seed).set(playerInventory.player.getEnchantmentTableSeed());
+		// this.addProperty(this.seed).set(playerInventory.player.getEnchantmentTableSeed());
 		this.addProperty(Property.create(this.enchantmentId, 0));
 		this.addProperty(Property.create(this.enchantmentId, 1));
 		this.addProperty(Property.create(this.enchantmentId, 2));
@@ -95,20 +97,22 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 	public void onContentChanged(Inventory inventory) {
 		if (inventory == this.inventory) {
 			ItemStack itemStack = inventory.getStack(0);
-			if (!itemStack.isEmpty() && itemStack.isEnchantable()) {
+			if (!itemStack.isEmpty() && itemStack.getItem().isEnchantable(itemStack)) {
 				this.context.run((world, pos) -> {
-					int ix = 0;
+					// int ix = 0;
 
-					for (BlockPos blockPos : EnchantingTableBlock.POWER_PROVIDER_OFFSETS) {
-						if (EnchantingTableBlock.canAccessPowerProvider(world, pos, blockPos)) {
-							ix++;
-						}
-					}
+					// for (BlockPos blockPos : EnchantingTableBlock.POWER_PROVIDER_OFFSETS) {
+					// 	if (EnchantingTableBlock.canAccessPowerProvider(world, pos, blockPos)) {
+					// 		ix++;
+					// 	}
+					// }
 
-					this.random.setSeed(this.seed.get());
+					// this.random.setSeed(this.seed.get());
+					EmpiresAndFortresses.LOGGER.info("content changed");
 
 					for (int j = 0; j < 3; j++) {
-						this.enchantmentPower[j] = EnchantmentHelper.calculateRequiredExperienceLevel(this.random, j, ix, itemStack);
+						// this.enchantmentPower[j] = EnchantmentHelper.calculateRequiredExperienceLevel(this.random, j, 15, itemStack);
+						this.enchantmentPower[j] = 1;
 						this.enchantmentId[j] = -1;
 						this.enchantmentLevel[j] = -1;
 						if (this.enchantmentPower[j] < j + 1) {
@@ -117,13 +121,11 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 					}
 
 					for (int jx = 0; jx < 3; jx++) {
-						if (this.enchantmentPower[jx] > 0) {
-							List<EnchantmentLevelEntry> list = this.generateEnchantments(itemStack, jx, this.enchantmentPower[jx]);
-							if (list != null && !list.isEmpty()) {
-								EnchantmentLevelEntry enchantmentLevelEntry = (EnchantmentLevelEntry)list.get(this.random.nextInt(list.size()));
-								this.enchantmentId[jx] = Registries.ENCHANTMENT.getRawId(enchantmentLevelEntry.enchantment);
-								this.enchantmentLevel[jx] = enchantmentLevelEntry.level;
-							}
+						List<EnchantmentLevelEntry> list = this.generateEnchantments(itemStack);
+						if (list != null && !list.isEmpty()) {
+							EnchantmentLevelEntry enchantmentLevelEntry = (EnchantmentLevelEntry)list.get(0);
+							this.enchantmentId[jx] = Registries.ENCHANTMENT.getRawId(enchantmentLevelEntry.enchantment);
+							this.enchantmentLevel[jx] = enchantmentLevelEntry.level;
 						}
 					}
 
@@ -147,14 +149,10 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 			int i = id + 1;
 			if ((itemStack2.isEmpty() || itemStack2.getCount() < i) && !player.getAbilities().creativeMode) {
 				return false;
-			} else if (this.enchantmentPower[id] <= 0
-				|| itemStack.isEmpty()
-				|| (player.experienceLevel < i || player.experienceLevel < this.enchantmentPower[id]) && !player.getAbilities().creativeMode) {
-				return false;
 			} else {
 				this.context.run((world, pos) -> {
 					ItemStack itemStack3 = itemStack;
-					List<EnchantmentLevelEntry> list = this.generateEnchantments(itemStack, id, this.enchantmentPower[id]);
+					List<EnchantmentLevelEntry> list = this.generateEnchantments(itemStack);
 					if (!list.isEmpty()) {
 						player.applyEnchantmentCosts(itemStack, i);
 						boolean bl = itemStack.isOf(Items.BOOK);
@@ -190,7 +188,7 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 						}
 
 						this.inventory.markDirty();
-						this.seed.set(player.getEnchantmentTableSeed());
+						// this.seed.set(player.getEnchantmentTableSeed());
 						this.onContentChanged(this.inventory);
 						world.playSound(null, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
 					}
@@ -203,9 +201,23 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 		}
 	}
 
-	private List<EnchantmentLevelEntry> generateEnchantments(ItemStack stack, int slot, int level) {
-		this.random.setSeed(this.seed.get() + slot);
-		List<EnchantmentLevelEntry> list = EnchantmentHelper.generateEnchantments(this.random, stack, level, false);
+	private List<EnchantmentLevelEntry> generateEnchantments(ItemStack stack) {
+		// this.random.setSeed(this.seed.get() + slot);
+		List<EnchantmentLevelEntry> list = Lists.<EnchantmentLevelEntry>newArrayList();
+		// for (Enchantment enchantment : Registries.ENCHANTMENT) {
+		// 	if (enchantment.target.isAcceptableItem(stack.getItem())) {
+		// 		for (int i = enchantment.getMaxLevel(); i > enchantment.getMinLevel() - 1; i--) {
+		// 			if (1 >= enchantment.getMinPower(i) && 1 <= enchantment.getMaxPower(i)) {
+		// 				list.add(new EnchantmentLevelEntry(enchantment, i));
+		// 				break;
+		// 			}
+		// 		}
+		// 	}
+		// }
+		// TODO: get enchantments depending on items
+		list.add(new EnchantmentLevelEntry(Enchantments.SHARPNESS, 7));
+		list.add(new EnchantmentLevelEntry(Enchantments.UNBREAKING, 7));
+		list.add(new EnchantmentLevelEntry(Enchantments.LOOTING, 7));
 		if (stack.isOf(Items.BOOK) && list.size() > 1) {
 			list.remove(this.random.nextInt(list.size()));
 		}
@@ -213,7 +225,7 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 		return list;
 	}
 
-	public int getLapisCount() {
+	public int getEnchantingItemCount() {
 		ItemStack itemStack = this.inventory.getStack(1);
 		return itemStack.isEmpty() ? 0 : itemStack.getCount();
 	}
