@@ -16,7 +16,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.GameRenderer;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -41,22 +40,21 @@ public class MagicHudOverlay implements HudRenderCallback {
         PlayerInventory inventory = player.getInventory();
         ItemStack stack = player.getMainHandStack();
         NbtCompound nbt = stack.getNbt();
-        
+
         if (!(stack.getItem() instanceof SpellCastingItem) || client.options.hudHidden) {
             return;
         }
 
         Spell activeSpell = Spells.getSpellById(nbt.getString("ActiveSpell"));
-
-        int x = 0;
-        int y = 0;
-        if (client != null) {
-            int width = client.getWindow().getScaledWidth();
-            int height = client.getWindow().getScaledHeight();
-
-            x = width / 2;
-            y = height;
+        if (activeSpell == null) {
+            return;
         }
+
+        int width = client.getWindow().getScaledWidth();
+        int height = client.getWindow().getScaledHeight();
+
+        int x = width / 2;
+        int y = height;
 
         drawContext.getMatrices().push();
         drawContext.getMatrices().translate(0, 0, 101);
@@ -68,7 +66,9 @@ public class MagicHudOverlay implements HudRenderCallback {
         drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 0.85f);
         RenderSystem.setShaderTexture(0, SPELL_SLOT);
 
-        if (KeyInputHandler.magicKey.isPressed() && !((SpellCastingItem)stack.getItem()).isTriggeringSpell(player, nbt, activeSpell)) {
+        PlayerCooldownComponent component = (PlayerCooldownComponent) (ModComponents.COOLDOWN_COMPONENT.get(player));
+
+        if (KeyInputHandler.magicKey.isPressed() && !((SpellCastingItem) stack.getItem()).isTriggeringSpell(player, nbt, activeSpell)) {
 
             int spellSlots = 0;
 
@@ -83,10 +83,9 @@ public class MagicHudOverlay implements HudRenderCallback {
                 Spell spell = Spells.getSpellById(list.getCompound(i).getString("Id"));
                 Identifier texture = spell.getSpellIcon();
                 SpellCategory category = spell.getCategory();
-                PlayerCooldownComponent component = (PlayerCooldownComponent)(ModComponents.COOLDOWN_COMPONENT.get((PlayerEntity)player));
 
                 int maxCooldown = component.getMaxCooldown(category);
-                int cooldownProgress = (int)(16 * ((float)component.getCooldown(category) / (float)maxCooldown));
+                int cooldownProgress = (int) (16 * ((float) component.getCooldown(category) / (float) maxCooldown));
                 int slotX = x - 88 + inventory.selectedSlot * 20;
                 int slotY = y - 41 - 22 * i;
 
@@ -103,10 +102,9 @@ public class MagicHudOverlay implements HudRenderCallback {
         }
 
         SpellCategory category = activeSpell.getCategory();
-        PlayerCooldownComponent component = (PlayerCooldownComponent)(ModComponents.COOLDOWN_COMPONENT.get((PlayerEntity)player));
 
         int maxCooldown = component.getMaxCooldown(category);
-        int cooldownProgress = (int)(16 * ((float)component.getCooldown(category) / (float)maxCooldown));
+        int cooldownProgress = (int) (16 * ((float) component.getCooldown(category) / (float) maxCooldown));
 
         drawContext.getMatrices().translate(0, 0, 105);
         drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 0.5f);
@@ -114,14 +112,15 @@ public class MagicHudOverlay implements HudRenderCallback {
 
         // TODO: render position not final yet
         SpellTriggerCategory triggerCategory = activeSpell.getTriggerCategory();
-        if (((SpellCastingItem) stack.getItem()).isTriggeringSpell(player, nbt, activeSpell) && activeSpell.castable(player) && (triggerCategory == SpellTriggerCategory.HOLD_ATTACK || triggerCategory == SpellTriggerCategory.HOLD_USE)) {
+        if (((SpellCastingItem) stack.getItem()).isTriggeringSpell(player, nbt, activeSpell) && activeSpell.castable(player)
+                && (triggerCategory == SpellTriggerCategory.HOLD_ATTACK || triggerCategory == SpellTriggerCategory.HOLD_USE)) {
             drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
             drawContext.getMatrices().translate(0, 0, -1);
             drawContext.drawTexture(SPELL_BACKGROUND, x - 91, y - 55, 0, 0, 182, 5, 182, 5);
 
             int useTimer = nbt.getInt("useTimer");
             int castTime = Spells.getSpellById(nbt.getString("ActiveSpell")).getCastTime();
-            drawContext.drawTexture(SPELL_CAST_PROGRESS, x - 91, y - 55, 0, 0, (int)(182 * (float)useTimer / (float)castTime), 5, 182, 5);
+            drawContext.drawTexture(SPELL_CAST_PROGRESS, x - 91, y - 55, 0, 0, (int) (182 * (float) useTimer / castTime), 5, 182, 5);
         }
 
         drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);

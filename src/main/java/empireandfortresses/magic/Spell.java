@@ -12,27 +12,27 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
 
 @Getter
 @Setter
-
+@SuppressWarnings("java:S107")
 public abstract class Spell {
     private final Identifier spellID;
     private final SpellCategory category;
     private final SpellTriggerCategory triggerCategory;
-    private final int XPCost;
+    private final int xpCost;
     private final boolean consumingXPLevel;
     private final int maxCooldown;
     private final boolean chargable;
     private final int castTime;
     private final Identifier spellIcon;
 
-    public Spell(String id, SpellCategory category, SpellTriggerCategory triggerCategory, int cost, boolean consumingXPLevel, int maxCooldown, boolean chargable, int castTime, Identifier spellIcon) {
+    protected Spell(String id, SpellCategory category, SpellTriggerCategory triggerCategory, int cost, boolean consumingXPLevel, int maxCooldown, boolean chargable, int castTime,
+            Identifier spellIcon) {
         this.spellID = new Identifier(EmpiresAndFortresses.MOD_ID, id);
         this.category = category;
         this.triggerCategory = triggerCategory;
-        this.XPCost = cost;
+        this.xpCost = cost;
         this.consumingXPLevel = consumingXPLevel;
         this.maxCooldown = maxCooldown;
         this.chargable = chargable;
@@ -40,40 +40,54 @@ public abstract class Spell {
         this.spellIcon = spellIcon;
     }
 
-    public void cast(World world, PlayerEntity user, ItemStack stack) {
-        cast(world, user, stack, 1);
+    protected Spell(String id, SpellCategory category, SpellTriggerCategory triggerCategory, int cost, boolean consumingXPLevel, int maxCooldown, boolean chargable, int castTime) {
+        this(id, category, triggerCategory, cost, consumingXPLevel, maxCooldown, chargable, castTime, new Identifier(EmpiresAndFortresses.MOD_ID, "textures/gui/spell/" + id + ".png"));
     }
 
-    public void cast(World world, PlayerEntity user, ItemStack stack, int itemDamage) {
+    public void cast(PlayerEntity user, ItemStack stack) {
+        cast(user, stack, 1);
+    }
+
+    public void cast(PlayerEntity user, ItemStack stack, int itemDamage) {
         if (!user.isCreative()) {
-            stack.damage(itemDamage, user, (e) -> {
-                e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
-            });
+            stack.damage(itemDamage, user, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
         }
     }
 
-    public boolean condition() {
+    /**
+     * @param user Playerr casting spell, for use in overriding
+     */
+    public boolean condition(PlayerEntity user) {
         return true;
     }
 
-    public boolean XPSufficient(PlayerEntity user) {
+    /**
+     * @param user Playerr casting spell, for use in overriding
+     */
+    public boolean shouldNotifyOfFailingCondition(PlayerEntity user) {
+        return true;
+    }
+
+    public boolean isXpSufficient(PlayerEntity user) {
         if (consumingXPLevel) {
-            return user.experienceLevel >= XPCost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY);
+            return user.experienceLevel >= xpCost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY);
         }
-        return user.totalExperience >= XPCost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY);
+        return user.totalExperience >= xpCost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY);
     }
 
     public boolean castable(PlayerEntity user) {
-        if(!this.XPSufficient(user)) {
+        if (!this.isXpSufficient(user)) {
             user.sendMessage(Text.translatable("spell.emp_fort.fail.xp").formatted(Formatting.RED), true);
             return false;
         }
-        if(this.isOnCooldown(user)) {
+        if (this.isOnCooldown(user)) {
             user.sendMessage(Text.translatable("spell.emp_fort.fail.cooldown").formatted(Formatting.RED), true);
             return false;
         }
-        if(!this.condition()) {
-            user.sendMessage(Text.translatable("spell.emp_fort.fail.condition").formatted(Formatting.RED), true);
+        if (!this.condition(user)) {
+            if (shouldNotifyOfFailingCondition(user)) {
+                user.sendMessage(Text.translatable("spell.emp_fort.fail.condition").formatted(Formatting.RED), true);
+            }
             return false;
         }
         return true;
@@ -85,10 +99,14 @@ public abstract class Spell {
 
     public void consumeXP(PlayerEntity user, int cost, boolean consumesLevel) {
         if (!consumesLevel) {
-            user.addExperience((int)(-cost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY)));
+            user.addExperience((int) (-cost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY)));
         } else {
-            user.addExperienceLevels((int)(-cost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY)));
+            user.addExperienceLevels((int) (-cost * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY)));
         }
+    }
+
+    public void consumeXP(PlayerEntity user) {
+        consumeXP(user, getXpCost(), isConsumingXPLevel());
     }
 
     public NbtCompound toNbt() {
@@ -98,7 +116,7 @@ public abstract class Spell {
     }
 
     public void activateCooldown(PlayerEntity user) {
-        int cooldown = (int)(maxCooldown * (1 / user.getAttributeValue(ModEntityAttributes.MAGIC_AFFINITY)));
+        int cooldown = (int) (maxCooldown * (1 / user.getAttributeValue(ModEntityAttributes.MAGIC_AFFINITY)));
         ModComponents.COOLDOWN_COMPONENT.get(user).setCooldown(category, cooldown);
         ModComponents.COOLDOWN_COMPONENT.get(user).setMaxCooldown(category, cooldown);
     }
