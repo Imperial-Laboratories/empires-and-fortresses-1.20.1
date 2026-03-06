@@ -1,5 +1,6 @@
 package empireandfortresses.screen;
 
+import empireandfortresses.enchantment.CustomEnchantmentHelper;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
@@ -9,10 +10,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.Registries;
 import net.minecraft.screen.Property;
 import net.minecraft.screen.ScreenHandler;
@@ -34,9 +34,11 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 	};
 	private final ScreenHandlerContext context;
 	private final Property seed = Property.create();
+	// ! currently no function
 	public final int[] enchantmentPower = new int[3];
 	public final int[] enchantmentId = new int[]{-1, -1, -1};
-	public final int[] enchantmentLevel = new int[]{-1, -1, -1};
+	public final int[] enchantmentLevel = new int[]{1, 1, 1};
+	public int[] enchantmentMaterial = new int[]{1, 1, 1};
 
 	public CustomEnchantmentScreenHandler(int syncId, PlayerInventory playerInventory) {
 		this(syncId, playerInventory, ScreenHandlerContext.EMPTY);
@@ -56,6 +58,7 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 		    	return 1;
 		    }
         });
+
         this.addSlot(new Slot(this.inventory, 1, 35, 47){
 			@Override
 			public boolean canInsert(ItemStack stack) {
@@ -82,6 +85,9 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 		this.addProperty(Property.create(this.enchantmentLevel, 0));
 		this.addProperty(Property.create(this.enchantmentLevel, 1));
 		this.addProperty(Property.create(this.enchantmentLevel, 2));
+		this.addProperty(Property.create(this.enchantmentMaterial, 0));
+		this.addProperty(Property.create(this.enchantmentMaterial, 1));
+		this.addProperty(Property.create(this.enchantmentMaterial, 2));
     }
 
 	@Override
@@ -91,21 +97,20 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 			ItemStack itemStack2 = inventory.getStack(1);
 			if (!itemStack.isEmpty() && itemStack.getItem().isEnchantable(itemStack)) {
 				this.context.run((world, pos) -> {
-
-					for (int j = 0; j < 3; j++) {
-						this.enchantmentPower[j] = 1;
-						this.enchantmentId[j] = -1;
-						this.enchantmentLevel[j] = -1;
-						if (this.enchantmentPower[j] < j + 1) {
-							this.enchantmentPower[j] = 0;
-						}
-					}
-
 					for (int jx = 0; jx < 3; jx++) {
-						EnchantmentLevelEntry enchantmentLevelEntry = this.generateEnchantment(itemStack, itemStack2);
+						EnchantmentLevelEntry enchantmentLevelEntry = this.generateEnchantment(itemStack, itemStack2, jx);
 						if (enchantmentLevelEntry != null) {
 							this.enchantmentId[jx] = Registries.ENCHANTMENT.getRawId(enchantmentLevelEntry.enchantment);
-							this.enchantmentLevel[jx] = enchantmentLevelEntry.level;
+							Enchantment enchantment = Enchantment.byRawId(this.enchantmentId[jx]);
+							if (CustomEnchantmentHelper.getNextLevel(itemStack, enchantment) - 1 < enchantment.getMaxLevel()) {
+								this.enchantmentLevel[jx] = CustomEnchantmentHelper.getNextLevel(itemStack, enchantment);
+								this.enchantmentMaterial[jx] = CustomEnchantmentHelper.materialCost(this.enchantmentLevel[jx]);
+							} else {
+								this.enchantmentPower[jx] = 0;
+								this.enchantmentId[jx] = -1;
+								this.enchantmentLevel[jx] = -1;
+								this.enchantmentMaterial[jx] = 0;
+							}
 						}
 					}
 
@@ -115,7 +120,8 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 				for (int i = 0; i < 3; i++) {
 					this.enchantmentPower[i] = 0;
 					this.enchantmentId[i] = -1;
-					this.enchantmentLevel[i] = -1;
+					this.enchantmentLevel[i] = 1;
+					this.enchantmentMaterial[i] = 1;
 				}
 			}
 		}
@@ -123,37 +129,28 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 
 	@Override
 	public boolean onButtonClick(PlayerEntity player, int id) {
-		if (id >= 0 && id < this.enchantmentPower.length) {
-			ItemStack itemStack = this.inventory.getStack(0);
+		ItemStack itemStack = this.inventory.getStack(0);
+		if (id >= 0 && id < 3) {
 			ItemStack itemStack2 = this.inventory.getStack(1);
-			int i = id + 1;
-			if ((itemStack2.isEmpty() || itemStack2.getCount() < i) && !player.getAbilities().creativeMode) {
+			if ((itemStack2.isEmpty() || itemStack2.getCount() < this.enchantmentMaterial[id]) && !player.getAbilities().creativeMode) {
 				return false;
 			} else {
 				this.context.run((world, pos) -> {
 					ItemStack itemStack3 = itemStack;
-					EnchantmentLevelEntry enchantmentLevelEntry = this.generateEnchantment(itemStack, itemStack2);
+					EnchantmentLevelEntry enchantmentLevelEntry = this.generateEnchantment(itemStack, itemStack2, id);
 					if (enchantmentLevelEntry != null) {
-						player.applyEnchantmentCosts(itemStack, i);
-						boolean bl = itemStack.isOf(Items.BOOK);
-						if (bl) {
-							itemStack3 = new ItemStack(Items.ENCHANTED_BOOK);
-							NbtCompound nbtCompound = itemStack.getNbt();
-							if (nbtCompound != null) {
-								itemStack3.setNbt(nbtCompound.copy());
-							}
 
-							this.inventory.setStack(0, itemStack3);
-						}
-
-						if (bl) {
-							EnchantedBookItem.addEnchantment(itemStack3, enchantmentLevelEntry);
+						if (!CustomEnchantmentHelper.containsEnchantment(itemStack3, enchantmentLevelEntry.enchantment)) {
+							itemStack3.addEnchantment(enchantmentLevelEntry.enchantment, this.enchantmentLevel[id]);
 						} else {
-							itemStack3.addEnchantment(enchantmentLevelEntry.enchantment, enchantmentLevelEntry.level);
+							NbtList enchantments = itemStack3.getEnchantments();
+							int index = CustomEnchantmentHelper.getEnchantmentIndex(itemStack3, enchantmentLevelEntry.enchantment);
+
+							enchantments.getCompound(index).putShort("lvl", (short)this.enchantmentLevel[id]);
 						}
 
 						if (!player.getAbilities().creativeMode) {
-							itemStack2.decrement(i);
+							itemStack2.decrement(this.enchantmentMaterial[id]);
 							if (itemStack2.isEmpty()) {
 								this.inventory.setStack(1, ItemStack.EMPTY);
 							}
@@ -161,7 +158,7 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 
 						player.incrementStat(Stats.ENCHANT_ITEM);
 						if (player instanceof ServerPlayerEntity) {
-							Criteria.ENCHANTED_ITEM.trigger((ServerPlayerEntity)player, itemStack3, i);
+							Criteria.ENCHANTED_ITEM.trigger((ServerPlayerEntity)player, itemStack3, this.enchantmentLevel[id]);
 						}
 
 						this.inventory.markDirty();
@@ -171,22 +168,48 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 				});
 				return true;
 			}
+		} else if (id >= 10 && id < 13) {
+			int level = this.enchantmentLevel[id - 10];
+			Enchantment enchantment = Enchantment.byRawId(this.enchantmentId[id - 10]);
+			if (level > 1) {
+				this.enchantmentLevel[id - 10] = --level;
+				this.enchantmentMaterial[id - 10] = CustomEnchantmentHelper.materialCost(CustomEnchantmentHelper.getNextLevel(itemStack, enchantment) - 1, level);
+				this.sendContentUpdates();
+			}
+
+			return true;
+		} else if (id >= 20 && id < 23) {
+			int level = this.enchantmentLevel[id - 20];
+			Enchantment enchantment = Enchantment.byRawId(this.enchantmentId[id - 20]);
+			if (level < Enchantment.byRawId(this.enchantmentId[id - 20]).getMaxLevel()) {
+				this.enchantmentLevel[id - 20] = ++level;
+				this.enchantmentMaterial[id - 20] = CustomEnchantmentHelper.materialCost(CustomEnchantmentHelper.getNextLevel(itemStack, enchantment) - 1, level);
+				this.sendContentUpdates();
+			}
+
+			return true;
 		} else {
 			Util.error(player.getName() + " pressed invalid button id: " + id);
 			return false;
 		}
 	}
 
-	private EnchantmentLevelEntry generateEnchantment(ItemStack stack, ItemStack stack2) {
-		EnchantmentLevelEntry enchantmentLevelEntry = null;
+	private EnchantmentLevelEntry generateEnchantment(ItemStack stack, ItemStack stack2, int i) {
 		// TODO: get enchantments depending on items
-		for (Enchantment enchantment : Registries.ENCHANTMENT) {
-			if (enchantment.target.isAcceptableItem(stack.getItem())) {
-				enchantmentLevelEntry = new EnchantmentLevelEntry(Enchantments.SHARPNESS, 7);
+		switch (i) {
+			case 0: {
+				return new EnchantmentLevelEntry(Enchantments.SHARPNESS, 1);
+			}
+			case 1: {
+				return new EnchantmentLevelEntry(Enchantments.SMITE, 1);
+			}
+			case 2: {
+				return new EnchantmentLevelEntry(Enchantments.BANE_OF_ARTHROPODS, 1);
+			}
+			default: {
+				return null;
 			}
 		}
-
-		return enchantmentLevelEntry;
 	}
 
 	public int getEnchantingItemCount() {

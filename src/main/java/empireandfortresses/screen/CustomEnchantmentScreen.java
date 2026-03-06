@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import empireandfortresses.EmpiresAndFortresses;
+import empireandfortresses.enchantment.CustomEnchantmentHelper;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.EnchantingPhrases;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -17,7 +18,6 @@ import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.StringVisitable;
@@ -63,12 +63,28 @@ public class CustomEnchantmentScreen extends HandledScreen<CustomEnchantmentScre
 		int i = (this.width - this.backgroundWidth) / 2;
 		int j = (this.height - this.backgroundHeight) / 2;
 
+		ItemStack itemStack = this.handler.getSlot(0).getStack();
+
 		for (int k = 0; k < 3; k++) {
 			double d = mouseX - (i + 78);
 			double e = mouseY - (j + 14 + 19 * k);
-			if (d >= 0.0 && e >= 0.0 && d < 71.0 && e < 19.0 && this.handler.onButtonClick(this.client.player, k)) {
-				this.client.interactionManager.clickButton(this.handler.syncId, k);
-				return true;
+			Enchantment enchantment = Enchantment.byRawId(this.handler.enchantmentId[k]);
+
+			if (enchantment != null) {
+				if (d >= 0.0 && e >= 0.0 && d < 71.0 && e < 19.0 && this.handler.enchantmentLevel[k] <= enchantment.getMaxLevel() && CustomEnchantmentHelper.getNextLevel(itemStack, enchantment) - 1 != this.handler.enchantmentLevel[k]) {
+					this.client.interactionManager.clickButton(this.handler.syncId, k);
+					return true;
+				}
+
+				if (d >= -19.0 && e >= 0.0 && d < 0.0 && e < 19.0 && this.handler.enchantmentLevel[k] > CustomEnchantmentHelper.getNextLevel(this.handler.getSlot(0).getStack(), enchantment)) {
+					this.client.interactionManager.clickButton(this.handler.syncId, k + 10);
+					return true;
+				}
+
+				if (d >= 72.0 && e >= 0.0 && d < 90.0 && e < 19.0 && (this.handler.enchantmentLevel[k] < enchantment.getMaxLevel() && this.handler.getEnchantingItemCount() >= this.handler.enchantmentMaterial[k] || this.client.player.getAbilities().creativeMode)) {
+					this.client.interactionManager.clickButton(this.handler.syncId, k + 20);
+					return true;
+				}
 			}
 		}
 
@@ -88,31 +104,55 @@ public class CustomEnchantmentScreen extends HandledScreen<CustomEnchantmentScre
 		for (int l = 0; l < 3; l++) {
 			int m = i + 79;
 			int n = m + 4;
-			if (itemStack.getItem() == Items.AIR) {
-				context.drawTexture(TEXTURE, m, j + 14 + 19 * l, 0, 185, 108, 19);
+			int r = mouseX - (i + 78);
+			int s = mouseY - (j + 14 + 19 * l);
+
+			Enchantment enchantment = Enchantment.byRawId(this.handler.enchantmentId[l]);
+
+			if (!itemStack.getItem().isEnchantable(itemStack) || enchantment == null) {
+				context.drawTexture(TEXTURE, m, j + 14 + 19 * l, 0, 185, 70, 19);
 			} else {
 				int p = 50;
 				StringVisitable stringVisitable = EnchantingPhrases.getInstance().generatePhrase(this.textRenderer, p);
 				int q = 6839882;
-				if ((k < l + 1) && !this.client.player.getAbilities().creativeMode) {
-					context.drawTexture(TEXTURE, m, j + 14 + 19 * l, 0, 185, 108, 19);
-					context.drawTexture(TEXTURE, m + 1, j + 15 + 19 * l, 16 * l, 239, 16, 16);
+
+				if (this.handler.enchantmentLevel[l] == CustomEnchantmentHelper.getNextLevel(itemStack, enchantment)) {
+					context.drawTexture(TEXTURE, m - 18, j + 14 + 19 * l, 70 + 38, 166, 19, 19);
+				} else {
+					context.drawTexture(TEXTURE, m - 18, j + 14 + 19 * l, 70, 166, 19, 19);
+					if (r >= -16 && s >= 0 && r < 0 && s < 19) {
+						context.drawTexture(TEXTURE, m - 18, j + 13 + 19 * l, 70, 184, 19, 19);
+					}
+				}
+
+				boolean materialSufficient = (k >= this.handler.enchantmentMaterial[l]) || this.client.player.getAbilities().creativeMode;
+
+				if (this.handler.enchantmentLevel[l] == enchantment.getMaxLevel() || !materialSufficient) {
+					context.drawTexture(TEXTURE, m + 68, j + 14 + 19 * l, 89 + 38, 166, 19, 19);
+				} else {
+					context.drawTexture(TEXTURE, m + 68, j + 14 + 19 * l, 89, 166, 19, 19);
+					if (r >= 72 && s >= 0 && r < 87 && s < 19) {
+						context.drawTexture(TEXTURE, m + 68, j + 13 + 19 * l, 89, 184, 19, 19);
+					}
+				}
+
+				if (!materialSufficient) {
+					context.drawTexture(TEXTURE, m, j + 14 + 19 * l, 0, 185, 70, 19);
 					context.drawTextWrapped(this.textRenderer, stringVisitable, n, j + 16 + 19 * l, p, (q & 16711422) >> 1);
 					q = 4226832;
 				} else {
-					int r = mouseX - (i + 78);
-					int s = mouseY - (j + 14 + 19 * l);
 					if (r >= 0 && s >= 0 && r < 71 && s < 19) {
-						context.drawTexture(TEXTURE, m, j + 14 + 19 * l, 0, 204, 108, 19);
+						context.drawTexture(TEXTURE, m, j + 14 + 19 * l, 0, 204, 70, 19);
 						q = 16777088;
 					} else {
-						context.drawTexture(TEXTURE, m, j + 14 + 19 * l, 0, 166, 108, 19);
+						context.drawTexture(TEXTURE, m, j + 14 + 19 * l, 0, 166, 70, 19);
 					}
 
 					context.drawTexture(TEXTURE, m + 1, j + 15 + 19 * l, 16 * l, 223, 16, 16);
 					context.drawTextWrapped(this.textRenderer, stringVisitable, n, j + 16 + 19 * l, p, q);
 					q = 8453920;
 				}
+
 			}
 		}
 	}
@@ -148,24 +188,25 @@ public class CustomEnchantmentScreen extends HandledScreen<CustomEnchantmentScre
 		this.drawMouseoverTooltip(context, mouseX, mouseY);
 		boolean bl = this.client.player.getAbilities().creativeMode;
 		int i = this.handler.getEnchantingItemCount();
+		ItemStack itemStack = this.handler.getSlot(0).getStack();
 
 		for (int j = 0; j < 3; j++) {
 			Enchantment enchantment = Enchantment.byRawId(this.handler.enchantmentId[j]);
 			int l = this.handler.enchantmentLevel[j];
-			int m = j + 1;
-			if (this.isPointWithinBounds(79, 14 + 19 * j, 69, 17, mouseX, mouseY) && enchantment != null) {
+			if (this.isPointWithinBounds(79, 14 + 19 * j, 69, 17, mouseX, mouseY) && enchantment != null && CustomEnchantmentHelper.getNextLevel(itemStack, enchantment) - 1 != this.handler.enchantmentLevel[j]) {
 				List<Text> list = Lists.<Text>newArrayList();
 				list.add(Text.translatable("container.enchant.clue", enchantment.getName(l)).formatted(Formatting.WHITE));
 				if (!bl) {
 					list.add(ScreenTexts.EMPTY);
 					MutableText mutableText;
-					if (m == 1) {
+					int requiredItemCount = this.handler.enchantmentMaterial[j];
+					if (requiredItemCount == 1) {
 						mutableText = Text.translatable("container.enchant.lapis.one");
 					} else {
-						mutableText = Text.translatable("container.enchant.lapis.many", m);
+						mutableText = Text.translatable("container.enchant.lapis.many", requiredItemCount);
 					}
 
-					list.add(mutableText.formatted(i >= m ? Formatting.GRAY : Formatting.RED));
+					list.add(mutableText.formatted(i >= requiredItemCount ? Formatting.GRAY : Formatting.RED));
 					
 				}
 
