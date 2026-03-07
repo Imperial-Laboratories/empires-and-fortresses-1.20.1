@@ -1,17 +1,17 @@
 package empireandfortresses.screen;
 
 import empireandfortresses.enchantment.CustomEnchantmentHelper;
+import empireandfortresses.enchantment.EnchantingItems;
+import empireandfortresses.util.ModTags;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.Registries;
 import net.minecraft.screen.Property;
@@ -34,8 +34,8 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 	};
 	private final ScreenHandlerContext context;
 	private final Property seed = Property.create();
-	// ! currently no function
-	public final int[] enchantmentPower = new int[3];
+	// ! currently no function but I will keep it for the moment
+	// public final int[] enchantmentPower = new int[3];
 	public final int[] enchantmentId = new int[]{-1, -1, -1};
 	public final int[] enchantmentLevel = new int[]{1, 1, 1};
 	public int[] enchantmentMaterial = new int[]{1, 1, 1};
@@ -62,23 +62,23 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
         this.addSlot(new Slot(this.inventory, 1, 35, 47){
 			@Override
 			public boolean canInsert(ItemStack stack) {
-				return stack.isOf(Items.LAPIS_LAZULI);
+				return stack.isIn(ModTags.Items.ENCHANTING_ITEM);
 			}
 		});
 
-        for(int i = 0; i < 3; ++i) {
-            for(int j = 0; j < 9; ++j) {
+        for(int i = 0; i < 3; i++) {
+            for(int j = 0; j < 9; j++) {
                 this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
             }
         }
 
-        for(int i = 0; i < 9; ++i) {
+        for(int i = 0; i < 9; i++) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
 
-		this.addProperty(Property.create(this.enchantmentPower, 0));
-		this.addProperty(Property.create(this.enchantmentPower, 1));
-		this.addProperty(Property.create(this.enchantmentPower, 2));
+		// this.addProperty(Property.create(this.enchantmentPower, 0));
+		// this.addProperty(Property.create(this.enchantmentPower, 1));
+		// this.addProperty(Property.create(this.enchantmentPower, 2));
 		this.addProperty(Property.create(this.enchantmentId, 0));
 		this.addProperty(Property.create(this.enchantmentId, 1));
 		this.addProperty(Property.create(this.enchantmentId, 2));
@@ -97,6 +97,16 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 			ItemStack itemStack2 = inventory.getStack(1);
 			if (!itemStack.isEmpty() && itemStack.getItem().isEnchantable(itemStack)) {
 				this.context.run((world, pos) -> {
+
+					for (int j = 0; j < 3; j++) {
+						// this.enchantmentPower[j] = 0;
+						this.enchantmentId[j] = -1;
+						this.enchantmentLevel[j] = -1;
+						// if (this.enchantmentPower[j] < j + 1) {
+						// 	this.enchantmentPower[j] = 0;
+						// }
+					}
+
 					for (int jx = 0; jx < 3; jx++) {
 						EnchantmentLevelEntry enchantmentLevelEntry = this.generateEnchantment(itemStack, itemStack2, jx);
 						if (enchantmentLevelEntry != null) {
@@ -106,7 +116,7 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 								this.enchantmentLevel[jx] = CustomEnchantmentHelper.getNextLevel(itemStack, enchantment);
 								this.enchantmentMaterial[jx] = CustomEnchantmentHelper.materialCost(this.enchantmentLevel[jx]);
 							} else {
-								this.enchantmentPower[jx] = 0;
+								// this.enchantmentPower[jx] = 0;
 								this.enchantmentId[jx] = -1;
 								this.enchantmentLevel[jx] = -1;
 								this.enchantmentMaterial[jx] = 0;
@@ -118,7 +128,7 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 				});
 			} else {
 				for (int i = 0; i < 3; i++) {
-					this.enchantmentPower[i] = 0;
+					// this.enchantmentPower[i] = 0;
 					this.enchantmentId[i] = -1;
 					this.enchantmentLevel[i] = 1;
 					this.enchantmentMaterial[i] = 1;
@@ -177,6 +187,10 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 				this.sendContentUpdates();
 			}
 
+			this.context.run((world, pos) -> 
+				world.playSound(null, pos, SoundEvents.ITEM_BOOK_PAGE_TURN, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F)
+			);
+
 			return true;
 		} else if (id >= 20 && id < 23) {
 			int level = this.enchantmentLevel[id - 20];
@@ -187,6 +201,10 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 				this.sendContentUpdates();
 			}
 
+			this.context.run((world, pos) -> 
+				world.playSound(null, pos, SoundEvents.ITEM_BOOK_PAGE_TURN, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F)
+			);
+
 			return true;
 		} else {
 			Util.error(player.getName() + " pressed invalid button id: " + id);
@@ -195,20 +213,11 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 	}
 
 	private EnchantmentLevelEntry generateEnchantment(ItemStack stack, ItemStack stack2, int i) {
-		// TODO: get enchantments depending on items
-		switch (i) {
-			case 0: {
-				return new EnchantmentLevelEntry(Enchantments.SHARPNESS, 1);
-			}
-			case 1: {
-				return new EnchantmentLevelEntry(Enchantments.SMITE, 1);
-			}
-			case 2: {
-				return new EnchantmentLevelEntry(Enchantments.BANE_OF_ARTHROPODS, 1);
-			}
-			default: {
-				return null;
-			}
+		if (!stack2.isEmpty()) {
+			Enchantment enchantment = EnchantingItems.enchantingItemMap.get(stack2.getItem()).get(i);
+			return enchantment.isAcceptableItem(stack) ? new EnchantmentLevelEntry(enchantment, 1) : null;
+		} else {
+			return null;
 		}
 	}
 
@@ -247,7 +256,7 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
                 if (!this.insertItem(itemStack2, 2, 38, true)) {
                 return ItemStack.EMPTY;
                 }
-            } else if (itemStack2.isOf(Items.LAPIS_LAZULI)) {
+            } else if (itemStack2.isIn(ModTags.Items.ENCHANTING_ITEM)) {
                 if (!this.insertItem(itemStack2, 1, 2, true)) {
                     return ItemStack.EMPTY;
                 }

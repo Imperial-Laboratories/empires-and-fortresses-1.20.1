@@ -3,8 +3,10 @@ package empireandfortresses.datagen;
 import java.util.concurrent.CompletableFuture;
 
 import empireandfortresses.item.ModItems;
+import empireandfortresses.util.ModTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.minecraft.registry.tag.ItemTags;
 
@@ -36,6 +38,9 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
                         ModItems.MITHRIL_BOOTS,
                         ModItems.ADAMANT_HELMET, ModItems.ADAMANT_CHESTPLATE, ModItems.ADAMANT_LEGGINGS,
                         ModItems.ADAMANT_BOOTS);
+
+        getOrCreateTagBuilder(ModTags.Items.ENCHANTING_ITEM).add(Items.LAPIS_LAZULI, ModItems.RUBY);
+
     }
 
 }

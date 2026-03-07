@@ -8,7 +8,8 @@
         "ServerPlayerEntityMixin",
         "PlayerEntityMixin",
         "MouseMixin",
-        "MinecraftClientMixin"
+        "MinecraftClientMixin",
+        "BookItemMixin"
     ],
     "injectors": {
         "defaultRequire": 1

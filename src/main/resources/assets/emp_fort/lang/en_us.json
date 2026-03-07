@@ -138,6 +138,9 @@
     "attribute.name.magic_affinity": "Magic Affinity",
     "attribute.name.xp_efficiency": "XP Efficiency",
 
+    "container.emp_fort.enchant.item.one": "1 Enchanting Item",
+    "container.emp_fort.enchant.item.many": "%s Enchanting Items",
+
     "spell.emp_fort.fail.xp": "Not enough XP!",
     "spell.emp_fort.fail.cooldown": "Cooldown has not finished!",
     "spell.emp_fort.fail.condition": "Cannot cast right now!",

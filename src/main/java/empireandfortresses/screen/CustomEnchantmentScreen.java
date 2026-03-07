@@ -195,15 +195,15 @@ public class CustomEnchantmentScreen extends HandledScreen<CustomEnchantmentScre
 			int l = this.handler.enchantmentLevel[j];
 			if (this.isPointWithinBounds(79, 14 + 19 * j, 69, 17, mouseX, mouseY) && enchantment != null && CustomEnchantmentHelper.getNextLevel(itemStack, enchantment) - 1 != this.handler.enchantmentLevel[j]) {
 				List<Text> list = Lists.<Text>newArrayList();
-				list.add(Text.translatable("container.enchant.clue", enchantment.getName(l)).formatted(Formatting.WHITE));
+				list.add(Text.translatable(enchantment.getName(l).getString()).formatted(Formatting.WHITE));
 				if (!bl) {
 					list.add(ScreenTexts.EMPTY);
 					MutableText mutableText;
 					int requiredItemCount = this.handler.enchantmentMaterial[j];
 					if (requiredItemCount == 1) {
-						mutableText = Text.translatable("container.enchant.lapis.one");
+						mutableText = Text.translatable("container.emp_fort.enchant.item.one");
 					} else {
-						mutableText = Text.translatable("container.enchant.lapis.many", requiredItemCount);
+						mutableText = Text.translatable("container.emp_fort.enchant.item.many", requiredItemCount);
 					}
 
 					list.add(mutableText.formatted(i >= requiredItemCount ? Formatting.GRAY : Formatting.RED));
@@ -231,11 +231,11 @@ public class CustomEnchantmentScreen extends HandledScreen<CustomEnchantmentScre
 		this.pageTurningSpeed = this.nextPageTurningSpeed;
 		boolean bl = false;
 
-		for (int i = 0; i < 3; i++) {
-			if (this.handler.enchantmentPower[i] != 0) {
-				bl = true;
-			}
-		}
+		// for (int i = 0; i < 3; i++) {
+		// 	if (this.handler.enchantmentPower[i] != 0) {
+		// 		bl = true;
+		// 	}
+		// }
 
 		if (bl) {
 			this.nextPageTurningSpeed += 0.2F;
