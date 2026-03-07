@@ -22,6 +22,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 
 public class CustomEnchantmentScreenHandler extends ScreenHandler {
@@ -107,20 +108,32 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 						// }
 					}
 
+					EnchantmentLevelEntry[] enchantmentLevelEntries = generateEnchantments(itemStack, itemStack2);
+					NbtList enchantments = itemStack.getEnchantments();
+
 					for (int jx = 0; jx < 3; jx++) {
-						EnchantmentLevelEntry enchantmentLevelEntry = this.generateEnchantment(itemStack, itemStack2, jx);
-						if (enchantmentLevelEntry != null) {
-							this.enchantmentId[jx] = Registries.ENCHANTMENT.getRawId(enchantmentLevelEntry.enchantment);
+						if (enchantmentLevelEntries != null && enchantmentLevelEntries[jx] != null) {
+							for (int k = 0; k < enchantments.size(); k++) {
+								Identifier enchantmentId = new Identifier(enchantments.getCompound(k).getString("id"));
+								Enchantment enchantment = Registries.ENCHANTMENT.get(enchantmentId);
+
+								if (!enchantmentLevelEntries[jx].enchantment.canCombine(enchantment) && enchantmentLevelEntries[jx].enchantment != enchantment) {
+									enchantmentLevelEntries[jx] = null;
+								}
+							}
+
+							this.enchantmentId[jx] = Registries.ENCHANTMENT.getRawId(enchantmentLevelEntries[jx].enchantment);
 							Enchantment enchantment = Enchantment.byRawId(this.enchantmentId[jx]);
+
 							if (CustomEnchantmentHelper.getNextLevel(itemStack, enchantment) - 1 < enchantment.getMaxLevel()) {
 								this.enchantmentLevel[jx] = CustomEnchantmentHelper.getNextLevel(itemStack, enchantment);
 								this.enchantmentMaterial[jx] = CustomEnchantmentHelper.materialCost(this.enchantmentLevel[jx]);
-							} else {
-								// this.enchantmentPower[jx] = 0;
-								this.enchantmentId[jx] = -1;
-								this.enchantmentLevel[jx] = -1;
-								this.enchantmentMaterial[jx] = 0;
 							}
+						} else {
+							// this.enchantmentPower[jx] = 0;
+							this.enchantmentId[jx] = -1;
+							this.enchantmentLevel[jx] = -1;
+							this.enchantmentMaterial[jx] = 0;
 						}
 					}
 
@@ -219,6 +232,19 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 		} else {
 			return null;
 		}
+	}
+
+	private EnchantmentLevelEntry[] generateEnchantments(ItemStack stack, ItemStack stack2) {
+		EnchantmentLevelEntry[] enchantmentLevelEntries = new EnchantmentLevelEntry[3];
+		for (int i = 0; i < 3; i++) {
+			if (!stack2.isEmpty()) {
+				Enchantment enchantment = EnchantingItems.enchantingItemMap.get(stack2.getItem()).get(i);
+				enchantmentLevelEntries[i] = enchantment.isAcceptableItem(stack) ? new EnchantmentLevelEntry(enchantment, 1) : null;
+			} else {
+				enchantmentLevelEntries = null;
+			}
+		}
+		return enchantmentLevelEntries;
 	}
 
 	public int getEnchantingItemCount() {
