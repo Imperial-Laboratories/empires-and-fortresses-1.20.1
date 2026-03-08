@@ -39,7 +39,7 @@ public class CustomEnchantmentHelper {
     public static int materialCost(int lvl1, int lvl2) {
         int cost = 0;
         for (int i = lvl1; i <= lvl2; i++) {
-            cost += Math.pow(2, i - 1);
+            cost += 1 << (i - 1);
         }
 
         if (lvl1 == 1) {
