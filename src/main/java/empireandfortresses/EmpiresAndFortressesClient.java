@@ -6,6 +6,8 @@ import empireandfortresses.entity.client.MagicBulletEntityModel;
 import empireandfortresses.entity.client.MagicBulletEntityRenderer;
 import empireandfortresses.entity.client.ModModelLayers;
 import empireandfortresses.event.KeyInputHandler;
+import empireandfortresses.screen.CustomEnchantmentScreen;
+import empireandfortresses.screen.ModScreenHandlers;
 import empireandfortresses.networking.ModMessages;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -13,6 +15,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.network.ClientPlayerEntity;
 
@@ -29,6 +32,8 @@ public class EmpiresAndFortressesClient implements ClientModInitializer {
         KeyInputHandler.registerKeyBindings();
 
         HudRenderCallback.EVENT.register(new MagicHudOverlay());
+        ModScreenHandlers.registerScreenHandlers();
+        HandledScreens.register(ModScreenHandlers.ENCHANTING_SCREEN_HANDLER, CustomEnchantmentScreen::new);
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             ClientPlayerEntity player = client.player;

@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import empireandfortresses.block.ModBlocks;
 import empireandfortresses.command.ModCommands;
+import empireandfortresses.enchantment.EnchantingItems;
 import empireandfortresses.entity.ModEntities;
 import empireandfortresses.entity.attribute.ModEntityAttributes;
 import empireandfortresses.item.ModItemGroups;
@@ -37,6 +38,7 @@ public class EmpiresAndFortresses implements ModInitializer {
         ModMessages.registerS2CPackets();
 
         BorderVisibilityManager.initialize();
+        EnchantingItems.registerEnchantingItems();
     }
 
 }
