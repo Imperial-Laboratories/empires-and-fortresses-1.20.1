@@ -122,12 +122,16 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 								}
 							}
 
-							this.enchantmentId[jx] = Registries.ENCHANTMENT.getRawId(enchantmentLevelEntries[jx].enchantment);
-							Enchantment enchantment = Enchantment.byRawId(this.enchantmentId[jx]);
+							if (enchantmentLevelEntries[jx] != null) {
+								this.enchantmentId[jx] = Registries.ENCHANTMENT.getRawId(enchantmentLevelEntries[jx].enchantment);
+								Enchantment enchantment = Enchantment.byRawId(this.enchantmentId[jx]);
 
-							if (CustomEnchantmentHelper.getNextLevel(itemStack, enchantment) - 1 < enchantment.getMaxLevel()) {
-								this.enchantmentLevel[jx] = CustomEnchantmentHelper.getNextLevel(itemStack, enchantment);
-								this.enchantmentMaterial[jx] = CustomEnchantmentHelper.materialCost(this.enchantmentLevel[jx]);
+								if (CustomEnchantmentHelper.getNextLevel(itemStack, enchantment) - 1 < enchantment.getMaxLevel()) {
+									this.enchantmentLevel[jx] = CustomEnchantmentHelper.getNextLevel(itemStack, enchantment);
+									this.enchantmentMaterial[jx] = CustomEnchantmentHelper.materialCost(this.enchantmentLevel[jx]);
+								}
+							} else {
+								this.enchantmentId[jx] = -1;
 							}
 						} else {
 							// this.enchantmentPower[jx] = 0;
