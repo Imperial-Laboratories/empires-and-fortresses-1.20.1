@@ -3,15 +3,27 @@ package empireandfortresses.magic;
 import java.util.ArrayList;
 import java.util.List;
 
-import empireandfortresses.magic.spell.MagicBulletSpell;
-import empireandfortresses.magic.spell.RapidBulletSpell;
+import empireandfortresses.magic.spell.*;
 
+import net.minecraft.util.Identifier;
 
 public class Spells {
-    public static final List<Spell> SPELL_REGISTRY = new ArrayList<>();
+    protected static final List<Spell> SPELL_REGISTRY = new ArrayList<>();
 
     public static final Spell MAGIC_BULLET = registerSpell(new MagicBulletSpell());
     public static final Spell RAPID_BULLET = registerSpell(new RapidBulletSpell());
+    public static final Spell MULTISHOT = registerSpell(new MultishotSpell());
+    public static final Spell REACTIVE_BULLET = registerSpell(new ReactiveBulletSpell());
+
+    public static final Spell FANGS_VERTICAL = registerSpell(new FangsVerticalSpell());
+    public static final Spell FANGS_HORIZONTAL = registerSpell(new FangsHorizontalSpell());
+
+    public static final Spell HEAL = registerSpell(new HealSpell());
+
+    public static final Spell NULLIFY = registerSpell(new NullifySpell());
+
+    public static final Spell BACKSTEP = registerSpell(new BackstepSpell());
+    public static final Spell DOUBLE_LEAP = registerSpell(new DoubleLeapSpell());
 
     public static Spell registerSpell(Spell spell) {
         SPELL_REGISTRY.add(spell);
@@ -20,5 +32,17 @@ public class Spells {
 
     public static Spell getSpellById(String id) {
         return SPELL_REGISTRY.stream().filter(s -> s.getSpellID().toString().equals(id)).findFirst().orElse(null);
+    }
+
+    public static List<String> getAllSpellIdsAsString() {
+        return getAllSpellIds().stream().map(Identifier::toString).toList();
+    }
+
+    public static List<Spell> getAllSpells() {
+        return new ArrayList<>(SPELL_REGISTRY);
+    }
+
+    public static List<Identifier> getAllSpellIds() {
+        return SPELL_REGISTRY.stream().map(Spell::getSpellID).toList();
     }
 }

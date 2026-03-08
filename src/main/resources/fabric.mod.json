@@ -22,6 +22,7 @@
             "empireandfortresses.component.ModComponents"
         ]
     },
+    "accessWidener": "emp_fort.accesswidener",
     "mixins": ["emp_fort.mixins.json"],
     "depends": {
         "fabricloader": ">=0.18.4",
@@ -30,8 +31,6 @@
         "fabric-api": "*"
     },
     "custom": {
-        "cardinal-components": [
-            "emp_fort:cooldown_component"
-        ]
+        "cardinal-components": ["emp_fort:cooldown_component"]
     }
 }
