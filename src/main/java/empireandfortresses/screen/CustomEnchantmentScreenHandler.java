@@ -60,7 +60,7 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 		    }
         });
 
-        this.addSlot(new Slot(this.inventory, 1, 35, 47){
+        this.addSlot(new Slot(this.inventory, 1, 35, 47) {
 			@Override
 			public boolean canInsert(ItemStack stack) {
 				return stack.isIn(ModTags.Items.ENCHANTING_ITEM);
