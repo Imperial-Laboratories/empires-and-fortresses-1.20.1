@@ -1,6 +1,7 @@
 package empireandfortresses.command.commands;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Predicate;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -29,6 +30,11 @@ public class SpellAddCommand extends AbstractCommand {
     @Override
     public String getPath() {
         return "spell add";
+    }
+
+    @Override
+    public Predicate<ServerCommandSource> getRequirement() {
+        return source -> source.hasPermissionLevel(4);
     }
 
     @Override
