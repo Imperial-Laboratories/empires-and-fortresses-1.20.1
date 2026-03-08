@@ -19,6 +19,6 @@ public class ModMessages {
     }
 
     public static void registerS2CPackets() {
-
+        // empty
     }
 }

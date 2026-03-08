@@ -68,7 +68,7 @@ public class MagicHudOverlay implements HudRenderCallback {
 
         PlayerCooldownComponent component = (PlayerCooldownComponent) (ModComponents.COOLDOWN_COMPONENT.get(player));
 
-        if (KeyInputHandler.magicKey.isPressed() && !((SpellCastingItem) stack.getItem()).isTriggeringSpell(player, nbt, activeSpell)) {
+        if (KeyInputHandler.getMagicKey().isPressed() && !((SpellCastingItem) stack.getItem()).isTriggeringSpell(player, nbt, activeSpell)) {
 
             int spellSlots = 0;
 

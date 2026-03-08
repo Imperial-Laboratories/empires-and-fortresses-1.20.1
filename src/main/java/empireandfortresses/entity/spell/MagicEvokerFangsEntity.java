@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 
 @Getter
 @Setter
+@SuppressWarnings("java:S2160")
 public class MagicEvokerFangsEntity extends EvokerFangsEntity {
 
     private float damage;

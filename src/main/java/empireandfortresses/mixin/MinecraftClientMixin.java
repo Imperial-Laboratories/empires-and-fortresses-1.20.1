@@ -45,7 +45,7 @@ public class MinecraftClientMixin {
             return 0;
         }
 
-        if (KeyInputHandler.magicKey.isPressed()) {
+        if (KeyInputHandler.getMagicKey().isPressed()) {
             GameOptions options = MinecraftClient.getInstance().options;
             NbtList list = nbt.getList("Spells", NbtElement.COMPOUND_TYPE);
             for (int j = 0; j < list.size(); ++j) {

@@ -44,7 +44,7 @@ public class MouseMixin {
                 return;
             }
 
-            if (KeyInputHandler.magicKey.isPressed()) {
+            if (KeyInputHandler.getMagicKey().isPressed()) {
                 if (vertical > 0) {
                     ClientPlayNetworking.send(ModMessages.NEXT_SPELL_ID, PacketByteBufs.create());
                 } else {

@@ -10,13 +10,14 @@ import net.minecraft.util.Identifier;
 
 public class ModScreenHandlers {
 
-    public static final ScreenHandlerType<CustomEnchantmentScreenHandler> ENCHANTING_SCREEN_HANDLER = register(new Identifier(EmpiresAndFortresses.MOD_ID, "enchanting").toString(), CustomEnchantmentScreenHandler::new);
+    public static final ScreenHandlerType<CustomEnchantmentScreenHandler> ENCHANTING_SCREEN_HANDLER = register(new Identifier(EmpiresAndFortresses.MOD_ID, "enchanting").toString(),
+            CustomEnchantmentScreenHandler::new);
 
-	private static <T extends ScreenHandler> ScreenHandlerType<T> register(String id, ScreenHandlerType.Factory<T> factory) {
-		return Registry.register(Registries.SCREEN_HANDLER, id, new ScreenHandlerType<>(factory, FeatureFlags.VANILLA_FEATURES));
-	}
+    private static <T extends ScreenHandler> ScreenHandlerType<T> register(String id, ScreenHandlerType.Factory<T> factory) {
+        return Registry.register(Registries.SCREEN_HANDLER, id, new ScreenHandlerType<>(factory, FeatureFlags.VANILLA_FEATURES));
+    }
 
     public static void registerScreenHandlers() {
-        
+        // empty
     }
 }
