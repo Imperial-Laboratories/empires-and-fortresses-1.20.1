@@ -33,7 +33,7 @@ public class CustomEnchantmentHelper {
     }
 
     public static int materialCost(int lvl) {
-            return (int) Math.pow(2, lvl - 1);
+            return 1 << (lvl - 1); // Math.pow(2, lvl - 1)
     }
 
     public static int materialCost(int lvl1, int lvl2) {
