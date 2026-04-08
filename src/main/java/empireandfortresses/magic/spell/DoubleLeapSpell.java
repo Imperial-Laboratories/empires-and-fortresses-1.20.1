@@ -3,8 +3,6 @@ package empireandfortresses.magic.spell;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
-import empireandfortresses.component.ModComponents;
-import empireandfortresses.entity.attribute.ModEntityAttributes;
 import empireandfortresses.magic.Spell;
 import empireandfortresses.magic.SpellCategory;
 import empireandfortresses.magic.SpellTriggerCategory;
@@ -42,7 +40,7 @@ public class DoubleLeapSpell extends Spell {
 
     @Override
     public boolean isXpSufficient(PlayerEntity user) {
-        return !condition(user) || super.isXpSufficient(user) > 0 ;
+        return !condition(user) || super.isXpSufficient(user);
     }
 
     @Override
