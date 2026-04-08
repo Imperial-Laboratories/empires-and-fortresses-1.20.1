@@ -140,7 +140,6 @@ public class SpellCastingItem extends ToolItem {
         return super.postHit(stack, target, attacker);
     }
 
-    // nbt modification every tick. Probably not a good idea
     // TODO: detect critical hits
     public boolean isTriggeringSpell(PlayerEntity player, NbtCompound nbt, Spell spell) {
         GameOptions options = MinecraftClient.getInstance().options;
@@ -158,7 +157,7 @@ public class SpellCastingItem extends ToolItem {
                 nbt.putBoolean("wasPressed", true);
                 return true;
             } else {
-                if (nbt.getBoolean("wasPressed") && !player.isCreative() && spell.castable(player)) {
+                if (nbt.getBoolean("wasPressed") && !player.isCreative() && spell.castable(player) && !spell.isChargable()) {
                     spell.activateCooldown(player);
                 }
                 nbt.putBoolean("wasPressed", false);
@@ -170,7 +169,7 @@ public class SpellCastingItem extends ToolItem {
                 nbt.putBoolean("wasPressed", true);
                 return true;
             } else {
-                if (nbt.getBoolean("wasPressed") && !player.isCreative() && spell.castable(player)) {
+                if (nbt.getBoolean("wasPressed") && !player.isCreative() && spell.castable(player) && !spell.isChargable()) {
                     spell.activateCooldown(player);
                 }
                 nbt.putBoolean("wasPressed", false);
@@ -240,13 +239,23 @@ public class SpellCastingItem extends ToolItem {
         tooltip.add(Text.translatable("item.emp_fort." + this.asItem().toString() + ".lore"));
         tooltip.add(Text.empty());
         tooltip.add(Text.translatable("tooltip.emp_fort.spells").formatted(Formatting.GRAY));
-        for (int i = 0; i <= list.size() - 1; ++i) {
+        for (int i = 0; i <= list.size() - 1; i++) {
             if (i == getActiveSpellIndex(stack)) {
                 tooltip.add(Text.literal("  [").formatted(Formatting.AQUA)
                         .append(Text.translatable("spell.emp_fort." + Spells.getSpellById(list.getCompound(i).getString("Id")).getSpellID().getPath()).formatted(Formatting.LIGHT_PURPLE))
                         .append(Text.literal("]").formatted(Formatting.AQUA)));
             } else {
                 tooltip.add(Text.literal("  ").append(Text.translatable("spell.emp_fort." + Spells.getSpellById(list.getCompound(i).getString("Id")).getSpellID().getPath()))
+                        .formatted(Formatting.DARK_PURPLE));
+            }
+        }
+
+        if (list.size() == 0) {
+            tooltip.add(Text.literal("  [").formatted(Formatting.AQUA)
+                    .append(Text.translatable("spell.emp_fort." + Spells.getSpellById(this.defaultSpells.getCompound(0).getString("Id")).getSpellID().getPath()).formatted(Formatting.LIGHT_PURPLE))
+                    .append(Text.literal("]").formatted(Formatting.AQUA)));
+            for (int i = 0; i <= this.defaultSpells.size() - 2; i++) {
+                tooltip.add(Text.literal("  ").append(Text.translatable("spell.emp_fort." + Spells.getSpellById(this.defaultSpells.getCompound(i).getString("Id")).getSpellID().getPath()))
                         .formatted(Formatting.DARK_PURPLE));
             }
         }

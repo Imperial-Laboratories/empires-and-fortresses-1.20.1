@@ -34,6 +34,16 @@ public class DoubleLeapSpell extends Spell {
     }
 
     @Override
+    public boolean isOnCooldown(PlayerEntity user) {
+        return super.isOnCooldown(user) && condition(user);
+    }
+
+    @Override
+    public boolean isXpSufficient(PlayerEntity user) {
+        return !condition(user) || super.isXpSufficient(user);
+    }
+
+    @Override
     public boolean shouldNotifyOfFailingCondition(PlayerEntity user) {
         return false;
     }
