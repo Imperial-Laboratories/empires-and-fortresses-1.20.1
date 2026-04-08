@@ -3,6 +3,8 @@ package empireandfortresses.magic.spell;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
+import empireandfortresses.component.ModComponents;
+import empireandfortresses.entity.attribute.ModEntityAttributes;
 import empireandfortresses.magic.Spell;
 import empireandfortresses.magic.SpellCategory;
 import empireandfortresses.magic.SpellTriggerCategory;
@@ -31,6 +33,16 @@ public class DoubleLeapSpell extends Spell {
     @Override
     public boolean condition(PlayerEntity user) {
         return !user.isOnGround() && !user.isTouchingWater() && !user.isClimbing() && !user.getAbilities().flying && !user.hasVehicle() && user.fallDistance > 0.0f;
+    }
+
+    @Override
+    public boolean isOnCooldown(PlayerEntity user) {
+        return ModComponents.COOLDOWN_COMPONENT.get(user).getCooldown(getCategory()) > 0 && condition(user);
+    }
+
+    @Override
+    public boolean isXpSufficient(PlayerEntity user) {
+        return !(user.experienceLevel < getXpCost() * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY) && condition(user));
     }
 
     @Override

@@ -38,17 +38,7 @@ public class MagicHudOverlay implements HudRenderCallback {
         MinecraftClient client = MinecraftClient.getInstance();
         ClientPlayerEntity player = client.player;
         PlayerInventory inventory = player.getInventory();
-        ItemStack stack = player.getMainHandStack();
-        NbtCompound nbt = stack.getNbt();
-
-        if (!(stack.getItem() instanceof SpellCastingItem) || client.options.hudHidden) {
-            return;
-        }
-
-        Spell activeSpell = Spells.getSpellById(nbt.getString("ActiveSpell"));
-        if (activeSpell == null) {
-            return;
-        }
+        PlayerCooldownComponent component = (PlayerCooldownComponent) (ModComponents.COOLDOWN_COMPONENT.get(player));
 
         int width = client.getWindow().getScaledWidth();
         int height = client.getWindow().getScaledHeight();
@@ -63,11 +53,43 @@ public class MagicHudOverlay implements HudRenderCallback {
         RenderSystem.defaultBlendFunc();
 
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
+
+        // * Cooldown display in the hotbar
+        // * Done before the null check (independent of which item stack is selected)
+        drawContext.getMatrices().translate(0, 0, 105);
+        drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 0.5f);
+        for (int i = 0; i < 9; i++) {
+            ItemStack hotbarStack = inventory.getStack(i);
+            if (hotbarStack.getItem() instanceof SpellCastingItem && !client.options.hudHidden) {
+                Spell hotbarSpell = Spells.getSpellById(hotbarStack.getNbt().getString("ActiveSpell"));
+                SpellCategory category = hotbarSpell.getCategory();
+
+                int maxCooldown = component.getMaxCooldown(category);
+                int cooldownProgress = (int) (16 * ((float) component.getCooldown(category) / (float) maxCooldown));
+
+                drawContext.drawTexture(SPELL_COOLDOWN, x - 88 + i * 20, y - 3 - cooldownProgress, 0, 0, 16, cooldownProgress, 16, 16);
+            }
+        }
+
+        drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+        // * Various null checks for the holding stack
+        ItemStack stack = player.getMainHandStack();
+        NbtCompound nbt = stack.getNbt();
+
+        if (!(stack.getItem() instanceof SpellCastingItem) || client.options.hudHidden) {
+            return;
+        }
+
+        Spell activeSpell = Spells.getSpellById(nbt.getString("ActiveSpell"));
+        if (activeSpell == null) {
+            return;
+        }
+
         drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 0.85f);
         RenderSystem.setShaderTexture(0, SPELL_SLOT);
 
-        PlayerCooldownComponent component = (PlayerCooldownComponent) (ModComponents.COOLDOWN_COMPONENT.get(player));
-
+        // * Spell menu
         if (KeyInputHandler.getMagicKey().isPressed() && !((SpellCastingItem) stack.getItem()).isTriggeringSpell(player, nbt, activeSpell)) {
 
             int spellSlots = 0;
@@ -79,7 +101,7 @@ public class MagicHudOverlay implements HudRenderCallback {
 
             NbtList list = nbt.getList("Spells", NbtElement.COMPOUND_TYPE);
 
-            for (int i = 0; i <= list.size() - 1; ++i) {
+            for (int i = 0; i <= list.size() - 1; i++) {
                 Spell spell = Spells.getSpellById(list.getCompound(i).getString("Id"));
                 Identifier texture = spell.getSpellIcon();
                 SpellCategory category = spell.getCategory();
@@ -101,15 +123,7 @@ public class MagicHudOverlay implements HudRenderCallback {
 
         }
 
-        SpellCategory category = activeSpell.getCategory();
-
-        int maxCooldown = component.getMaxCooldown(category);
-        int cooldownProgress = (int) (16 * ((float) component.getCooldown(category) / (float) maxCooldown));
-
-        drawContext.getMatrices().translate(0, 0, 105);
-        drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 0.5f);
-        drawContext.drawTexture(SPELL_COOLDOWN, x - 88 + inventory.selectedSlot * 20, y - 3 - cooldownProgress, 0, 0, 16, cooldownProgress, 16, 16);
-
+        // * Cast Time bar
         // TODO: render position not final yet
         SpellTriggerCategory triggerCategory = activeSpell.getTriggerCategory();
         if (((SpellCastingItem) stack.getItem()).isTriggeringSpell(player, nbt, activeSpell) && activeSpell.castable(player)

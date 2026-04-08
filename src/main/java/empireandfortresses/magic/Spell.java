@@ -55,14 +55,14 @@ public abstract class Spell {
     }
 
     /**
-     * @param user Playerr casting spell, for use in overriding
+     * @param user Player casting spell, for use in overriding
      */
     public boolean condition(PlayerEntity user) {
         return true;
     }
 
     /**
-     * @param user Playerr casting spell, for use in overriding
+     * @param user Player casting spell, for use in overriding
      */
     public boolean shouldNotifyOfFailingCondition(PlayerEntity user) {
         return true;
