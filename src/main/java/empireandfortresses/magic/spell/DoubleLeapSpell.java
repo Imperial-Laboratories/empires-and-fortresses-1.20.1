@@ -37,7 +37,7 @@ public class DoubleLeapSpell extends Spell {
 
     @Override
     public boolean isOnCooldown(PlayerEntity user) {
-        return ModComponents.COOLDOWN_COMPONENT.get(user).getCooldown(getCategory()) > 0 && condition(user);
+        return super.isOnCooldown(user) && condition(user);
     }
 
     @Override
