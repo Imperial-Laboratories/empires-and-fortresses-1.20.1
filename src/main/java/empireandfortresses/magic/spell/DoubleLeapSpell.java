@@ -42,7 +42,7 @@ public class DoubleLeapSpell extends Spell {
 
     @Override
     public boolean isXpSufficient(PlayerEntity user) {
-        return !(user.experienceLevel < getXpCost() * user.getAttributeValue(ModEntityAttributes.XP_EFFICIENCY) && condition(user));
+        return !condition(user) || super.isXpSufficient(user) > 0 ;
     }
 
     @Override
