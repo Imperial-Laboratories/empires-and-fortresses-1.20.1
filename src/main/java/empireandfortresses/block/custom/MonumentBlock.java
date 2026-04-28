@@ -2,8 +2,8 @@ package empireandfortresses.block.custom;
 
 import java.util.UUID;
 
-import empireandfortresses.nations.Nation;
-import empireandfortresses.nations.TerritoryState;
+import empireandfortresses.nation.Nation;
+import empireandfortresses.nation.TerritoryState;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;

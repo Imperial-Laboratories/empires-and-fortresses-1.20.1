@@ -1,4 +1,4 @@
-package empireandfortresses.nations;
+package empireandfortresses.nation;
 
 import java.util.ArrayList;
 import java.util.EnumMap;

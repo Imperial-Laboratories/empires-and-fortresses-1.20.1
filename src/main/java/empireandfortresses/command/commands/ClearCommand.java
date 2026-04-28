@@ -6,7 +6,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import empireandfortresses.command.AbstractCommand;
-import empireandfortresses.nations.TerritoryState;
+import empireandfortresses.nation.TerritoryState;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 

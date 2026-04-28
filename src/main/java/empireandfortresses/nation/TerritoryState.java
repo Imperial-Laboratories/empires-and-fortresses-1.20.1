@@ -1,4 +1,4 @@
-package empireandfortresses.nations;
+package empireandfortresses.nation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import empireandfortresses.EmpiresAndFortresses;
-import empireandfortresses.nations.villages.VillageNation;
+import empireandfortresses.nation.villages.VillageNation;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;

@@ -1,4 +1,4 @@
-package empireandfortresses.nations.villages;
+package empireandfortresses.nation.villages;
 
 import java.util.HashMap;
 import java.util.Map;

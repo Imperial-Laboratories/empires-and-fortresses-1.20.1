@@ -1,9 +1,9 @@
-package empireandfortresses.nations.villages;
+package empireandfortresses.nation.villages;
 
 import java.util.Random;
 import java.util.UUID;
 
-import empireandfortresses.nations.TerritoryState;
+import empireandfortresses.nation.TerritoryState;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.VillagerEntity;

@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import org.joml.Vector3f;
 
-import empireandfortresses.nations.TerritoryState;
+import empireandfortresses.nation.TerritoryState;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.particle.DustParticleEffect;
