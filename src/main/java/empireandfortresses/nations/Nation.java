@@ -11,8 +11,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.util.math.BlockPos;
 
 @Getter
@@ -47,24 +45,14 @@ public class Nation {
         nbt.putUuid("Leader", leader);
         nbt.putLong("MonumentPos", monumentPos.asLong()); // apparently blockpos can be stored as a long??
 
-        NbtList levelList = new NbtList();
-        for (Map.Entry<NationLevelType, Integer> entry : levels.entrySet()) {
-            NationLevelType levelType = entry.getKey();
-            Integer levelValue = entry.getValue();
-            NbtCompound levelNbt = new NbtCompound();
-            levelNbt.putString("Type", levelType.name());
-            levelNbt.putInt("Level", levelValue);
-            levelList.add(levelNbt);
-        }
+        NbtCompound levelList = new NbtCompound();
+        levels.forEach((type, level) -> levelList.putInt(type.name(), level));
         nbt.put("Levels", levelList);
 
-        NbtList memberList = new NbtList();
-        for (UUID member : members) {
-            NbtCompound m = new NbtCompound();
-            m.putUuid("UUID", member);
-            memberList.add(m);
-        }
+        NbtCompound memberList = new NbtCompound();
+        members.forEach(member -> memberList.putUuid(member.toString(), member));
         nbt.put("Members", memberList);
+
         return nbt;
     }
 
@@ -77,21 +65,18 @@ public class Nation {
                 nbt.getUuid("Leader"),
                 BlockPos.fromLong(nbt.getLong("MonumentPos")));
 
-        NbtList levelList = nbt.getList("Levels", NbtElement.COMPOUND_TYPE);
-        for (int i = 0; i < levelList.size(); i++) {
-            NbtCompound levelNbt = levelList.getCompound(i);
-            NationLevelType type = NationLevelType.valueOf(levelNbt.getString("Type"));
-            int level = levelNbt.getInt("Level");
+        NbtCompound levelList = nbt.getCompound("Levels");
+        levelList.getKeys().forEach(key -> {
+            NationLevelType type = NationLevelType.valueOf(key);
+            int level = levelList.getInt(key);
             nation.levels.put(type, level);
-        }
+        });
 
-        NbtList memberList = nbt.getList("Members", NbtElement.COMPOUND_TYPE);
-        for (int i = 0; i < memberList.size(); i++) {
-            UUID member = memberList.getCompound(i).getUuid("UUID");
-            if (!nation.members.contains(member)) {
-                nation.members.add(member);
-            }
-        }
+        NbtCompound memberList = nbt.getCompound("Members");
+        memberList.getKeys().forEach(key -> {
+            UUID memberId = memberList.getUuid(key);
+            nation.members.add(memberId);
+        });
 
         return nation;
     }

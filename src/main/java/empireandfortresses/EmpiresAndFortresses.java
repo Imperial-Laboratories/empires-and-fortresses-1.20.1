@@ -11,6 +11,7 @@ import empireandfortresses.entity.ModEntities;
 import empireandfortresses.entity.attribute.ModEntityAttributes;
 import empireandfortresses.item.ModItemGroups;
 import empireandfortresses.item.ModItems;
+import empireandfortresses.nations.villages.VillageDetector;
 import empireandfortresses.networking.ModMessages;
 import empireandfortresses.util.BorderVisibilityManager;
 
@@ -38,6 +39,7 @@ public class EmpiresAndFortresses implements ModInitializer {
         ModMessages.registerS2CPackets();
 
         BorderVisibilityManager.initialize();
+        VillageDetector.initialize();
         EnchantingItems.registerEnchantingItems();
     }
 
