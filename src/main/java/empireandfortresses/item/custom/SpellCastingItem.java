@@ -1,5 +1,6 @@
 package empireandfortresses.item.custom;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
@@ -7,8 +8,13 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableMultimap.Builder;
 import com.google.common.collect.Multimap;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.option.GameOptions;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,37 +28,42 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import empireandfortresses.entity.attribute.ModEntityAttributes;
 import empireandfortresses.magic.Spell;
+import empireandfortresses.magic.SpellTriggerCategory;
 import empireandfortresses.magic.Spells;
 
 public class SpellCastingItem extends ToolItem {
 
-	private final float magicAttackDamage;
-	private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
+    private final float magicAttackDamage;
+    private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
+    private final int spellSlots;
     private NbtList defaultSpells;
     private Spell defaultSpell;
 
-    public SpellCastingItem(ToolMaterial material, int damage, Settings settings, Spell defaultSpell) {
+    public SpellCastingItem(ToolMaterial material, int damage, Settings settings, int slots, Spell defaultSpell) {
         super(material, settings);
+
+        this.spellSlots = slots;
 
         this.defaultSpells = new NbtList();
 
         this.magicAttackDamage = damage;
-		Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-		builder.put(
-			ModEntityAttributes.GENERIC_MAGIC_ATTACK_DAMAGE,
-			new EntityAttributeModifier(UUID.fromString("07e14470-a892-4032-9bcd-ee900f68f9e5"), "Weapon modifier", (double)this.magicAttackDamage, EntityAttributeModifier.Operation.ADDITION)
-		);
-		this.attributeModifiers = builder.build();
+        Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(ModEntityAttributes.MAGIC_ATTACK_DAMAGE,
+                new EntityAttributeModifier(UUID.fromString("07e14470-a892-4032-9bcd-ee900f68f9e5"), "Weapon modifier", this.magicAttackDamage, EntityAttributeModifier.Operation.ADDITION));
+        this.attributeModifiers = builder.build();
 
         this.appendSpell(defaultSpell);
         this.defaultSpell = defaultSpell;
     }
 
     public void appendSpell(Spell spell) {
-        this.defaultSpells.add(spell.toNbt());
+        if (this.defaultSpells.size() < this.spellSlots) {
+            this.defaultSpells.add(spell.toNbt());
+        }
     }
 
     public int getActiveSpellIndex(ItemStack stack) {
@@ -83,38 +94,106 @@ public class SpellCastingItem extends ToolItem {
     }
 
     @Override
-	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
 
-        if (!world.isClient) {
-            // user.sendMessage(Text.literal(String.valueOf(user.getAttributeValue(ModEntityAttributes.GENERIC_MAGIC_ATTACK_DAMAGE))), false);
-            // user.sendMessage(Text.literal(stack.getNbt().getString("ActiveSpell")));
+        if (hand != Hand.MAIN_HAND) {
+            return TypedActionResult.pass(stack);
+        }
 
+        if (!world.isClient) {
             Spell spell = Spells.getSpellById(stack.getNbt().getString("ActiveSpell"));
-            if (spell.castable(user)) {
-                spell.cast(world, user, stack);
-            } else if(!spell.XPSufficient(user)) {
-                user.sendMessage(Text.translatable("spell.emp_fort.fail.xp").formatted(Formatting.RED), true);
-            } else if(spell.isOnCooldown(user)) {
-                user.sendMessage(Text.translatable("spell.emp_fort.fail.cooldown").formatted(Formatting.RED), true);
-            } else if(!spell.condition()) {
-                user.sendMessage(Text.translatable("spell.emp_fort.fail.condition").formatted(Formatting.RED), true);
+
+            if (spell.getTriggerCategory() == SpellTriggerCategory.USE && spell.castable(user)) {
+                spell.cast(user, stack);
+                return TypedActionResult.success(stack);
             }
 
-            if (!user.isSneaking()) {
-                nextSpell(stack);
-            } else {
-                prevSpell(stack);
+        }
+
+        return TypedActionResult.pass(stack);
+    }
+
+    @Override
+    public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
+        if (miner instanceof PlayerEntity player) {
+            Spell spell = Spells.getSpellById(stack.getNbt().getString("ActiveSpell"));
+
+            if (spell.getTriggerCategory() == SpellTriggerCategory.USE && spell.castable(player)) {
+                spell.cast(player, stack);
             }
         }
 
-		return TypedActionResult.success(stack);
-	}
+        return super.postMine(stack, world, state, pos, miner);
+    }
 
-	@Override
-	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
-		return slot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(slot);
-	}
+    @Override
+    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if (attacker instanceof PlayerEntity player) {
+            Spell spell = Spells.getSpellById(stack.getNbt().getString("ActiveSpell"));
+
+            if (spell.getTriggerCategory() == SpellTriggerCategory.USE && spell.castable(player)) {
+                spell.cast(player, stack);
+            }
+        }
+
+        return super.postHit(stack, target, attacker);
+    }
+
+    // TODO: detect critical hits
+    public boolean isTriggeringSpell(PlayerEntity player, NbtCompound nbt, Spell spell) {
+        GameOptions options = MinecraftClient.getInstance().options;
+        switch (spell.getTriggerCategory()) {
+        case ATTACK:
+            if (options.attackKey.isPressed() && !nbt.getBoolean("wasPressed")) {
+                nbt.putBoolean("wasPressed", true);
+                return true;
+            } else if (!options.attackKey.isPressed()) {
+                nbt.putBoolean("wasPressed", false);
+            }
+            return false;
+        case HOLD_ATTACK:
+            if (options.attackKey.isPressed()) {
+                nbt.putBoolean("wasPressed", true);
+                return true;
+            } else {
+                if (nbt.getBoolean("wasPressed") && !player.isCreative() && spell.castable(player) && !spell.isChargable()) {
+                    spell.activateCooldown(player);
+                }
+                nbt.putBoolean("wasPressed", false);
+                nbt.putInt("useTimer", 0);
+                return false;
+            }
+        case HOLD_USE:
+            if (options.useKey.isPressed()) {
+                nbt.putBoolean("wasPressed", true);
+                return true;
+            } else {
+                if (nbt.getBoolean("wasPressed") && !player.isCreative() && spell.castable(player) && !spell.isChargable()) {
+                    spell.activateCooldown(player);
+                }
+                nbt.putBoolean("wasPressed", false);
+                nbt.putInt("useTimer", 0);
+                return false;
+            }
+        default:
+            return false;
+        }
+    }
+
+    public void onJump(PlayerEntity player, ItemStack stack) {
+        NbtCompound nbt = stack.getNbt();
+        Spell spell = Spells.getSpellById(nbt.getString("ActiveSpell"));
+
+        if (spell.getTriggerCategory() == SpellTriggerCategory.JUMP && spell.castable(player)) {
+            spell.cast(player, stack);
+        }
+    }
+
+    @Override
+    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
+        return slot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(slot);
+    }
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
@@ -131,5 +210,55 @@ public class SpellCastingItem extends ToolItem {
         if (!nbt.contains("ActiveSpell")) {
             nbt.putString("ActiveSpell", defaultSpell.getSpellID().toString());
         }
+
+        if (!nbt.contains("wasPressed")) {
+            nbt.putBoolean("wasPressed", false);
+        }
+
+        if (!nbt.contains("useTimer")) {
+            nbt.putInt("useTimer", 0);
+        }
+
+        if (!nbt.contains("SpellSlots")) {
+            nbt.putInt("SpellSlots", spellSlots);
+        }
+
+        if (entity instanceof PlayerEntity player && selected) {
+            Spell spell = Spells.getSpellById(nbt.getString("ActiveSpell"));
+            if (isTriggeringSpell(player, nbt, spell) && spell.castable(player)) {
+                spell.cast(player, stack);
+            }
+        }
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
+        NbtCompound nbt = stack.getNbt();
+        NbtList list = nbt.getList("Spells", NbtElement.COMPOUND_TYPE);
+
+        tooltip.add(Text.translatable("item.emp_fort." + this.asItem().toString() + ".lore"));
+        tooltip.add(Text.empty());
+        tooltip.add(Text.translatable("tooltip.emp_fort.spells").formatted(Formatting.GRAY));
+        for (int i = 0; i <= list.size() - 1; i++) {
+            if (i == getActiveSpellIndex(stack)) {
+                tooltip.add(Text.literal("  [").formatted(Formatting.AQUA)
+                        .append(Text.translatable("spell.emp_fort." + Spells.getSpellById(list.getCompound(i).getString("Id")).getSpellID().getPath()).formatted(Formatting.LIGHT_PURPLE))
+                        .append(Text.literal("]").formatted(Formatting.AQUA)));
+            } else {
+                tooltip.add(Text.literal("  ").append(Text.translatable("spell.emp_fort." + Spells.getSpellById(list.getCompound(i).getString("Id")).getSpellID().getPath()))
+                        .formatted(Formatting.DARK_PURPLE));
+            }
+        }
+
+        if (list.size() == 0) {
+            tooltip.add(Text.literal("  [").formatted(Formatting.AQUA)
+                    .append(Text.translatable("spell.emp_fort." + Spells.getSpellById(this.defaultSpells.getCompound(0).getString("Id")).getSpellID().getPath()).formatted(Formatting.LIGHT_PURPLE))
+                    .append(Text.literal("]").formatted(Formatting.AQUA)));
+            for (int i = 0; i <= this.defaultSpells.size() - 2; i++) {
+                tooltip.add(Text.literal("  ").append(Text.translatable("spell.emp_fort." + Spells.getSpellById(this.defaultSpells.getCompound(i).getString("Id")).getSpellID().getPath()))
+                        .formatted(Formatting.DARK_PURPLE));
+            }
+        }
+        super.appendTooltip(stack, world, tooltip, context);
     }
 }

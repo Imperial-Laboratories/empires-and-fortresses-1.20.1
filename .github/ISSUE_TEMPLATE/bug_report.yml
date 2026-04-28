@@ -1,0 +1,95 @@
+name: Bug Report
+description: Report a bug or issue with the mod
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the sections below.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear description of what the bug is.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this behavior?
+      placeholder: |
+        1. Load into world
+        2. Press '...'
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: |
+        Relevant log output (latest.log, crash reports, etc.).
+        Please use a paste service like [McLogs](https://mclo.gs/) or [GitHub Gist](https://gist.github.com/) for large logs.
+      placeholder: "Paste log URL here"
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain the issue.
+
+  - type: input
+    id: mod-version
+    attributes:
+      label: Mod Version
+      placeholder: "e.g., 1.0.0"
+    validations:
+      required: true
+
+  - type: input
+    id: fabric-version
+    attributes:
+      label: Fabric Loader Version
+      placeholder: "e.g., 0.16.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: other-mods
+    attributes:
+      label: Other Mods
+      description: List any other mods that might be relevant to this issue.
+      placeholder: |
+        - Fabric API 0.102.0
+        - Sodium 0.5.8
+        - ...
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I have checked for existing issues that describe this bug.
+          required: true
+        - label: I am using the latest version of the mod.
+          required: false

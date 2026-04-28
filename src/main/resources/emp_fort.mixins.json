@@ -6,7 +6,10 @@
         "EnchantingTableBlockMixin",
         "AnvilScreenHandlerMixin",
         "ServerPlayerEntityMixin",
-        "PlayerEntityMixin"
+        "PlayerEntityMixin",
+        "MouseMixin",
+        "MinecraftClientMixin",
+        "BookItemMixin"
     ],
     "injectors": {
         "defaultRequire": 1

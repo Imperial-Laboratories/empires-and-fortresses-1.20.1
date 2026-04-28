@@ -6,11 +6,13 @@ import org.slf4j.LoggerFactory;
 
 import empireandfortresses.block.ModBlocks;
 import empireandfortresses.command.ModCommands;
+import empireandfortresses.enchantment.EnchantingItems;
 import empireandfortresses.entity.ModEntities;
 import empireandfortresses.entity.attribute.ModEntityAttributes;
 import empireandfortresses.item.ModItemGroups;
 import empireandfortresses.item.ModItems;
 import empireandfortresses.nations.villages.VillageDetector;
+import empireandfortresses.networking.ModMessages;
 import empireandfortresses.util.BorderVisibilityManager;
 
 public class EmpiresAndFortresses implements ModInitializer {
@@ -33,9 +35,12 @@ public class EmpiresAndFortresses implements ModInitializer {
         ModCommands.registerCommands();
         ModEntities.registerEntities();
         ModEntityAttributes.registerAttributes();
+        ModMessages.registerC2SPackets();
+        ModMessages.registerS2CPackets();
 
         BorderVisibilityManager.initialize();
         VillageDetector.initialize();
+        EnchantingItems.registerEnchantingItems();
     }
 
 }
