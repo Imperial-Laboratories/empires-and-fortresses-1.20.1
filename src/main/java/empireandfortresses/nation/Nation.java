@@ -22,6 +22,7 @@ public class Nation {
     private String name;
     private UUID leader;
     private Map<NationLevelType, Integer> levels = new EnumMap<>(NationLevelType.class);
+    private Map<TerritoryLevelType, Integer> mainTerritoryLevels = new EnumMap<>(TerritoryLevelType.class);
     private List<UUID> members = new ArrayList<>();
     private BlockPos monumentPos;
 
@@ -33,6 +34,10 @@ public class Nation {
 
         for (NationLevelType levelType : NationLevelType.values()) {
             levels.put(levelType, 0);
+        }
+
+        for (TerritoryLevelType levelType : TerritoryLevelType.values()) {
+            mainTerritoryLevels.put(levelType, 0);
         }
 
         this.members.add(leader);
