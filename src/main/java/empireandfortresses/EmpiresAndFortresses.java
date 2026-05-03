@@ -11,7 +11,7 @@ import empireandfortresses.entity.ModEntities;
 import empireandfortresses.entity.attribute.ModEntityAttributes;
 import empireandfortresses.item.ModItemGroups;
 import empireandfortresses.item.ModItems;
-import empireandfortresses.nation.villages.VillageDetector;
+import empireandfortresses.nation.village.VillageDetector;
 import empireandfortresses.networking.ModMessages;
 import empireandfortresses.util.BorderVisibilityManager;
 

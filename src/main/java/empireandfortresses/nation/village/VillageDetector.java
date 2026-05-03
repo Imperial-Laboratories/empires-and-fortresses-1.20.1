@@ -1,4 +1,4 @@
-package empireandfortresses.nation.villages;
+package empireandfortresses.nation.village;
 
 import java.util.Random;
 import java.util.UUID;

@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import empireandfortresses.EmpiresAndFortresses;
-import empireandfortresses.nation.villages.VillageNation;
+import empireandfortresses.nation.village.VillageNation;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;

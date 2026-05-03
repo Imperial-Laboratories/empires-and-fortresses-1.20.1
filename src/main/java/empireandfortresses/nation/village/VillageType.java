@@ -1,4 +1,4 @@
-package empireandfortresses.nation.villages;
+package empireandfortresses.nation.village;
 
 import net.minecraft.util.Formatting;
 

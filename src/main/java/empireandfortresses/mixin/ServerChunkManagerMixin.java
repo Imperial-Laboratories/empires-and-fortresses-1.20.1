@@ -12,7 +12,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import empireandfortresses.nation.Nation;
 import empireandfortresses.nation.TerritoryLevelType;
 import empireandfortresses.nation.TerritoryState;
-import empireandfortresses.nation.villages.VillageNation;
+import empireandfortresses.nation.village.VillageNation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerChunkManager;
 import net.minecraft.util.math.ChunkPos;
