@@ -13,9 +13,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 
-public class TerritoryAnchor extends Block {
+public class TerritoryAnchorBlock extends Block {
 
-    public TerritoryAnchor(Settings settings) {
+    public TerritoryAnchorBlock(Settings settings) {
         super(settings);
     }
 

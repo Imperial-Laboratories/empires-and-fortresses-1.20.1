@@ -16,8 +16,8 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
-public class MonumentBlock extends Block {
-    public MonumentBlock(Settings settings) {
+public class TerritoryMonumentBlock extends Block {
+    public TerritoryMonumentBlock(Settings settings) {
         super(settings);
     }
 

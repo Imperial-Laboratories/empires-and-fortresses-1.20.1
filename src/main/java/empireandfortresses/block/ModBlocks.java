@@ -16,10 +16,10 @@ import net.minecraft.util.Identifier;
 public class ModBlocks {
 
     public static final Block MONUMENT_BLOCK = registerBlock("monument_block",
-            new MonumentBlock(
+            new TerritoryMonumentBlock(
                     FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).strength(5.0f).requiresTool()));
     public static final Block TERRITORY_ANCHOR = registerBlock("territory_anchor",
-            new TerritoryAnchor(
+            new TerritoryAnchorBlock(
                     FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).strength(5.0f).requiresTool()));
 
     private static Block registerBlock(String name, Block block) {
