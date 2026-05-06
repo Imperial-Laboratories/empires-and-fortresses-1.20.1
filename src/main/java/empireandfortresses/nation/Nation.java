@@ -41,6 +41,8 @@ public class Nation {
         }
 
         this.members.add(leader);
+
+        NationManager.nations.put(id, this);
     }
 
     public NbtCompound toNbt() {

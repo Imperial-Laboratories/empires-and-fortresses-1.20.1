@@ -11,6 +11,7 @@ public class ModCommands {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             register(dispatcher, new BorderCommand());
             register(dispatcher, new ClearCommand());
+            register(dispatcher, new TerritoryLevelCommand());
 
             register(dispatcher, new SpellListCommand());
             register(dispatcher, new SpellAddCommand());
