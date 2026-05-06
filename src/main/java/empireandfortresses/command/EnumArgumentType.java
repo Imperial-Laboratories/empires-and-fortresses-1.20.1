@@ -62,4 +62,8 @@ public class EnumArgumentType<E extends Enum<E>> implements ArgumentType<E> {
     public Collection<String> getExamples() {
         return validValues;
     }
+
+    Class<E> getEnumClass() {
+        return enumClass;
+    }
 }
