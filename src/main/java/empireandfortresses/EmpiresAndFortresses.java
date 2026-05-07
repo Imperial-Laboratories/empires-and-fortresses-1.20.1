@@ -1,12 +1,15 @@
 package empireandfortresses;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.minecraft.resource.ResourceType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import empireandfortresses.block.ModBlocks;
 import empireandfortresses.command.ModCommands;
-import empireandfortresses.enchantment.EnchantingItems;
+import empireandfortresses.enchantment.EnchantingItemsLoader;
 import empireandfortresses.entity.ModEntities;
 import empireandfortresses.entity.attribute.ModEntityAttributes;
 import empireandfortresses.item.ModItemGroups;
@@ -40,7 +43,8 @@ public class EmpiresAndFortresses implements ModInitializer {
 
         BorderVisibilityManager.initialize();
         VillageDetector.initialize();
-        EnchantingItems.registerEnchantingItems();
+
+        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new EnchantingItemsLoader());
     }
 
 }
