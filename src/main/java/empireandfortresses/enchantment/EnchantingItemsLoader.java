@@ -18,6 +18,7 @@ import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 
+@SuppressWarnings("java:S2386")
 public class EnchantingItemsLoader implements SimpleSynchronousResourceReloadListener {
 
     public static final Map<Item, List<Enchantment>> ENCHANTING_ITEM_MAP = new HashMap<>();
