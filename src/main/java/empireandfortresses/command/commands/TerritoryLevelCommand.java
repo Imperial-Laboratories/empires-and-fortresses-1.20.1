@@ -6,7 +6,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -14,6 +13,7 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 
 import empireandfortresses.command.AbstractCommand;
+import empireandfortresses.command.EnumArgumentType;
 import empireandfortresses.nation.Nation;
 import empireandfortresses.nation.NationManager;
 import empireandfortresses.nation.TerritoryLevelType;
@@ -38,7 +38,7 @@ public class TerritoryLevelCommand extends AbstractCommand {
     @Override
     protected void configure(LiteralArgumentBuilder<ServerCommandSource> builder) {
         builder.then(argument("nation", UuidArgumentType.uuid()).suggests(this::suggestNations)
-            .then(argument("level_type", StringArgumentType.string()).suggests(this::suggestLevelTypes)
+            .then(argument("level_type", EnumArgumentType.enumArg(TerritoryLevelType.class))
                 .then(argument("level", IntegerArgumentType.integer(0)).executes(this))));
     }
 
@@ -68,7 +68,8 @@ public class TerritoryLevelCommand extends AbstractCommand {
             return 0;
         }
 
-        TerritoryLevelType levelType = TerritoryLevelType.valueOf(context.getArgument("level_type", String.class));
+        // TerritoryLevelType levelType = TerritoryLevelType.valueOf(context.getArgument("level_type", String.class));
+        TerritoryLevelType levelType = context.getArgument("level_type", TerritoryLevelType.class);
         int level = context.getArgument("level", Integer.class);
 
         Map<TerritoryLevelType, Integer> mainTerritoryLevels = nation.getMainTerritoryLevels();
