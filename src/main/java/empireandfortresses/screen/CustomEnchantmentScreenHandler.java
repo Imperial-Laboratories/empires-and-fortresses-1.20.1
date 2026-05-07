@@ -1,7 +1,7 @@
 package empireandfortresses.screen;
 
 import empireandfortresses.enchantment.CustomEnchantmentHelper;
-import empireandfortresses.enchantment.EnchantingItems;
+import empireandfortresses.enchantment.EnchantingItemsLoader;
 import empireandfortresses.util.ModTags;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Blocks;
@@ -228,7 +228,7 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
 
     private EnchantmentLevelEntry generateEnchantment(ItemStack stack, ItemStack stack2, int i) {
         if (!stack2.isEmpty()) {
-            Enchantment enchantment = EnchantingItems.enchantingItemMap.get(stack2.getItem()).get(i);
+            Enchantment enchantment = EnchantingItemsLoader.ENCHANTING_ITEM_MAP.get(stack2.getItem()).get(i);
             return enchantment.isAcceptableItem(stack) ? new EnchantmentLevelEntry(enchantment, 1) : null;
         } else {
             return null;
@@ -240,7 +240,7 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
         boolean isEmpty = stack2.isEmpty();
         for (int i = 0; i < 3; i++) {
             if (!isEmpty) {
-                Enchantment enchantment = EnchantingItems.enchantingItemMap.get(stack2.getItem()).get(i);
+                Enchantment enchantment = EnchantingItemsLoader.ENCHANTING_ITEM_MAP.get(stack2.getItem()).get(i);
                 enchantmentLevelEntries[i] = enchantment.isAcceptableItem(stack) ? new EnchantmentLevelEntry(enchantment, 1) : null;
                 continue;
             }

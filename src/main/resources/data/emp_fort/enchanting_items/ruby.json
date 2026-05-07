@@ -1,0 +1,8 @@
+{
+    "item": "emp_fort:ruby",
+    "enchantments": [
+        "minecraft:fire_aspect",
+        "minecraft:flame",
+        "minecraft:fire_protection"
+    ]
+}
