@@ -20,7 +20,7 @@ import net.minecraft.util.Identifier;
 
 public class EnchantingItemsLoader implements SimpleSynchronousResourceReloadListener {
 
-    public static final Map<Item, List<Enchantment>> ENCHANTING_ITEM_MAP = new HashMap<>();
+    protected static final Map<Item, List<Enchantment>> ENCHANTING_ITEM_MAP = new HashMap<>();
 
     @Override
     public Identifier getFabricId() {
