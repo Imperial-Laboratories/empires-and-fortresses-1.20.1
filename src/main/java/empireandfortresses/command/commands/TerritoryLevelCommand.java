@@ -68,7 +68,6 @@ public class TerritoryLevelCommand extends AbstractCommand {
             return 0;
         }
 
-        // TerritoryLevelType levelType = TerritoryLevelType.valueOf(context.getArgument("level_type", String.class));
         TerritoryLevelType levelType = context.getArgument("level_type", TerritoryLevelType.class);
         int level = context.getArgument("level", Integer.class);
 

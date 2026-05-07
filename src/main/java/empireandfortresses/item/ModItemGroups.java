@@ -25,7 +25,7 @@ public class ModItemGroups {
                         entries.add(ModItems.MITHRIL);
                         entries.add(ModItems.ADAMANT_CHUNK);
 
-                        entries.add(ModBlocks.MONUMENT_BLOCK);
+                        entries.add(ModBlocks.TERRITORY_MONUMENT);
                     }).build());
 
     public static final ItemGroup TOOLS_GROUP = Registry.register(Registries.ITEM_GROUP,

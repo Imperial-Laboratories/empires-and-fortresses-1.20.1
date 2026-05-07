@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "emp_fort:monument_block"
+          "name": "emp_fort:territory_monument"
         }
       ],
       "rolls": 1.0

@@ -15,7 +15,7 @@ import net.minecraft.util.Identifier;
 @SuppressWarnings("java:S1186")
 public class ModBlocks {
 
-    public static final Block MONUMENT_BLOCK = registerBlock("monument_block",
+    public static final Block TERRITORY_MONUMENT = registerBlock("territory_monument",
             new TerritoryMonumentBlock(
                     FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).strength(5.0f).requiresTool()));
     public static final Block TERRITORY_ANCHOR = registerBlock("territory_anchor",

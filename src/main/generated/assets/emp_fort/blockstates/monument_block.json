@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "emp_fort:block/monument_block"
+      "model": "emp_fort:block/territory_monument"
     }
   }
 }
