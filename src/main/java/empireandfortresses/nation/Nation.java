@@ -13,9 +13,7 @@ import lombok.ToString;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 
-@Getter
-@Setter
-@ToString
+@Getter @Setter @ToString
 public class Nation {
 
     private UUID id;
@@ -41,8 +39,6 @@ public class Nation {
         }
 
         this.members.add(leader);
-
-        NationManager.nations.put(id, this);
     }
 
     public NbtCompound toNbt() {
@@ -70,11 +66,7 @@ public class Nation {
     public static Nation fromNbt(NbtCompound nbt) {
         EmpiresAndFortresses.LOGGER.info("Deserializing Nation from NBT...");
 
-        Nation nation = new Nation(
-                nbt.getUuid("Id"),
-                nbt.getString("Name"),
-                nbt.getUuid("Leader"),
-                BlockPos.fromLong(nbt.getLong("MonumentPos")));
+        Nation nation = new Nation(nbt.getUuid("Id"), nbt.getString("Name"), nbt.getUuid("Leader"), BlockPos.fromLong(nbt.getLong("MonumentPos")));
 
         NbtCompound levelList = nbt.getCompound("Levels");
         levelList.getKeys().forEach(key -> {

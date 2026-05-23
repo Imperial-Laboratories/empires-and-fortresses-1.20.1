@@ -15,8 +15,8 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import empireandfortresses.command.AbstractCommand;
 import empireandfortresses.command.EnumArgumentType;
 import empireandfortresses.nation.Nation;
-import empireandfortresses.nation.NationManager;
 import empireandfortresses.nation.TerritoryLevelType;
+import empireandfortresses.nation.TerritoryState;
 import net.minecraft.command.argument.UuidArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
@@ -38,12 +38,12 @@ public class TerritoryLevelCommand extends AbstractCommand {
     @Override
     protected void configure(LiteralArgumentBuilder<ServerCommandSource> builder) {
         builder.then(argument("nation", UuidArgumentType.uuid()).suggests(this::suggestNations)
-            .then(argument("level_type", EnumArgumentType.enumArg(TerritoryLevelType.class))
-                .then(argument("level", IntegerArgumentType.integer(0)).executes(this))));
+                .then(argument("level_type", EnumArgumentType.enumArg(TerritoryLevelType.class)).then(argument("level", IntegerArgumentType.integer(0)).executes(this))));
     }
 
     protected CompletableFuture<Suggestions> suggestNations(CommandContext<ServerCommandSource> context, SuggestionsBuilder builder) throws CommandSyntaxException {
-        for (Nation nation : NationManager.nations.values()) {
+        TerritoryState serverState = TerritoryState.getServerState(context.getSource().getServer());
+        for (Nation nation : serverState.nations.values()) {
             builder.suggest(nation.getId().toString());
         }
 
@@ -61,7 +61,8 @@ public class TerritoryLevelCommand extends AbstractCommand {
     @Override
     public int run(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         UUID nationUuid = context.getArgument("nation", UUID.class);
-        Nation nation = NationManager.nations.getOrDefault(nationUuid, null);
+        TerritoryState serverState = TerritoryState.getServerState(context.getSource().getServer());
+        Nation nation = serverState.nations.get(nationUuid);
 
         if (nation == null) {
             context.getSource().sendError(Text.literal("Nation not found"));
