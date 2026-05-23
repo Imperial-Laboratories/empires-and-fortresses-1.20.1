@@ -2,7 +2,6 @@ package empireandfortresses.screen;
 
 import empireandfortresses.enchantment.CustomEnchantmentHelper;
 import empireandfortresses.enchantment.EnchantingItemsLoader;
-import empireandfortresses.util.ModTags;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
@@ -64,7 +63,7 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
         this.addSlot(new Slot(this.inventory, 1, 35, 47) {
             @Override
             public boolean canInsert(ItemStack stack) {
-                return stack.isIn(ModTags.Items.ENCHANTING_ITEM);
+                return EnchantingItemsLoader.ENCHANTING_ITEM_MAP.containsKey(stack.getItem());
             }
         });
 
@@ -285,7 +284,7 @@ public class CustomEnchantmentScreenHandler extends ScreenHandler {
                 if (!this.insertItem(itemStack2, 2, 38, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (itemStack2.isIn(ModTags.Items.ENCHANTING_ITEM)) {
+            } else if (EnchantingItemsLoader.ENCHANTING_ITEM_MAP.containsKey(itemStack2.getItem())) {
                 if (!this.insertItem(itemStack2, 1, 2, true)) {
                     return ItemStack.EMPTY;
                 }

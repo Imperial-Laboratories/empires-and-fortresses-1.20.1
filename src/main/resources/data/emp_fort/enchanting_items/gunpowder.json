@@ -1,0 +1,8 @@
+{
+    "item": "minecraft:gunpowder",
+    "enchantments": [
+        "minecraft:blast_protection",
+        "minecraft:knockback",
+        "minecraft:punch"
+    ]
+}

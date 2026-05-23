@@ -32,7 +32,8 @@ public class EnchantingItemsLoader implements SimpleSynchronousResourceReloadLis
     public void reload(ResourceManager manager) {
         ENCHANTING_ITEM_MAP.clear();
 
-        Map<Identifier, Resource> resources = manager.findResources("enchanting_items", path -> path.getPath().endsWith(".json"));
+        Map<Identifier, Resource> resources = manager.findResources("enchanting_items",
+                path -> path.getPath().endsWith(".json"));
         for (var entry : resources.entrySet()) {
             try (InputStreamReader reader = new InputStreamReader(entry.getValue().getInputStream())) {
                 JsonObject json = JsonParser.parseReader(reader).getAsJsonObject();

@@ -1,0 +1,8 @@
+{
+    "item": "minecraft:emerald",
+    "enchantments": [
+        "minecraft:fortune",
+        "minecraft:looting",
+        "minecraft:luck_of_the_sea"
+    ]
+}

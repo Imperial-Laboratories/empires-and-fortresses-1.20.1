@@ -38,9 +38,6 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
                         ModItems.MITHRIL_BOOTS,
                         ModItems.ADAMANT_HELMET, ModItems.ADAMANT_CHESTPLATE, ModItems.ADAMANT_LEGGINGS,
                         ModItems.ADAMANT_BOOTS);
-
-        getOrCreateTagBuilder(ModTags.Items.ENCHANTING_ITEM).add(Items.LAPIS_LAZULI, ModItems.RUBY);
-
     }
 
 }
