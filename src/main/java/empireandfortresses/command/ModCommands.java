@@ -17,6 +17,7 @@ public class ModCommands {
             register(dispatcher, new BorderCommand());
             register(dispatcher, new ClearCommand());
             register(dispatcher, new TerritoryLevelCommand());
+            register(dispatcher, new TerritoryLevelGetCommand());
 
             register(dispatcher, new SpellListCommand());
             register(dispatcher, new SpellAddCommand());

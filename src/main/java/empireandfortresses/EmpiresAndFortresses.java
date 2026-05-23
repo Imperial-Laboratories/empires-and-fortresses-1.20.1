@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import empireandfortresses.block.ModBlocks;
+import empireandfortresses.block.entity.ModBlockEntities;
 import empireandfortresses.command.ModCommands;
 import empireandfortresses.enchantment.EnchantingItems;
 import empireandfortresses.entity.ModEntities;
@@ -32,6 +33,7 @@ public class EmpiresAndFortresses implements ModInitializer {
         ModItemGroups.registerItemGroups();
         ModItems.registerItems();
         ModBlocks.registerBlocks();
+        ModBlockEntities.registerBlockEntities();
         ModCommands.registerCommands();
         ModCommands.registerArgumentTypes();
         ModEntities.registerEntities();

@@ -56,6 +56,10 @@ public class Nation {
         levels.forEach((type, level) -> levelList.putInt(type.name(), level));
         nbt.put("Levels", levelList);
 
+        NbtCompound mainTerritoryLevelList = new NbtCompound();
+        mainTerritoryLevels.forEach((type, level) -> mainTerritoryLevelList.putInt(type.name(), level));
+        nbt.put("MainTerritoryLevels", mainTerritoryLevelList);
+
         NbtCompound memberList = new NbtCompound();
         members.forEach(member -> memberList.putUuid(member.toString(), member));
         nbt.put("Members", memberList);
@@ -77,6 +81,13 @@ public class Nation {
             NationLevelType type = NationLevelType.valueOf(key);
             int level = levelList.getInt(key);
             nation.levels.put(type, level);
+        });
+
+        NbtCompound mainTerritoryLevelList = nbt.getCompound("MainTerritoryLevels");
+        mainTerritoryLevelList.getKeys().forEach(key -> {
+            TerritoryLevelType type = TerritoryLevelType.valueOf(key);
+            int level = mainTerritoryLevelList.getInt(key);
+            nation.mainTerritoryLevels.put(type, level);
         });
 
         NbtCompound memberList = nbt.getCompound("Members");

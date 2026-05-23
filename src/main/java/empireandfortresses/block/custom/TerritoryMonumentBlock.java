@@ -2,21 +2,32 @@ package empireandfortresses.block.custom;
 
 import java.util.UUID;
 
+import empireandfortresses.block.entity.TerritoryMonumentBlockEntity;
 import empireandfortresses.nation.Nation;
 import empireandfortresses.nation.TerritoryState;
-import net.minecraft.block.Block;
+import empireandfortresses.screen.TerritoryOverviewScreenHandler;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
-public class TerritoryMonumentBlock extends Block {
+public class TerritoryMonumentBlock extends BlockWithEntity {
     public TerritoryMonumentBlock(Settings settings) {
         super(settings);
     }
@@ -93,5 +104,39 @@ public class TerritoryMonumentBlock extends Block {
             monumentNation.setMonumentPos(null);
             serverState.markDirty();
         }
+    }
+
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
+            BlockHitResult hit) {
+        if (world.isClient) {
+            return ActionResult.SUCCESS;
+        } else {
+            player.openHandledScreen((TerritoryMonumentBlockEntity) world.getBlockEntity(pos));
+            return ActionResult.CONSUME;
+        }
+    }
+
+    @Override
+    public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
+        TerritoryState serverState = TerritoryState.getServerState(world.getServer());
+        Nation monumentNation = serverState.nations.values().stream()
+                .filter(nation -> pos.equals(nation.getMonumentPos()))
+                .findFirst()
+                .orElse(null);
+
+		return new SimpleNamedScreenHandlerFactory(
+			(syncId, inventory, player) -> new TerritoryOverviewScreenHandler(syncId, inventory, ScreenHandlerContext.create(world, pos)), Text.literal(monumentNation.getName()).formatted(Formatting.DARK_GRAY)
+		);
+    }
+
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new TerritoryMonumentBlockEntity(pos, state);
+    }
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 }
