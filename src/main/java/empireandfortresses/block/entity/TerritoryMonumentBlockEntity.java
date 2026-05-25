@@ -13,6 +13,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 
 public class TerritoryMonumentBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory {
@@ -32,7 +33,7 @@ public class TerritoryMonumentBlockEntity extends BlockEntity implements Extende
 
     @Override
     public Text getDisplayName() {
-        return Text.literal(getCachedState().getBlock().getTranslationKey());
+        return Text.literal(getNation().getName()).formatted(Formatting.DARK_GRAY);
     }
 
     @Override
@@ -45,5 +46,4 @@ public class TerritoryMonumentBlockEntity extends BlockEntity implements Extende
         EmpiresAndFortresses.LOGGER.info(String.valueOf(this.getNation()));
         buf.writeNbt(this.getNation().toNbt());
     }
-
 }

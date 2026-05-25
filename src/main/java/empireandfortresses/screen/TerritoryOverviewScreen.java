@@ -1,8 +1,14 @@
 package empireandfortresses.screen;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import empireandfortresses.EmpiresAndFortresses;
 import empireandfortresses.nation.Nation;
+import empireandfortresses.util.SkinUtils;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.PlayerSkinDrawer;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
@@ -27,8 +33,8 @@ public class TerritoryOverviewScreen extends HandledScreen<TerritoryOverviewScre
         Nation nation = this.handler.getNation();
 
         // * Levels
-        context.drawText(textRenderer, Text.literal("Lvl: " + String.valueOf(nation.getLevels().values().stream().mapToInt(Integer::intValue).sum())), i + 94, j + 22, 0x555555, false);
-        context.drawText(textRenderer, Text.literal("Nation Lvl: "  + String.valueOf(nation.getMainTerritoryLevels().values().stream().mapToInt(Integer::intValue).sum())), i + 94, j + 39, 0x555555, false);
+        context.drawText(textRenderer, Text.literal("Lvl: " + String.valueOf(nation.getLevels().values().stream().mapToInt(Integer::intValue).sum())), i + 92, j + 22, 0x555555, false);
+        context.drawText(textRenderer, Text.literal("Nation Lvl: "  + String.valueOf(nation.getMainTerritoryLevels().values().stream().mapToInt(Integer::intValue).sum())), i + 92, j + 39, 0x555555, false);
 
         // * Buttons
         // add member & stat visibility
@@ -44,6 +50,13 @@ public class TerritoryOverviewScreen extends HandledScreen<TerritoryOverviewScre
         }
 
         // * Members
+        List<Identifier> skins = new ArrayList<>();
+        for (UUID player : nation.getMembers()) {
+            SkinUtils.loadSkinFromUuid(player, skinId -> {
+                skins.add(skinId);
+            });
+        }
+        PlayerSkinDrawer.draw(context, skins.get(0), mouseX, mouseY, 8);
 
         // * Relations
 
@@ -57,5 +70,4 @@ public class TerritoryOverviewScreen extends HandledScreen<TerritoryOverviewScre
         super.render(context, mouseX, mouseY, delta);
         drawMouseoverTooltip(context, mouseX, mouseY);
     }
-
 }

@@ -42,7 +42,6 @@ public class TerritoryOverviewScreenHandler extends ScreenHandler {
     }
 
     public Nation getNation() {
-        // EmpiresAndFortresses.LOGGER.info(String.valueOf(this.nation.getMainTerritoryLevels()));
         return this.nation;
     }
 
@@ -55,5 +54,4 @@ public class TerritoryOverviewScreenHandler extends ScreenHandler {
     public boolean canUse(PlayerEntity player) {
         return canUse(this.context, player, ModBlocks.TERRITORY_MONUMENT);
     }
-
 }
