@@ -17,10 +17,15 @@ import net.minecraft.util.Identifier;
 public class TerritoryOverviewScreen extends HandledScreen<TerritoryOverviewScreenHandler> {
 
     private static final Identifier TEXTURE = new Identifier(EmpiresAndFortresses.MOD_ID, "textures/gui/container/territory_monument/0_overview.png");
+    private final List<Identifier> memberSkins = new ArrayList<>();
 
     public TerritoryOverviewScreen(TerritoryOverviewScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
         this.playerInventoryTitleY = this.backgroundHeight * 2;
+        SkinUtils.loadSkinFromUuid(UUID.fromString("101c101a-4bc5-4889-978a-5923ce721ff1"), skinId -> {
+            EmpiresAndFortresses.LOGGER.info(String.valueOf(skinId));
+            memberSkins.add(skinId);
+        });
     }
 
     @Override
@@ -33,8 +38,10 @@ public class TerritoryOverviewScreen extends HandledScreen<TerritoryOverviewScre
         Nation nation = this.handler.getNation();
 
         // * Levels
-        context.drawText(textRenderer, Text.literal("Lvl: " + String.valueOf(nation.getLevels().values().stream().mapToInt(Integer::intValue).sum())), i + 92, j + 22, 0x555555, false);
-        context.drawText(textRenderer, Text.literal("Nation Lvl: "  + String.valueOf(nation.getMainTerritoryLevels().values().stream().mapToInt(Integer::intValue).sum())), i + 92, j + 39, 0x555555, false);
+        context.drawText(textRenderer, Text.literal("Lvl: " + String.valueOf(nation.getLevels().values().stream().mapToInt(Integer::intValue).sum())), i + 92, j + 22, 0x555555,
+                false);
+        context.drawText(textRenderer, Text.literal("Nation Lvl: " + String.valueOf(nation.getMainTerritoryLevels().values().stream().mapToInt(Integer::intValue).sum())), i + 92,
+                j + 39, 0x555555, false);
 
         // * Buttons
         // add member & stat visibility
@@ -56,7 +63,9 @@ public class TerritoryOverviewScreen extends HandledScreen<TerritoryOverviewScre
                 skins.add(skinId);
             });
         }
-        PlayerSkinDrawer.draw(context, skins.get(0), mouseX, mouseY, 8);
+        if (!memberSkins.isEmpty()) {
+            PlayerSkinDrawer.draw(context, memberSkins.get(0), mouseX, mouseY, 8);
+        }
 
         // * Relations
 
